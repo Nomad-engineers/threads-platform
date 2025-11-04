@@ -46,7 +46,8 @@
 ### D. Subscriptions & Monetization
 
 * **Free (Starter) - $0/month:**
-  * 10 scheduled posts per month
+  * 10 scheduled posts per week
+  * Content calendar view
   * Basic analytics (last 10 posts)
   * Single Threads account
   * Community support
@@ -57,7 +58,6 @@
   * Advanced analytics (all historical data)
   * Basic comment management (view, filter, respond individually)
   * AI-powered optimal posting times
-  * Content calendar view
   * 3 months competitor benchmarking
   * Email support (48-hour response)
 

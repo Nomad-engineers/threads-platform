@@ -27,7 +27,7 @@ By using Threadlytics, you agree to the collection and use of information in acc
 - **Platform Usage:** Features accessed, dashboard interactions, time spent on platform
 - **API Usage:** Request frequency, data synchronization activities
 - **Device Information:** Browser type, operating system, device identifiers
-- **Network Data:** IP address, geolocation (country/region level), Internet Service Provider
+- **Network Data:** IP address, geolocation (country/region level)
 
 ### 1.4 Communications Data
 - **Support Interactions:** Customer service tickets, chat transcripts, email correspondence
@@ -84,21 +84,16 @@ By using Threadlytics, you agree to the collection and use of information in acc
 - **Legal Basis:** Contractual necessity for service delivery
 
 ### 4.2 Payment Processors
-- **Providers:** Stripe and/or Paddle for payment processing
+- **Providers:** Paddle for payment processing
 - **Data Shared:** Payment information, billing addresses, transaction details
 - **Protection:** PCI DSS compliant processing with industry-standard security
 
 ### 4.3 Cloud Infrastructure
-- **Providers:** AWS, Google Cloud, or Microsoft Azure
+- **Providers:** Hetzner VPS
 - **Purpose:** Data storage, computing resources, and content delivery
 - **Data Shared:** Encrypted customer data necessary for service operation
 
-### 4.4 Email and Communication Services
-- **Providers:** SendGrid or Mailgun for email delivery
-- **Data Shared:** Email addresses and communication preferences
-- **Purpose:** Transactional emails and customer communications
-
-### 4.5 Analytics Services
+### 4.4 Analytics Services
 - **Internal Analytics:** Product usage and performance monitoring
 - **External Services:** May use privacy-focused analytics tools
 - **Anonymization:** Data aggregated and anonymized before analysis
