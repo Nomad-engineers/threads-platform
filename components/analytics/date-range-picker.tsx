@@ -88,10 +88,7 @@ export function DateRangePicker({
     return `${format(value.from, "MMM dd, yyyy")} - ...`
   }
 
-  const selectedDays = value?.from ? [value.from] : []
-  if (value?.to && value.from !== value.to) {
-    selectedDays.push(value.to)
-  }
+  const selectedDay = value?.from || undefined
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -129,7 +126,7 @@ export function DateRangePicker({
             <div className="border-t pt-3">
               <Calendar
                 mode="single"
-                selected={selectedDays}
+                selected={selectedDay}
                 onSelect={handleDateSelect}
                 month={currentMonth}
                 onMonthChange={setCurrentMonth}

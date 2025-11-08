@@ -1,25 +1,103 @@
+'use client';
+
 import Link from 'next/link';
-import { ArrowRight, BarChart3, Calendar, MessageSquare, Sparkles } from 'lucide-react';
+import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Star, Users, Zap, Shield, Globe, Target, Eye, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui/switch';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useState } from 'react';
 
 export default function HomePage() {
+  const [isAnnual, setIsAnnual] = useState(false);
+
+  const pricingPlans = [
+    {
+      name: "Starter",
+      description: "Perfect for getting started",
+      monthlyPrice: 0,
+      annualPrice: 0,
+      popular: false,
+      features: [
+        { name: "10 scheduled posts per week", tooltip: "Schedule up to 10 posts each week with our calendar view" },
+        { name: "Content calendar view", tooltip: "Visual calendar to manage and organize your content schedule" },
+        { name: "Basic analytics (last 10 posts)", tooltip: "Track performance of your most recent 10 posts" },
+        { name: "Single Threads account", tooltip: "Connect and manage one Threads account" },
+        { name: "Community support", tooltip: "Get help from our community forums" },
+        { name: "30 days data history", tooltip: "Access your analytics data for the past 30 days" }
+      ],
+      cta: { text: "Start Free", variant: "outline" as const }
+    },
+    {
+      name: "Creator",
+      description: "Most popular for growing creators",
+      monthlyPrice: 8,
+      annualPrice: 6,
+      popular: true,
+      features: [
+        { name: "Unlimited scheduled posts", tooltip: "Schedule unlimited posts with advanced queue management" },
+        { name: "Advanced analytics (all historical data)", tooltip: "Complete analytics access to all your historical data" },
+        { name: "Basic comment management", tooltip: "Manage and respond to comments efficiently" },
+        { name: "AI-powered optimal posting times", tooltip: "AI analyzes your audience to suggest best posting times" },
+        { name: "3 months competitor benchmarking", tooltip: "Track and compare with up to 3 competitors" },
+        { name: "Email support (48-hour response)", tooltip: "Get email support within 48 business hours" }
+      ],
+      cta: { text: "Start 14-Day Trial", variant: "default" as const }
+    },
+    {
+      name: "Professional",
+      description: "For professional content creators",
+      monthlyPrice: 20,
+      annualPrice: 16,
+      popular: false,
+      features: [
+        { name: "Advanced comment management", tooltip: "Advanced tools for managing comments and engagement" },
+        { name: "Unlimited competitor benchmarking (10 accounts)", tooltip: "Track unlimited competitors with up to 10 accounts" },
+        { name: "AI content suggestions & hashtag optimization", tooltip: "AI-powered content ideas and hashtag recommendations" },
+        { name: "Data export (CSV, PDF reports)", tooltip: "Export your data in multiple formats for analysis" },
+        { name: "Priority email support (24-hour response)", tooltip: "Priority email support within 24 business hours" },
+        { name: "1 year data history", tooltip: "Access your complete analytics data for the past year" },
+        { name: "Custom branding on reports", tooltip: "Add your brand logo and colors to exported reports" }
+      ],
+      cta: { text: "Start 14-Day Trial", variant: "outline" as const }
+    },
+    {
+      name: "Business",
+      description: "For teams and agencies",
+      monthlyPrice: 49,
+      annualPrice: 39,
+      popular: false,
+      features: [
+        { name: "Team collaboration (3 team members)", tooltip: "Invite up to 3 team members to collaborate" },
+        { name: "Advanced analytics (ROI tracking)", tooltip: "Track return on investment and advanced metrics" },
+        { name: "White-label reporting", tooltip: "Remove branding and add your own on reports" },
+        { name: "API access (reasonable limits)", tooltip: "Access our API for custom integrations" },
+        { name: "Phone support during business hours", tooltip: "Direct phone support during business hours" },
+        { name: "Unlimited data history", tooltip: "Access all your historical data without limits" },
+        { name: "Custom integrations (Zapier, webhooks)", tooltip: "Connect with 1000+ apps via Zapier and webhooks" },
+        { name: "Compliance features (GDPR, data retention)", tooltip: "Enterprise-grade compliance and data controls" }
+      ],
+      cta: { text: "Contact Sales", variant: "outline" as const }
+    }
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <nav className="container flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-lg bg-brand-500 flex items-center justify-center">
-              <BarChart3 className="h-5 w-5 text-white" />
+      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <nav className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
+              <BarChart3 className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xl font-bold">Threadlytics</span>
+            <span className="text-2xl font-bold text-black">Threadlytics</span>
           </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" asChild>
+          <div className="flex items-center space-x-6">
+            <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
               <Link href="/login">Sign In</Link>
             </Button>
-            <Button asChild>
+            <Button asChild className="bg-black text-white hover:bg-gray-800">
               <Link href="/register">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -30,264 +108,477 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="flex-1">
-        <div className="container px-4 py-20 text-center">
-          <div className="mx-auto max-w-4xl">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl gradient-text">
-              Analytics & Automation for Threads
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground sm:text-xl">
-              Track your performance, schedule content, and grow your audience with data-driven insights.
-              The comprehensive platform for Threads creators and businesses.
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="mx-auto max-w-6xl text-center">
+          <Badge className="mb-6 bg-black text-white border-0">
+            Trusted by 10,000+ creators
+          </Badge>
+
+          <h1 className="text-5xl md:text-7xl font-bold mb-8 text-black">
+            Analytics & Automatization
+            <br />
+            for Threads
+          </h1>
+
+          <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+            Unlock the full potential of your Threads content with AI-powered insights,
+            advanced analytics, and growth tools designed for serious creators.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
+            <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
+              <Link href="/register">
+                Start Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button variant="outline" size="lg" asChild className="text-lg px-10 py-4 h-14 border-gray-300 text-gray-700 hover:bg-gray-50">
+              <Link href="#features">
+                <Eye className="mr-2 h-5 w-5" />
+                View Demo
+              </Link>
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {[
+              { number: "10K+", label: "Creators", icon: Users },
+              { number: "2M+", label: "Posts Analyzed", icon: BarChart3 },
+              { number: "324%", label: "Avg. Growth", icon: TrendingUp }
+            ].map((stat, index) => (
+              <div key={index} className="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                <stat.icon className="h-8 w-8 text-black mb-3 mx-auto" />
+                <div className="text-4xl font-bold text-black mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-gray-600">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-24 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-20">
+            <Badge className="mb-4 bg-black text-white border-0">
+              Features
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+              Everything you need to
+              <br />
+              grow your presence
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Powerful tools and insights designed to help you understand your audience
+              and optimize your content strategy for maximum impact.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button size="lg" asChild>
-                <Link href="/register">
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="#features">View Features</Link>
-              </Button>
-            </div>
           </div>
-        </div>
 
-        {/* Features Grid */}
-        <div id="features" className="container px-4 py-20">
-          <div className="mx-auto max-w-6xl">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold sm:text-4xl">Everything you need to grow on Threads</h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Powerful analytics and automation tools designed for Threads creators and businesses
-              </p>
-            </div>
-
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              <Card className="relative overflow-hidden">
-                <CardHeader>
-                  <BarChart3 className="h-8 w-8 text-brand-500" />
-                  <CardTitle>Advanced Analytics</CardTitle>
-                  <CardDescription>
-                    Track engagement, identify viral content, and understand your audience with detailed insights
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Engagement rate tracking</li>
-                    <li>• Viral post prediction</li>
-                    <li>• Competitor benchmarking</li>
-                    <li>• Custom date ranges</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="relative overflow-hidden">
-                <CardHeader>
-                  <Calendar className="h-8 w-8 text-brand-500" />
-                  <CardTitle>Smart Scheduling</CardTitle>
-                  <CardDescription>
-                    Schedule posts for optimal times and automate your content strategy with AI-powered suggestions
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• AI-powered timing</li>
-                    <li>• Content calendar</li>
-                    <li>• Bulk scheduling</li>
-                    <li>• Auto-posting</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="relative overflow-hidden">
-                <CardHeader>
-                  <MessageSquare className="h-8 w-8 text-brand-500" />
-                  <CardTitle>Comment Management</CardTitle>
-                  <CardDescription>
-                    Stay on top of your engagement with advanced comment management and response tools
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Unified inbox</li>
-                    <li>• Bulk responses</li>
-                    <li>• VIP highlighting</li>
-                    <li>• Response templates</li>
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="relative overflow-hidden">
-                <CardHeader>
-                  <Sparkles className="h-8 w-8 text-brand-500" />
-                  <CardTitle>AI-Powered Insights</CardTitle>
-                  <CardDescription>
-                    Get intelligent recommendations to optimize your content strategy and grow faster
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Content suggestions</li>
-                    <li>• Hashtag optimization</li>
-                    <li>• Growth predictions</li>
-                    <li>• Performance analysis</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-
-        {/* Pricing Preview */}
-        <div className="bg-muted/50">
-          <div className="container px-4 py-20">
-            <div className="mx-auto max-w-6xl text-center">
-              <h2 className="text-3xl font-bold sm:text-4xl mb-4">Simple, transparent pricing</h2>
-              <p className="text-lg text-muted-foreground mb-16">
-                Start free, scale as you grow. No hidden fees.
-              </p>
-
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                <Card className="relative">
-                  <CardHeader>
-                    <CardTitle className="text-xl">Free</CardTitle>
-                    <div className="text-3xl font-bold">$0</div>
-                    <CardDescription>Perfect for getting started</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-2 text-sm">
-                      <li>✓ 10 scheduled posts/week</li>
-                      <li>✓ Basic analytics</li>
-                      <li>✓ 30 days data history</li>
-                      <li>✓ Community support</li>
-                    </ul>
-                    <Button variant="outline" className="w-full">
-                      Start Free
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card className="relative border-brand-200 dark:border-brand-800">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-brand-500 text-white text-xs font-medium px-3 py-1 rounded-full">
-                      Most Popular
-                    </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                icon: BarChart3,
+                title: "Advanced Analytics",
+                description: "Deep insights into your content performance and audience behavior",
+                features: ["Real-time metrics", "Growth tracking", "Content analysis"]
+              },
+              {
+                icon: Calendar,
+                title: "Smart Scheduling",
+                description: "Schedule posts at optimal times for maximum engagement",
+                features: ["AI timing", "Queue management", "Bulk scheduling"]
+              },
+              {
+                icon: MessageSquare,
+                title: "Comment Management",
+                description: "Engage with your audience efficiently and effectively",
+                features: ["Auto-responses", "Sentiment analysis", "Bulk moderation"]
+              },
+              {
+                icon: Zap,
+                title: "AI-Powered Insights",
+                description: "Get personalized recommendations to accelerate your growth",
+                features: ["Content ideas", "Hashtag suggestions", "Growth predictions"]
+              }
+            ].map((feature, index) => (
+              <Card key={index} className="border border-gray-200 bg-white hover:shadow-lg transition-shadow duration-300">
+                <CardHeader className="text-center">
+                  <div className="h-16 w-16 rounded-lg bg-black flex items-center justify-center mx-auto mb-6">
+                    <feature.icon className="h-8 w-8 text-white" />
                   </div>
-                  <CardHeader>
-                    <CardTitle className="text-xl">Creator</CardTitle>
-                    <div className="text-3xl font-bold">$6<span className="text-lg font-normal">/mo</span></div>
-                    <CardDescription>For individual creators</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-2 text-sm">
-                      <li>✓ Unlimited scheduling</li>
-                      <li>✓ Advanced analytics</li>
-                      <li>✓ 3 months data history</li>
-                      <li>✓ AI suggestions</li>
-                      <li>✓ Email support</li>
-                    </ul>
-                    <Button className="w-full">
-                      Start Trial
-                    </Button>
-                  </CardContent>
-                </Card>
+                  <CardTitle className="text-xl font-semibold mb-3 text-black">{feature.title}</CardTitle>
+                  <CardDescription className="text-gray-600">
+                    {feature.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {feature.features.map((item, idx) => (
+                      <li key={idx} className="flex items-center gap-3 text-sm text-gray-600">
+                        <Check className="h-5 w-5 text-green-600 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <Card className="relative">
-                  <CardHeader>
-                    <CardTitle className="text-xl">Professional</CardTitle>
-                    <div className="text-3xl font-bold">$16<span className="text-lg font-normal">/mo</span></div>
-                    <CardDescription>For growing creators</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-2 text-sm">
-                      <li>✓ Everything in Creator</li>
-                      <li>✓ Comment management</li>
-                      <li>✓ Competitor tracking</li>
-                      <li>✓ 1 year data history</li>
-                      <li>✓ Priority support</li>
-                    </ul>
-                    <Button variant="outline" className="w-full">
-                      Start Trial
-                    </Button>
-                  </CardContent>
-                </Card>
+      {/* Social Proof Section */}
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-black text-white border-0">
+              Trusted by creators worldwide
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+              Join thousands of successful
+              <br />
+              Threads creators
+            </h2>
+          </div>
 
-                <Card className="relative">
-                  <CardHeader>
-                    <CardTitle className="text-xl">Business</CardTitle>
-                    <div className="text-3xl font-bold">$39<span className="text-lg font-normal">/mo</span></div>
-                    <CardDescription>For teams and agencies</CardDescription>
+          {/* Testimonials */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            {[
+              {
+                name: "Sarah Chen",
+                role: "Content Creator",
+                content: "Threadlytics helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
+                rating: 5,
+                avatar: "👩‍💼"
+              },
+              {
+                name: "Marcus Rodriguez",
+                role: "Digital Marketer",
+                content: "The scheduling feature alone saved me 10+ hours per week. Absolutely essential for serious creators.",
+                rating: 5,
+                avatar: "👨‍💻"
+              },
+              {
+                name: "Emma Thompson",
+                role: "Brand Strategist",
+                content: "Best analytics tool for Threads I've used. The insights are detailed yet easy to understand.",
+                rating: 5,
+                avatar: "👩‍🎨"
+              }
+            ].map((testimonial, index) => (
+              <Card key={index} className="border border-gray-200 bg-white p-8 hover:shadow-lg transition-shadow duration-300">
+                <div className="flex items-center gap-2 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+                  ))}
+                </div>
+                <p className="text-gray-700 mb-6 italic">
+                  "{testimonial.content}"
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="text-3xl">{testimonial.avatar}</div>
+                  <div>
+                    <div className="font-semibold text-black">{testimonial.name}</div>
+                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Trust indicators */}
+          <div className="bg-white rounded-lg p-8 text-center border border-gray-200">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { number: "99.9%", label: "Uptime" },
+                { number: "24/7", label: "Support" },
+                { number: "SSL", label: "Secured" },
+                { number: "GDPR", label: "Compliant" }
+              ].map((trust, index) => (
+                <div key={index} className="flex flex-col items-center">
+                  <Shield className="h-8 w-8 text-black mb-2" />
+                  <div className="text-2xl font-bold text-black">{trust.number}</div>
+                  <div className="text-sm text-gray-600">{trust.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="py-24 px-6 bg-white">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center mb-20">
+            <Badge className="mb-4 bg-black text-white border-0">
+              Pricing
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+              Simple, transparent
+              <br />
+              pricing that scales
+            </h2>
+            <p className="text-xl text-gray-600 mb-8">
+              Start free, upgrade when you're ready to accelerate your growth
+            </p>
+
+            {/* Billing Toggle */}
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <span className={`text-lg font-medium transition-colors duration-200 ${!isAnnual ? 'text-black' : 'text-gray-500'}`}>
+                Monthly
+              </span>
+              <Switch
+                checked={isAnnual}
+                onCheckedChange={setIsAnnual}
+                className="data-[state=checked]:bg-black data-[state=unchecked]:bg-gray-300"
+              />
+              <span className={`text-lg font-medium transition-colors duration-200 ${isAnnual ? 'text-black' : 'text-gray-500'}`}>
+                Annual
+              </span>
+              <Badge className="ml-2 bg-gray-100 text-black border-gray-300">
+                Save 25%
+              </Badge>
+            </div>
+          </div>
+
+          <TooltipProvider>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+              {pricingPlans.map((plan, index) => (
+                <Card
+                  key={index}
+                  className={`relative group transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${
+                    plan.popular
+                      ? 'border-2 border-black bg-gray-50 shadow-xl'
+                      : 'border border-gray-200 bg-white hover:shadow-lg hover:border-gray-400'
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
+                      <div className="relative">
+                        <div className="bg-gradient-to-r from-black to-gray-800 text-white px-8 py-3 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
+                          <Sparkles className="h-4 w-4" />
+                          Most Popular
+                          <Sparkles className="h-4 w-4" />
+                        </div>
+                        <div className="absolute inset-0 bg-black rounded-full blur-lg opacity-30 -z-10"></div>
+                      </div>
+                    </div>
+                  )}
+
+                  <CardHeader className="text-center pb-8 pt-8">
+                    <CardTitle className={`text-2xl mb-2 ${plan.popular ? 'text-black' : 'text-gray-900'}`}>
+                      {plan.name}
+                    </CardTitle>
+                    <div className="flex items-baseline justify-center gap-1 mb-2">
+                      <span className="text-5xl font-bold text-black">
+                        ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
+                      </span>
+                      {(plan.monthlyPrice > 0 || plan.annualPrice > 0) && (
+                        <span className="text-lg font-normal text-gray-600">/mo</span>
+                      )}
+                    </div>
+                    {plan.monthlyPrice > 0 && plan.annualPrice > 0 && (
+                      <CardDescription className="text-gray-600">
+                        <span className="text-sm">
+                          ${isAnnual ? plan.monthlyPrice : plan.annualPrice}/month billed {isAnnual ? 'annually' : 'monthly'}
+                        </span>
+                      </CardDescription>
+                    )}
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-2 text-sm">
-                      <li>✓ Everything in Pro</li>
-                      <li>✓ Team collaboration</li>
-                      <li>✓ API access</li>
-                      <li>✓ White-label reports</li>
-                      <li>✓ Phone support</li>
+
+                  <CardContent className="space-y-6">
+                    <ul className="space-y-3">
+                      {plan.features.map((feature, idx) => (
+                        <Tooltip key={idx}>
+                          <TooltipTrigger asChild>
+                            <li className="flex items-center gap-3 text-gray-700 text-sm cursor-help group">
+                              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
+                                plan.popular
+                                  ? 'bg-black text-white group-hover:scale-110 transition-transform'
+                                  : 'bg-green-100 text-green-600 group-hover:scale-110 transition-transform'
+                              }`}>
+                                <Check className="h-3 w-3" />
+                              </div>
+                              <span className="group-hover:text-black transition-colors">{feature.name}</span>
+                            </li>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-xs p-3 bg-gray-900 text-white border-gray-700">
+                            <p className="text-sm">{feature.tooltip}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      ))}
                     </ul>
-                    <Button variant="outline" className="w-full">
-                      Contact Sales
+
+                    <Button
+                      variant={plan.cta.variant}
+                      className={`w-full h-12 transition-all duration-300 ${
+                        plan.popular
+                          ? 'bg-black text-white hover:bg-gray-800 hover:scale-105 hover:shadow-lg'
+                          : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:scale-105'
+                      }`}
+                    >
+                      {plan.cta.text}
+                      {plan.cta.text.includes("Trial") && <ArrowRight className="ml-2 h-4 w-4" />}
                     </Button>
                   </CardContent>
                 </Card>
+              ))}
+            </div>
+          </TooltipProvider>
+
+          {/* Additional Info */}
+          <div className="text-center mt-16">
+            <p className="text-gray-600 mb-4">
+              All plans include core features • No hidden fees • Cancel anytime
+            </p>
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <Shield className="h-4 w-4" />
+                <span>Secure payment</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4" />
+                <span>14-day guarantee</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                <span>10,000+ creators</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-background">
-        <div className="container px-4 py-12">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="h-8 w-8 rounded-lg bg-brand-500 flex items-center justify-center">
-                  <BarChart3 className="h-5 w-5 text-white" />
-                </div>
-                <span className="text-xl font-bold">Threadlytics</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Analytics and automation platform for Threads creators and businesses.
+      {/* CTA Section */}
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="mx-auto max-w-4xl">
+          <Card className="border border-gray-200 bg-white">
+            <CardContent className="text-center py-16">
+              <Badge className="mb-6 bg-black text-white border-0">
+                <Target className="h-3 w-3 mr-2" />
+                Ready to grow?
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black">
+                Start your free trial today
+              </h2>
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Join thousands of creators who are already using Threadlytics to grow their audience
+                and optimize their content strategy.
               </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
+                  <Link href="/register">
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="ghost" asChild className="text-lg px-8 py-4 h-14 text-gray-600 hover:text-black">
+                  <Link href="/demo">
+                    Schedule Demo
+                  </Link>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-gray-200 bg-gray-50 py-16 px-6">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div>
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
+                  <BarChart3 className="h-6 w-6 text-white" />
+                </div>
+                <span className="text-2xl font-bold text-black">Threadlytics</span>
+              </div>
+              <p className="text-sm text-gray-600 mb-6">
+                The ultimate analytics platform for Threads creators and businesses who want to grow their audience with data-driven insights.
+              </p>
+              <div className="flex items-center gap-4">
+                {[
+                  { icon: Globe, label: "Global Reach" },
+                  { icon: Shield, label: "Secure" }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-2 text-xs text-gray-500">
+                    <item.icon className="h-3 w-3" />
+                    {item.label}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Product</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/features" className="hover:text-foreground">Features</Link></li>
-                <li><Link href="/pricing" className="hover:text-foreground">Pricing</Link></li>
-                <li><Link href="/api" className="hover:text-foreground">API</Link></li>
-                <li><Link href="/integrations" className="hover:text-foreground">Integrations</Link></li>
+              <h3 className="font-semibold text-black mb-6">Product</h3>
+              <ul className="space-y-3">
+                {[
+                  { href: "/dashboard/analytics", label: "Analytics" },
+                  { href: "/dashboard/content", label: "Content" },
+                  { href: "/privacy", label: "Privacy" },
+                  { href: "/terms", label: "Terms" }
+                ].map((item, index) => (
+                  <li key={index}>
+                    <Link href={item.href} className="text-gray-600 hover:text-black transition-colors duration-200">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/about" className="hover:text-foreground">About</Link></li>
-                <li><Link href="/blog" className="hover:text-foreground">Blog</Link></li>
-                <li><Link href="/careers" className="hover:text-foreground">Careers</Link></li>
-                <li><Link href="/contact" className="hover:text-foreground">Contact</Link></li>
+              <h3 className="font-semibold text-black mb-6">Company</h3>
+              <ul className="space-y-3">
+                {[
+                  { href: "/about", label: "About" },
+                  { href: "/blog", label: "Blog" },
+                  { href: "/careers", label: "Careers" },
+                  { href: "/contact", label: "Contact" }
+                ].map((item, index) => (
+                  <li key={index}>
+                    <Link href={item.href} className="text-gray-600 hover:text-black transition-colors duration-200">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/privacy" className="hover:text-foreground">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-foreground">Terms of Service</Link></li>
-                <li><Link href="/refund" className="hover:text-foreground">Refund Policy</Link></li>
-                <li><Link href="/cookies" className="hover:text-foreground">Cookie Policy</Link></li>
+              <h3 className="font-semibold text-black mb-6">Legal</h3>
+              <ul className="space-y-3">
+                {[
+                  { href: "/privacy", label: "Privacy Policy" },
+                  { href: "/terms", label: "Terms of Service" },
+                  { href: "/refund", label: "Refund Policy" },
+                  { href: "/cookies", label: "Cookie Policy" }
+                ].map((item, index) => (
+                  <li key={index}>
+                    <Link href={item.href} className="text-gray-600 hover:text-black transition-colors duration-200">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Threadlytics. All rights reserved.</p>
+          <div className="border-t border-gray-200 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-gray-500">
+                &copy; 2024 Threadlytics. All rights reserved.
+              </p>
+              <div className="flex items-center gap-6 text-sm text-gray-500">
+                <span>Made for creators</span>
+                <span>•</span>
+                <span>Version 2.0</span>
+              </div>
+            </div>
           </div>
         </div>
       </footer>

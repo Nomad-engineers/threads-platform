@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "dev:standard": "next dev",
+    "dev:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm dev",
     "build": "next build",
+    "build:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
