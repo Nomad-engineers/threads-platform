@@ -1,15 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeProvider } from "@/contexts/theme-context"
-import { TabSwitchBar } from "./tab-switch-bar"
-import { TopBar } from "./top-bar"
+import { Header } from "./header"
 import { cn } from "@/lib/utils"
-
-type SidebarType = "dashboard" | "analytics" | "activities"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -17,36 +13,6 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeSidebar, setActiveSidebar] = useState<SidebarType>("dashboard")
-  const pathname = usePathname()
-  const router = useRouter()
-
-  // Determine active sidebar based on pathname
-  useEffect(() => {
-    if (pathname.startsWith("/dashboard/analytics")) {
-      setActiveSidebar("analytics")
-    } else if (pathname.startsWith("/dashboard/activities")) {
-      setActiveSidebar("activities")
-    } else {
-      setActiveSidebar("dashboard")
-    }
-  }, [pathname])
-
-  // Handle tab navigation
-  const handleTabChange = (tab: SidebarType) => {
-    setActiveSidebar(tab)
-    switch (tab) {
-      case "dashboard":
-        router.push("/dashboard")
-        break
-      case "analytics":
-        router.push("/dashboard/analytics")
-        break
-      case "activities":
-        router.push("/dashboard/activities")
-        break
-    }
-  }
 
   return (
     <ThemeProvider
@@ -84,18 +50,11 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
         {/* Main content */}
         <div className="w-full">
-          {/* Tab Switch Bar */}
-          <TabSwitchBar
-            activeTab={activeSidebar}
-            onTabChange={handleTabChange}
-            className="sticky top-0 z-40"
-          />
-
-          {/* Top bar */}
-          <TopBar onMenuClick={() => setSidebarOpen(true)} />
+          {/* Unified Header */}
+          <Header onMenuClick={() => setSidebarOpen(true)} />
 
           {/* Page content */}
-          <main className="min-h-[calc(100vh-8rem)] w-full transition-colors duration-300">
+          <main className="min-h-[calc(100vh-4rem)] w-full transition-colors duration-300">
             {children}
           </main>
         </div>

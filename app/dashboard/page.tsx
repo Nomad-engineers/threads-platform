@@ -6,7 +6,7 @@ import { CalendarViewSelector } from '@/components/dashboard/calendar/CalendarVi
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
-import { format, addDays, startOfDay, addHours, startOfWeek, addWeeks, startOfMonth, addMonths } from 'date-fns'
+import { format, addDays, startOfDay, addHours, startOfWeek, addWeeks, addMonths } from 'date-fns'
 
 // Sample events for demonstration
 const sampleEvents: CalendarEvent[] = [

@@ -3,11 +3,11 @@ export type ViewMode = 'day' | 'week' | 'month'
 export interface CalendarEvent {
   id: string
   title: string
-  description?: string
+  description?: string | undefined
   startTime: Date
   endTime: Date
-  color?: string
-  type?: 'scheduled_post' | 'analytics_review' | 'content_planning' | 'meeting'
+  color?: string | undefined
+  type?: 'scheduled_post' | 'analytics_review' | 'content_planning' | 'meeting' | undefined
 }
 
 export interface TimeSlot {

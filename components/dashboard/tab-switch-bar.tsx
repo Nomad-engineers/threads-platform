@@ -33,7 +33,7 @@ const tabs = [
 
 export function TabSwitchBar({ activeTab, onTabChange, className }: TabSwitchBarProps) {
   return (
-    <div className={cn("border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/90 shadow-sm", className)}>
+    <div className={cn("border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 shadow-sm transition-colors duration-300", className)}>
       <div className="flex items-center gap-1 p-1">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id
@@ -43,7 +43,7 @@ export function TabSwitchBar({ activeTab, onTabChange, className }: TabSwitchBar
               variant={isActive ? "secondary" : "ghost"}
               size="sm"
               className={cn(
-                "gap-2 h-9 px-3",
+                "gap-2 h-9 px-3 transition-all duration-200",
                 isActive && "bg-secondary text-secondary-foreground shadow-sm"
               )}
               onClick={() => onTabChange(tab.id)}

@@ -285,15 +285,18 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
             </div>
           ) : (
             // Activity list
-            <div className="space-y-0">
+            <div className="flex flex-col space-y-4">
               {filteredActivities.map((activity, index) => (
-                <div key={activity.id}>
+                <div key={activity.id} className="flex items-stretch">
                   <ActivityCard
                     activity={activity}
                     onMarkAsRead={handleMarkAsRead}
                     onQuickAction={handleQuickAction}
+                    className="flex-1"
                   />
-                  {index < filteredActivities.length - 1 && <Separator />}
+                  {index < filteredActivities.length - 1 && (
+                    <div className="w-px bg-border dark:bg-gray-700 mx-4 flex-shrink-0" />
+                  )}
                 </div>
               ))}
             </div>
