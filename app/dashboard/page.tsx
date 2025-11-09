@@ -1,220 +1,184 @@
 "use client"
 
-import { MetricCard } from "@/components/analytics/metric-card"
-import { EngagementChart } from "@/components/analytics/engagement-chart"
-import { GrowthIndicator } from "@/components/analytics/growth-indicator"
-import { DateRangePicker } from "@/components/analytics/date-range-picker"
-import { PostCard } from "@/components/content/post-card"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarDays, TrendingUp, Users, MessageSquare, Eye, Heart } from "lucide-react"
+import { useState, useCallback } from 'react'
+import { CalendarView, CalendarEvent, ViewMode } from '@/components/dashboard/calendar'
+import { CalendarViewSelector } from '@/components/dashboard/calendar/CalendarViewSelector'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
+import { format, addDays, startOfDay, addHours, startOfWeek, addWeeks, startOfMonth, addMonths } from 'date-fns'
 
-// Sample data
-const sampleMetrics = [
+// Sample events for demonstration
+const sampleEvents: CalendarEvent[] = [
   {
-    title: "Total Followers",
-    value: "24,532",
-    change: { value: 12.5, label: "vs last month" },
-    trend: "up" as const,
-    icon: <Users className="h-4 w-4" />,
+    id: '1',
+    title: 'Morning Threads Post',
+    description: 'Share tips about content creation best practices',
+    startTime: addHours(startOfDay(new Date()), 9),
+    endTime: addHours(startOfDay(new Date()), 10),
+    type: 'scheduled_post',
   },
   {
-    title: "Total Posts",
-    value: "1,234",
-    change: { value: 8.2, label: "vs last month" },
-    trend: "up" as const,
-    icon: <MessageSquare className="h-4 w-4" />,
+    id: '2',
+    title: 'Analytics Review',
+    description: 'Review weekly performance metrics',
+    startTime: addHours(startOfDay(new Date()), 14),
+    endTime: addHours(startOfDay(new Date()), 15),
+    type: 'analytics_review',
   },
   {
-    title: "Total Engagement",
-    value: "89.2K",
-    change: { value: -2.4, label: "vs last month" },
-    trend: "down" as const,
-    icon: <Heart className="h-4 w-4" />,
+    id: '3',
+    title: 'Content Planning Session',
+    description: 'Plan next week\'s content calendar',
+    startTime: addHours(startOfDay(new Date()), 16),
+    endTime: addHours(startOfDay(new Date()), 17.5),
+    type: 'content_planning',
   },
   {
-    title: "Total Views",
-    value: "2.1M",
-    change: { value: 15.7, label: "vs last month" },
-    trend: "up" as const,
-    icon: <Eye className="h-4 w-4" />,
-  },
-]
-
-const sampleChartData = [
-  { date: "Jan 1", likes: 4000, comments: 2400, shares: 2400, views: 24000 },
-  { date: "Jan 2", likes: 3000, comments: 1398, shares: 2210, views: 22100 },
-  { date: "Jan 3", likes: 2000, comments: 9800, shares: 2290, views: 22900 },
-  { date: "Jan 4", likes: 2780, comments: 3908, shares: 2000, views: 20000 },
-  { date: "Jan 5", likes: 1890, comments: 4800, shares: 2181, views: 21810 },
-  { date: "Jan 6", likes: 2390, comments: 3800, shares: 2500, views: 25000 },
-  { date: "Jan 7", likes: 3490, comments: 4300, shares: 2100, views: 21000 },
-]
-
-const samplePosts = [
-  {
-    id: "1",
-    content: "Just shipped a major update to our analytics dashboard! 🚀\n\nNew features:\n- Real-time engagement tracking\n- Advanced filtering options\n- Export capabilities\n\nCheck it out and let me know what you think!",
-    author: {
-      name: "John Doe",
-      username: "johndoe",
-    },
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-    metrics: {
-      likes: 234,
-      comments: 45,
-      reposts: 12,
-      views: 5678,
-    },
-  },
-  {
-    id: "2",
-    content: "Quick tip: The best time to post on Threads is usually between 9-11 AM on weekdays. We've seen 3x better engagement during these hours! ⏰",
-    author: {
-      name: "John Doe",
-      username: "johndoe",
-    },
-    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
-    metrics: {
-      likes: 567,
-      comments: 89,
-      reposts: 34,
-      views: 12345,
-    },
+    id: '4',
+    title: 'Team Standup',
+    description: 'Daily sync with the content team',
+    startTime: addHours(startOfDay(new Date()), 10),
+    endTime: addHours(startOfDay(new Date()), 10.5),
+    type: 'meeting',
   },
 ]
 
 export default function DashboardPage() {
+  const [currentDate, setCurrentDate] = useState(new Date())
+  const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents)
+  const [viewMode, setViewMode] = useState<ViewMode>('week')
+
+  const handleEventClick = useCallback((event: CalendarEvent) => {
+    console.log('Event clicked:', event)
+  }, [])
+
+  const handleSlotClick = useCallback((date: Date, hour: number) => {
+    console.log('Slot clicked:', date, hour)
+  }, [])
+
+  const handleEventMove = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
+    setEvents(prev => prev.map(event =>
+      event.id === eventId
+        ? { ...event, startTime: newStartTime, endTime: newEndTime }
+        : event
+    ))
+  }, [])
+
+  const handleEventResize = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
+    setEvents(prev => prev.map(event =>
+      event.id === eventId
+        ? { ...event, startTime: newStartTime, endTime: newEndTime }
+        : event
+    ))
+  }, [])
+
+  const handleCreateEvent = useCallback((eventData: Partial<CalendarEvent>) => {
+    const newEvent: CalendarEvent = {
+      id: Date.now().toString(),
+      title: eventData.title || 'New Event',
+      description: eventData.description,
+      startTime: eventData.startTime || new Date(),
+      endTime: eventData.endTime || addHours(new Date(), 1),
+      type: eventData.type || 'scheduled_post',
+    }
+    setEvents(prev => [...prev, newEvent])
+  }, [])
+
+  const handleDeleteEvent = useCallback((eventId: string) => {
+    setEvents(prev => prev.filter(event => event.id !== eventId))
+  }, [])
+
+  const navigateDate = (direction: 'prev' | 'next' | 'today') => {
+    if (direction === 'prev') {
+      if (viewMode === 'day') {
+        setCurrentDate(prev => addDays(prev, -1))
+      } else if (viewMode === 'week') {
+        setCurrentDate(prev => addWeeks(prev, -1))
+      } else {
+        setCurrentDate(prev => addMonths(prev, -1))
+      }
+    } else if (direction === 'next') {
+      if (viewMode === 'day') {
+        setCurrentDate(prev => addDays(prev, 1))
+      } else if (viewMode === 'week') {
+        setCurrentDate(prev => addWeeks(prev, 1))
+      } else {
+        setCurrentDate(prev => addMonths(prev, 1))
+      }
+    } else {
+      setCurrentDate(new Date())
+    }
+  }
+
+  const getDateDisplay = () => {
+    if (viewMode === 'day') {
+      return format(currentDate, 'EEEE, MMMM d')
+    } else if (viewMode === 'week') {
+      const weekStart = startOfWeek(currentDate)
+      const weekEnd = addDays(weekStart, 6)
+      return `${format(weekStart, 'MMM d')} - ${format(weekEnd, 'MMM d, yyyy')}`
+    } else {
+      return format(currentDate, 'MMMM yyyy')
+    }
+  }
+
   return (
-    <div className="space-y-6">
+    <div className="h-full flex flex-col space-y-4">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Welcome back! Here's what's happening with your Threads account.
-        </p>
-      </div>
-
-      {/* Date Range Filter */}
       <div className="flex items-center justify-between">
-        <DateRangePicker className="w-64" />
-        <Badge variant="secondary" className="flex items-center gap-2">
-          <CalendarDays className="h-3 w-3" />
-          Last 7 days
-        </Badge>
-      </div>
+        <div>
+          <h1 className="text-3xl font-bold">Schedule</h1>
+          <p className="text-muted-foreground">
+            Manage your Threads content schedule and activities
+          </p>
+        </div>
 
-      {/* Metrics Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {sampleMetrics.map((metric) => (
-          <MetricCard key={metric.title} {...metric} />
-        ))}
-      </div>
-
-      {/* Growth Indicators */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <GrowthIndicator
-          label="Monthly Growth"
-          current={24532}
-          target={30000}
-          previous={21800}
-          showPercentage={true}
-        />
-        <GrowthIndicator
-          label="Engagement Rate"
-          current={3.6}
-          target={5.0}
-          previous={3.2}
-          unit="%"
-          showPercentage={true}
-        />
-        <GrowthIndicator
-          label="Posts Published"
-          current={89}
-          target={100}
-          previous={76}
-          showPercentage={true}
-        />
-      </div>
-
-      {/* Main Content Tabs */}
-      <Tabs defaultValue="analytics" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="content">Recent Content</TabsTrigger>
-          <TabsTrigger value="insights">Insights</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <EngagementChart
-            data={sampleChartData}
-            timeRange="last 7 days"
-          />
-        </TabsContent>
-
-        <TabsContent value="content" className="space-y-4">
-          <div className="grid gap-4">
-            {samplePosts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
+        <div className="flex items-center gap-4">
+          {/* Date Navigation */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigateDate('prev')}
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <CalendarViewSelector
+              currentView={viewMode}
+              onViewChange={setViewMode}
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigateDate('next')}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
           </div>
-        </TabsContent>
 
-        <TabsContent value="insights" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5" />
-                  Top Performing Content
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Product launch announcement</span>
-                    <Badge variant="default">12.5K engagement</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Behind-the-scenes video</span>
-                    <Badge variant="secondary">8.3K engagement</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">User testimonial thread</span>
-                    <Badge variant="outline">6.7K engagement</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          {/* Current Date Badge */}
+          <Badge variant="secondary" className="flex items-center gap-2">
+            <CalendarDays className="h-3 w-3" />
+            {getDateDisplay()}
+          </Badge>
+        </div>
+      </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  Audience Insights
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Peak activity time</span>
-                    <Badge variant="default">10:00 AM</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Most active day</span>
-                    <Badge variant="secondary">Tuesday</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Avg. engagement rate</span>
-                    <Badge variant="outline">3.6%</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
+      {/* Calendar View */}
+      <div className="flex-1 min-h-0">
+        <CalendarView
+          currentDate={currentDate}
+          events={events}
+          viewMode={viewMode}
+          onEventClick={handleEventClick}
+          onSlotClick={handleSlotClick}
+          onEventMove={handleEventMove}
+          onEventResize={handleEventResize}
+          onCreateEvent={handleCreateEvent}
+          onDeleteEvent={handleDeleteEvent}
+        />
+      </div>
     </div>
   )
 }
