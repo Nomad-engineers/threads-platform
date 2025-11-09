@@ -70,14 +70,14 @@ export function PostCard({
   const getStatusBadge = () => {
     if (!post.status) return null
 
-    const variants = {
-      published: "default",
-      scheduled: "secondary",
-      draft: "outline",
+    const badgeClasses = {
+      published: "post-badge-published",
+      scheduled: "post-badge-scheduled",
+      draft: "post-badge-draft",
     } as const
 
     return (
-      <Badge variant={variants[post.status]} className="text-xs">
+      <div className={cn("post-badge", badgeClasses[post.status])}>
         {post.status === "scheduled" && post.scheduledFor && (
           <>
             <Clock className="w-3 h-3 mr-1" />
@@ -86,13 +86,13 @@ export function PostCard({
         )}
         {post.status === "published" && "Published"}
         {post.status === "draft" && "Draft"}
-      </Badge>
+      </div>
     )
   }
 
   return (
-    <Card className={cn("w-full", className)}>
-      <CardHeader className="pb-3">
+    <Card className={cn("post-card w-full", className)}>
+      <CardHeader className="post-header">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
             <Avatar className="h-10 w-10">
@@ -124,7 +124,7 @@ export function PostCard({
             {showActions && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 post-button">
                     <MoreHorizontal className="h-4 w-4" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -144,7 +144,7 @@ export function PostCard({
       </CardHeader>
 
       <CardContent className="pb-3">
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">
+        <p className="post-content text-sm whitespace-pre-wrap">
           {post.content}
         </p>
 
@@ -176,20 +176,20 @@ export function PostCard({
         )}
       </CardContent>
 
-      <CardFooter>
+      <CardFooter className="post-footer">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="h-8 px-2">
+            <Button variant="ghost" size="sm" className="h-8 px-2 post-button">
               <Heart className="h-4 w-4 mr-1" />
-              <span className="text-xs">{formatMetric(post.metrics.likes)}</span>
+              <span className={cn("text-xs", "post-metric")}>{formatMetric(post.metrics.likes)}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="h-8 px-2">
+            <Button variant="ghost" size="sm" className="h-8 px-2 post-button">
               <MessageCircle className="h-4 w-4 mr-1" />
-              <span className="text-xs">{formatMetric(post.metrics.comments)}</span>
+              <span className={cn("text-xs", "post-metric")}>{formatMetric(post.metrics.comments)}</span>
             </Button>
-            <Button variant="ghost" size="sm" className="h-8 px-2">
+            <Button variant="ghost" size="sm" className="h-8 px-2 post-button">
               <Repeat2 className="h-4 w-4 mr-1" />
-              <span className="text-xs">{formatMetric(post.metrics.reposts)}</span>
+              <span className={cn("text-xs", "post-metric")}>{formatMetric(post.metrics.reposts)}</span>
             </Button>
           </div>
 
@@ -199,7 +199,7 @@ export function PostCard({
               {formatMetric(post.metrics.views)}
             </div>
             {post.metrics.views > 1000 && (
-              <div className="flex items-center text-xs text-success">
+              <div className={cn("flex items-center text-xs", "post-performance", "post-performance-good")}>
                 <TrendingUp className="h-3 w-3 mr-1" />
                 Performing well
               </div>

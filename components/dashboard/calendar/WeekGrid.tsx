@@ -10,10 +10,11 @@ import {
   useSensors,
   DragStartEvent,
   DragEndEvent,
+  useDroppable,
 } from '@dnd-kit/core'
 import { format, startOfWeek, addDays, isSameDay, setHours, setMinutes } from 'date-fns'
 import { CalendarEvent, WeekGridProps } from './types'
-import { EventCard } from './EventCard'
+import { ClientOnlyEventCard } from './ClientOnlyEventCard'
 import { cn } from '@/lib/utils'
 
 export function WeekGrid({
@@ -25,6 +26,12 @@ export function WeekGrid({
 }: WeekGridProps) {
   const [draggedEvent, setDraggedEvent] = useState<CalendarEvent | null>(null)
   const [dragStartTime, setDragStartTime] = useState<Date | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure DND only initializes on client side
+  React.useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -103,13 +110,47 @@ export function WeekGrid({
     onSlotClick?.(day, hour)
   }
 
-  return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
+  const renderEventCard = (event: CalendarEvent) => {
+    return (
+      <ClientOnlyEventCard
+        event={event}
+        onClick={() => onEventClick?.(event)}
+        onDragStart={() => {}}
+        onDragEnd={() => {}}
+      />
+    )
+  }
+
+  // Droppable time slot component
+  const DroppableTimeSlot = ({ day, hour, children }: { day: Date; hour: number; children: React.ReactNode }) => {
+    const { isOver, setNodeRef } = useDroppable({
+      id: `slot-${format(day, 'yyyy-MM-dd')}-${hour}`,
+      data: {
+        date: day,
+        hour,
+        minutes: 0
+      }
+    })
+
+    return (
+      <div
+        ref={setNodeRef}
+        className={cn(
+          "relative border-r last:border-r-0 min-h-[60px] cursor-pointer transition-colors",
+          isSameDay(day, new Date()) && "bg-primary/5",
+          isOver ? "bg-accent/20" : "hover:bg-muted/20"
+        )}
+        onClick={() => handleSlotClick(day, hour)}
+        data-day={format(day, 'yyyy-MM-dd')}
+        data-hour={hour}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  const renderContent = () => {
+    return (
       <div className="h-full overflow-auto">
         <div className="min-w-[800px]">
           {/* Week Header */}
@@ -152,16 +193,7 @@ export function WeekGrid({
                   const hourEvents = getEventsForDayAndHour(day, hour)
 
                   return (
-                    <div
-                      key={dayIndex}
-                      className={cn(
-                        "relative border-r last:border-r-0 min-h-[60px] cursor-pointer hover:bg-muted/20 transition-colors",
-                        isSameDay(day, new Date()) && "bg-primary/5"
-                      )}
-                      onClick={() => handleSlotClick(day, hour)}
-                      data-day={format(day, 'yyyy-MM-dd')}
-                      data-hour={hour}
-                    >
+                    <DroppableTimeSlot key={dayIndex} day={day} hour={hour}>
                       {/* Events */}
                       {hourEvents.map((event) => {
                         const position = getEventPosition(event, day, hour)
@@ -178,16 +210,11 @@ export function WeekGrid({
                               onEventClick?.(event)
                             }}
                           >
-                            <EventCard
-                              event={event}
-                              onClick={() => onEventClick?.(event)}
-                              onDragStart={() => {}}
-                              onDragEnd={() => {}}
-                            />
+                            {renderEventCard(event)}
                           </div>
                         )
                       })}
-                    </div>
+                    </DroppableTimeSlot>
                   )
                 })}
               </div>
@@ -195,11 +222,27 @@ export function WeekGrid({
           </div>
         </div>
       </div>
+    )
+  }
+
+  // Only render DND context on client side
+  if (!isClient) {
+    return renderContent()
+  }
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      {renderContent()}
 
       <DragOverlay>
         {draggedEvent ? (
           <div className="bg-white border rounded-lg shadow-lg p-2 opacity-90">
-            <EventCard
+            <ClientOnlyEventCard
               event={draggedEvent}
               isDragging={true}
             />

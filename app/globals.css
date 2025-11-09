@@ -482,3 +482,79 @@
     background-color: white;
   }
 }
+
+/* Unified Post Color Scheme */
+@layer utilities {
+  /* Unified post card styling */
+  .post-card {
+    @apply bg-card text-card-foreground rounded-2xl border border-border/50;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .post-card:hover {
+    @apply shadow-md border-border/70;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  /* Post content styling */
+  .post-content {
+    @apply text-foreground leading-relaxed;
+  }
+
+  /* Post metrics styling */
+  .post-metric {
+    @apply text-muted-foreground hover:text-foreground transition-colors;
+  }
+
+  /* Post status badges */
+  .post-badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .post-badge-published {
+    @apply bg-primary/10 text-primary border border-primary/20;
+  }
+
+  .post-badge-scheduled {
+    @apply bg-secondary/50 text-secondary-foreground border border-secondary/50;
+  }
+
+  .post-badge-draft {
+    @apply bg-muted/50 text-muted-foreground border border-muted/50;
+  }
+
+  /* Performance indicator - softer, more harmonious */
+  .post-performance {
+    @apply text-muted-foreground text-xs font-medium;
+  }
+
+  .post-performance-good {
+    @apply text-emerald-600 dark:text-emerald-400;
+  }
+
+  /* Post header styling */
+  .post-header {
+    @apply border-b border-border/30 pb-3;
+  }
+
+  /* Post footer styling */
+  .post-footer {
+    @apply border-t border-border/30 pt-3;
+  }
+
+  /* Post interaction buttons */
+  .post-button {
+    @apply hover:bg-accent/50 text-muted-foreground hover:text-foreground transition-all duration-200;
+  }
+
+  /* Dark mode specific adjustments */
+  .dark .post-card {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  }
+
+  .dark .post-card:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  }
+}

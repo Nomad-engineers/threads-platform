@@ -1,17 +1,45 @@
 "use client"
 
-import React from 'react'
-import { format, startOfMonth, endOfMonth, startOfWeek, addDays, eachDayOfInterval, isSameMonth, isSameDay, isToday } from 'date-fns'
+import React, { useState, useCallback } from 'react'
+import { format, startOfMonth, endOfMonth, startOfWeek, addDays, eachDayOfInterval, isSameMonth, isSameDay, isToday, setHours, setMinutes } from 'date-fns'
+import {
+  DndContext,
+  DragOverlay,
+  closestCenter,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragStartEvent,
+  DragEndEvent,
+  useDroppable,
+} from '@dnd-kit/core'
 import { CalendarEvent, MonthGridProps } from './types'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { ClientOnlyEventCard } from './ClientOnlyEventCard'
 
 export function MonthGrid({
   currentDate,
   events = [],
   onEventClick,
   onSlotClick,
+  onEventMove,
 }: MonthGridProps) {
+  const [draggedEvent, setDraggedEvent] = useState<CalendarEvent | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure DND only initializes on client side
+  React.useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  )
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(monthStart)
   const calendarStart = startOfWeek(monthStart)
@@ -35,79 +63,148 @@ export function MonthGrid({
     onSlotClick?.(day)
   }
 
-  return (
-    <div className="h-full overflow-auto">
-      {/* Week Day Headers */}
-      <div className="grid grid-cols-7 border-b bg-muted/50 sticky top-0 z-10">
-        {weekDays.map((day, index) => (
-          <div
-            key={index}
-            className="p-3 text-center text-sm font-medium text-muted-foreground border-r last:border-r-0"
-          >
-            {day}
-          </div>
-        ))}
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    const { active } = event
+    const eventData = active.data.current as { event: CalendarEvent }
+    if (eventData?.event) {
+      setDraggedEvent(eventData.event)
+    }
+  }, [])
+
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
+    const { active, over } = event
+
+    if (!over || !draggedEvent) {
+      setDraggedEvent(null)
+      return
+    }
+
+    const dropData = over.data.current as { date: Date }
+
+    if (dropData?.date) {
+      // Default to 9 AM for month view drops
+      const baseDate = setHours(setMinutes(dropData.date, 0), 9)
+      const duration = draggedEvent.endTime.getTime() - draggedEvent.startTime.getTime()
+      const newStartTime = new Date(baseDate)
+      const newEndTime = new Date(baseDate.getTime() + duration)
+
+      onEventMove?.(draggedEvent.id, newStartTime, newEndTime)
+    }
+
+    setDraggedEvent(null)
+  }, [draggedEvent, onEventMove])
+
+  // Droppable day component
+  const DroppableDay = ({ day, children }: { day: Date; children: React.ReactNode }) => {
+    const { isOver, setNodeRef } = useDroppable({
+      id: `day-${format(day, 'yyyy-MM-dd')}`,
+      data: {
+        date: day
+      }
+    })
+
+    const isCurrentMonth = isSameMonth(day, currentDate)
+    const isCurrentDay = isToday(day)
+
+    return (
+      <div
+        ref={setNodeRef}
+        className={cn(
+          "min-h-[100px] border-r border-b p-2 cursor-pointer transition-colors",
+          "last:border-r-0",
+          !isCurrentMonth && "bg-muted/10 text-muted-foreground",
+          isCurrentDay && "bg-primary/5",
+          isOver ? "bg-accent/20" : "hover:bg-muted/20"
+        )}
+        onClick={() => handleDayClick(day)}
+      >
+        {children}
       </div>
+    )
+  }
 
-      {/* Calendar Grid */}
-      <div className="grid grid-cols-7">
-        {calendarDays.map((day, index) => {
-          const dayEvents = getEventsForDay(day)
-          const isCurrentMonth = isSameMonth(day, currentDate)
-          const isCurrentDay = isToday(day)
-
-          return (
+  const renderContent = () => {
+    return (
+      <div className="h-full overflow-auto">
+        {/* Week Day Headers */}
+        <div className="grid grid-cols-7 border-b bg-muted/50 sticky top-0 z-10">
+          {weekDays.map((day, index) => (
             <div
               key={index}
-              className={cn(
-                "min-h-[100px] border-r border-b p-2 cursor-pointer transition-colors",
-                "hover:bg-muted/20",
-                !isCurrentMonth && "bg-muted/10 text-muted-foreground",
-                isCurrentDay && "bg-primary/5",
-                "last:border-r-0"
-              )}
-              onClick={() => handleDayClick(day)}
+              className="p-3 text-center text-sm font-medium text-muted-foreground border-r last:border-r-0"
             >
-              {/* Day Number */}
-              <div className={cn(
-                "text-sm font-medium mb-1",
-                isCurrentDay && "text-primary font-bold"
-              )}>
-                {format(day, 'd')}
-              </div>
-
-              {/* Events */}
-              <div className="space-y-1">
-                {dayEvents.slice(0, 3).map((event) => (
-                  <div
-                    key={event.id}
-                    className={cn(
-                      "text-xs p-1 rounded truncate cursor-pointer",
-                      "hover:opacity-80 transition-opacity",
-                      getEventColorClass(event.type)
-                    )}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onEventClick?.(event)
-                    }}
-                    title={event.title}
-                  >
-                    {format(event.startTime, 'h:mm a')} - {event.title}
-                  </div>
-                ))}
-
-                {/* Show more indicator */}
-                {dayEvents.length > 3 && (
-                  <div className="text-xs text-muted-foreground">
-                    +{dayEvents.length - 3} more
-                  </div>
-                )}
-              </div>
+              {day}
             </div>
-          )
-        })}
+          ))}
+        </div>
+
+        {/* Calendar Grid */}
+        <div className="grid grid-cols-7">
+          {calendarDays.map((day, index) => {
+            const dayEvents = getEventsForDay(day)
+
+            return (
+              <DroppableDay key={index} day={day}>
+                {/* Day Number */}
+                <div className={cn(
+                  "text-sm font-medium mb-1",
+                  isToday(day) && "text-primary font-bold"
+                )}>
+                  {format(day, 'd')}
+                </div>
+
+                {/* Events */}
+                <div className="space-y-1">
+                  {dayEvents.slice(0, 3).map((event) => (
+                    <ClientOnlyEventCard
+                      key={event.id}
+                      event={event}
+                      onClick={() => onEventClick?.(event)}
+                      onDragStart={() => {}}
+                      onDragEnd={() => {}}
+                    />
+                  ))}
+
+                  {/* Show more indicator */}
+                  {dayEvents.length > 3 && (
+                    <div className="text-xs text-muted-foreground">
+                      +{dayEvents.length - 3} more
+                    </div>
+                  )}
+                </div>
+              </DroppableDay>
+            )
+          })}
+        </div>
       </div>
-    </div>
+    )
+  }
+
+  // Only render DND context on client side
+  if (!isClient) {
+    return renderContent()
+  }
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      {renderContent()}
+
+      <DragOverlay>
+        {draggedEvent ? (
+          <div className="bg-white border rounded-lg shadow-lg p-2 opacity-90">
+            <ClientOnlyEventCard
+              event={draggedEvent}
+              isDragging={true}
+            />
+          </div>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
   )
 }
 

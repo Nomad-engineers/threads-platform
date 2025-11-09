@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useCallback } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { format, addHours, startOfDay, isWithinInterval, isSameDay, differenceInMinutes } from 'date-fns'
 import { DndContext, DragStartEvent, DragOverEvent, DragEndEvent, useSensor, useSensors, PointerSensor, DragOverlay } from '@dnd-kit/core'
 import { CalendarEvent, TimeGridProps } from './types'
 import { HourColumn } from './HourColumn'
-import { EventCard } from './EventCard'
+import { ClientOnlyEventCard } from './ClientOnlyEventCard'
 
 export function TimeGrid({
   currentDate,
@@ -15,8 +15,14 @@ export function TimeGrid({
   onEventMove,
   onEventResize,
 }: TimeGridProps) {
-  const [activeId, setActiveId] = React.useState<string | null>(null)
-  const [draggedEvent, setDraggedEvent] = React.useState<CalendarEvent | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const [draggedEvent, setDraggedEvent] = useState<CalendarEvent | null>(null)
+  const [isClient, setIsClient] = useState(false)
+
+  // Ensure DND only initializes on client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -59,30 +65,25 @@ export function TimeGrid({
     }
   }, [draggedEvent, currentDate, onEventMove])
 
-  return (
-    <div className="h-full flex">
-      {/* Time labels column */}
-      <div className="w-20 flex-shrink-0 border-r bg-muted/30">
-        {hours.map((hour) => (
-          <div
-            key={hour}
-            className="h-16 border-b flex items-center justify-center px-2"
-          >
-            <span className="text-xs text-muted-foreground font-medium">
-              {format(addHours(startOfDay(new Date()), hour), 'ha')}
-            </span>
-          </div>
-        ))}
-      </div>
+  const renderContent = () => {
+    return (
+      <div className="h-full flex">
+        {/* Time labels column */}
+        <div className="w-20 flex-shrink-0 border-r bg-muted/30">
+          {hours.map((hour) => (
+            <div
+              key={hour}
+              className="h-16 border-b flex items-center justify-center px-2"
+            >
+              <span className="text-xs text-muted-foreground font-medium">
+                {format(addHours(startOfDay(new Date()), hour), 'ha')}
+              </span>
+            </div>
+          ))}
+        </div>
 
-      {/* Calendar grid */}
-      <div className="flex-1 relative">
-        <DndContext
-          sensors={sensors}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-        >
+        {/* Calendar grid */}
+        <div className="flex-1 relative">
           {/* Hour columns */}
           <div className="relative">
             {hours.map((hour) => (
@@ -96,17 +97,36 @@ export function TimeGrid({
               />
             ))}
           </div>
-
-          {/* Drag overlay */}
-          <DragOverlay>
-            {activeId && draggedEvent ? (
-              <div className="bg-white border shadow-lg rounded p-2 opacity-90">
-                <div className="text-sm font-medium">{draggedEvent.title}</div>
-              </div>
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+        </div>
       </div>
-    </div>
+    )
+  }
+
+  // Only render DND context on client side
+  if (!isClient) {
+    return renderContent()
+  }
+
+  return (
+    <DndContext
+      sensors={sensors}
+      onDragStart={handleDragStart}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
+      {renderContent()}
+
+      {/* Drag overlay */}
+      <DragOverlay>
+        {activeId && draggedEvent ? (
+          <div className="bg-white border shadow-lg rounded p-2 opacity-90">
+            <ClientOnlyEventCard
+              event={draggedEvent}
+              isDragging={true}
+            />
+          </div>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
   )
 }

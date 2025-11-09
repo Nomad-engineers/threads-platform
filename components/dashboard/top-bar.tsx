@@ -3,6 +3,7 @@
 import { Bell, Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -44,6 +45,9 @@ export function TopBar({ onMenuClick }: TopBarProps) {
 
       {/* Right side actions */}
       <div className="flex items-center gap-3">
+        {/* Theme Toggle */}
+        <ThemeToggle />
+
         {/* Notifications */}
         <Button variant="outline" size="icon" className="relative">
           <Bell className="h-4 w-4" />

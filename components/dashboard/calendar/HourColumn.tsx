@@ -4,7 +4,7 @@ import React from 'react'
 import { format, addHours, startOfDay, isWithinInterval, isSameDay, differenceInMinutes } from 'date-fns'
 import { useDroppable } from '@dnd-kit/core'
 import { CalendarEvent, HourColumnProps } from './types'
-import { EventCard } from './EventCard'
+import { ClientOnlyEventCard } from './ClientOnlyEventCard'
 import { cn } from '@/lib/utils'
 
 export function HourColumn({
@@ -83,7 +83,7 @@ export function HourColumn({
                 minHeight: '20px',
               }}
             >
-              <EventCard
+              <ClientOnlyEventCard
                 event={event}
                 onClick={() => onEventClick?.(event)}
               />

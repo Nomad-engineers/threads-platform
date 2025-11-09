@@ -156,6 +156,7 @@ export function CalendarView({
                 setIsModalOpen(true)
                 onSlotClick?.(date, 9)
               }}
+              onEventMove={handleEventMove}
             />
           )}
         </Card>

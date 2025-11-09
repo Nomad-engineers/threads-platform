@@ -72,4 +72,5 @@ export interface MonthGridProps {
   events: CalendarEvent[]
   onEventClick?: (event: CalendarEvent) => void
   onSlotClick?: (date: Date) => void
+  onEventMove?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
 }
