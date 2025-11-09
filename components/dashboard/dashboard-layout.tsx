@@ -78,7 +78,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       </div>
 
       {/* Main content */}
-      <div className="lg:pl-64">
+      <div className="w-full">
         {/* Tab Switch Bar */}
         <TabSwitchBar
           activeTab={activeSidebar}
@@ -90,7 +90,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <TopBar onMenuClick={() => setSidebarOpen(true)} />
 
         {/* Page content */}
-        <main className="min-h-[calc(100vh-8rem)] p-6">
+        <main className="min-h-[calc(100vh-8rem)] w-full">
           {children}
         </main>
       </div>
