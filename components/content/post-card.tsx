@@ -199,7 +199,7 @@ export function PostCard({
               {formatMetric(post.metrics.views)}
             </div>
             {post.metrics.views > 1000 && (
-              <div className="flex items-center text-xs text-green-600">
+              <div className="flex items-center text-xs text-success">
                 <TrendingUp className="h-3 w-3 mr-1" />
                 Performing well
               </div>

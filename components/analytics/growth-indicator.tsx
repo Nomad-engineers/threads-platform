@@ -40,9 +40,9 @@ export function GrowthIndicator({
           {hasPrevious && (
             <div className="flex items-center space-x-1">
               {isPositiveGrowth ? (
-                <TrendingUp className="h-3 w-3 text-green-600" />
+                <TrendingUp className="h-3 w-3 text-success" />
               ) : (
-                <TrendingDown className="h-3 w-3 text-red-600" />
+                <TrendingDown className="h-3 w-3 text-destructive" />
               )}
               <Badge
                 variant={isPositiveGrowth ? "default" : "destructive"}

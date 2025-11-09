@@ -25,49 +25,49 @@ const filterConfig = [
     type: "all" as ActivityType,
     label: "All Activities",
     icon: Activity,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
   {
     type: "follow" as ActivityType,
     label: "Followers",
     icon: UserPlus,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
   {
     type: "reply" as ActivityType,
     label: "Replies",
     icon: MessageSquare,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
   {
     type: "mention" as ActivityType,
     label: "Mentions",
     icon: Bell,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
   {
     type: "quote" as ActivityType,
     label: "Quotes",
     icon: Quote,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
   {
     type: "repost" as ActivityType,
     label: "Reposts",
     icon: Share2,
-    color: "text-gray-600",
-    bgColor: "bg-gray-50 hover:bg-gray-100 border border-gray-300",
-    activeColor: "bg-gray-800 text-white hover:bg-gray-700 border border-gray-800",
+    color: "text-muted-foreground",
+    bgColor: "bg-muted hover:bg-accent border border-border",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
   },
 ]
 
@@ -111,8 +111,8 @@ export function ActivityFilters({
               className={cn(
                 "ml-1 px-2 py-0.5 text-xs font-semibold",
                 isActive
-                  ? "bg-white/20 text-white border-white/30"
-                  : "bg-gray-100 text-gray-700 border-gray-300"
+                  ? "bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
+                  : "bg-muted text-muted-foreground border-border"
               )}
             >
               {count}
@@ -120,7 +120,7 @@ export function ActivityFilters({
 
             {/* Unread indicator */}
             {!isActive && filter.type !== "all" && stats.unreadCount > 0 && (
-              <div className="absolute -top-1 -right-1 h-3 w-3 bg-gray-700 rounded-full border-2 border-white" />
+              <div className="absolute -top-1 -right-1 h-3 w-3 bg-destructive rounded-full border-2 border-background" />
             )}
           </Button>
         )

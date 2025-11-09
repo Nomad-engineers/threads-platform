@@ -43,16 +43,16 @@ export function EngagementChart({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-background border rounded-lg p-3 shadow-lg">
-          <p className="text-sm font-medium mb-2">{label}</p>
+        <div className="bg-popover border border-border rounded-lg p-3 shadow-lg">
+          <p className="text-sm font-medium mb-2 text-popover-foreground">{label}</p>
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <div
-                className="w-3 h-3 rounded-full"
+                className="w-3 h-3 rounded-full border border-border"
                 style={{ backgroundColor: entry.color }}
               />
               <span className="text-muted-foreground">{entry.name}:</span>
-              <span className="font-medium">{formatValue(entry.value)}</span>
+              <span className="font-medium text-foreground">{formatValue(entry.value)}</span>
             </div>
           ))}
         </div>
@@ -72,19 +72,23 @@ export function EngagementChart({
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorLikes" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+              <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorComments" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+              <stop offset="5%" stopColor="hsl(var(--chart-2))" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="hsl(var(--chart-2))" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorShares" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-              <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              <stop offset="5%" stopColor="hsl(var(--chart-3))" stopOpacity={0.3} />
+              <stop offset="95%" stopColor="hsl(var(--chart-3))" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            className="stroke-border"
+            strokeOpacity={0.3}
+          />
           <XAxis
             dataKey="date"
             stroke="hsl(var(--muted-foreground))"
@@ -104,7 +108,7 @@ export function EngagementChart({
             type="monotone"
             dataKey="likes"
             stackId="1"
-            stroke="#0ea5e9"
+            stroke="hsl(var(--chart-1))"
             fillOpacity={1}
             fill="url(#colorLikes)"
           />
@@ -112,7 +116,7 @@ export function EngagementChart({
             type="monotone"
             dataKey="comments"
             stackId="1"
-            stroke="#8b5cf6"
+            stroke="hsl(var(--chart-2))"
             fillOpacity={1}
             fill="url(#colorComments)"
           />
@@ -120,7 +124,7 @@ export function EngagementChart({
             type="monotone"
             dataKey="shares"
             stackId="1"
-            stroke="#10b981"
+            stroke="hsl(var(--chart-3))"
             fillOpacity={1}
             fill="url(#colorShares)"
           />

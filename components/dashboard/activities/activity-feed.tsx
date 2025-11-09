@@ -120,11 +120,11 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl font-light text-gray-900">Activity Feed</h2>
-          <p className="text-gray-700">
+          <h2 className="text-2xl font-light text-foreground">Activity Feed</h2>
+          <p className="text-muted-foreground">
             {filteredActivities.length} activities
             {unreadCount > 0 && (
-              <span className="text-gray-900 font-medium"> • {unreadCount} unread</span>
+              <span className="text-foreground font-medium"> • {unreadCount} unread</span>
             )}
           </p>
         </div>
@@ -135,7 +135,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
             size="sm"
             onClick={handleRefresh}
             disabled={isLoading}
-            className="border-gray-400 text-gray-800 hover:bg-gray-50"
+            className="border-border text-foreground hover:bg-accent"
           >
             <RefreshCw className={cn("h-4 w-4 mr-2", isLoading && "animate-spin")} />
             Refresh
@@ -145,7 +145,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
             size="sm"
             onClick={handleMarkAllAsRead}
             disabled={unreadCount === 0}
-            className="border-gray-400 text-gray-800 hover:bg-gray-50"
+            className="border-border text-foreground hover:bg-accent"
           >
             <Check className="h-4 w-4 mr-2" />
             Mark All Read
@@ -154,17 +154,17 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
       </div>
 
       {/* Filters and Search */}
-      <Card className="mb-6 border-gray-200 bg-white shadow-sm">
-        <CardHeader className="border-b border-gray-100">
-          <CardTitle className="flex items-center gap-2 text-gray-900 font-light">
-            <FilterIcon className="h-5 w-5 text-gray-600" />
+      <Card className="mb-6 border-border bg-card shadow-sm">
+        <CardHeader className="border-b border-border">
+          <CardTitle className="flex items-center gap-2 text-foreground font-light">
+            <FilterIcon className="h-5 w-5 text-muted-foreground" />
             Filters & Search
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 pt-6">
           {/* Activity Type Filters */}
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Activity Type</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Activity Type</h3>
             <ActivityFilters
               activeFilter={activeFilter}
               onFilterChange={setActiveFilter}
@@ -172,18 +172,18 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
             />
           </div>
 
-          <Separator className="bg-gray-100" />
+          <Separator />
 
           {/* Search */}
           <div>
-            <h3 className="text-sm font-medium text-gray-700 mb-3">Search</h3>
+            <h3 className="text-sm font-medium text-muted-foreground mb-3">Search</h3>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search by user, content, or action..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 border-gray-300 focus:border-gray-400"
+                className="pl-10 border-input focus:border-ring"
               />
             </div>
           </div>
@@ -191,17 +191,17 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
           {/* Active Filters Summary */}
           {(activeFilter !== "all" || searchTerm) && (
             <>
-              <Separator className="bg-gray-100" />
+              <Separator />
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-700">Active filters:</span>
+                  <span className="text-sm text-muted-foreground">Active filters:</span>
                   {activeFilter !== "all" && (
-                    <Badge variant="outline" className="capitalize border-gray-400 text-gray-800">
+                    <Badge variant="outline" className="capitalize border-border text-foreground">
                       {activeFilter}
                     </Badge>
                   )}
                   {searchTerm && (
-                    <Badge variant="outline" className="border-gray-400 text-gray-800">
+                    <Badge variant="outline" className="border-border text-foreground">
                       "{searchTerm}"
                     </Badge>
                   )}
@@ -213,7 +213,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                     setActiveFilter("all")
                     setSearchTerm("")
                   }}
-                  className="text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  className="text-muted-foreground hover:text-foreground hover:bg-accent"
                 >
                   Clear all
                 </Button>
@@ -224,15 +224,15 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
       </Card>
 
       {/* Activity List */}
-      <Card className="border-gray-200 bg-white shadow-sm">
-        <CardHeader className="border-b border-gray-100">
-          <CardTitle className="flex items-center justify-between text-gray-900 font-light">
+      <Card className="border-border bg-card shadow-sm">
+        <CardHeader className="border-b border-border">
+          <CardTitle className="flex items-center justify-between text-foreground font-light">
             <span>Activities</span>
-            <Badge variant="outline" className="border-gray-400 text-gray-800">
+            <Badge variant="outline" className="border-border text-foreground">
               {filteredActivities.length} items
             </Badge>
           </CardTitle>
-          <CardDescription className="text-gray-700">
+          <CardDescription className="text-muted-foreground">
             {activeFilter === "all"
               ? "All your recent activities and interactions"
               : `Showing ${activeFilter} activities only`}
@@ -259,13 +259,13 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
           ) : filteredActivities.length === 0 ? (
             // Empty state
             <div className="text-center py-12">
-              <div className="mx-auto h-12 w-12 rounded-full bg-gray-50 flex items-center justify-center mb-4">
-                <FilterIcon className="h-6 w-6 text-gray-400" />
+              <div className="mx-auto h-12 w-12 rounded-full bg-muted flex items-center justify-center mb-4">
+                <FilterIcon className="h-6 w-6 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-light text-gray-900 mb-2">
+              <h3 className="text-lg font-light text-foreground mb-2">
                 No activities found
               </h3>
-              <p className="text-gray-700 mb-4">
+              <p className="text-muted-foreground mb-4">
                 {searchTerm || activeFilter !== "all"
                   ? "Try adjusting your filters or search terms"
                   : "Your activity feed is empty"}
@@ -277,7 +277,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                     setActiveFilter("all")
                     setSearchTerm("")
                   }}
-                  className="border-gray-400 text-gray-800 hover:bg-gray-50"
+                  className="border-border text-foreground hover:bg-accent"
                 >
                   Clear filters
                 </Button>
