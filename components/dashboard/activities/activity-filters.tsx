@@ -25,49 +25,49 @@ const filterConfig = [
     type: "all" as ActivityType,
     label: "All Activities",
     icon: Activity,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
   {
     type: "follow" as ActivityType,
     label: "Followers",
     icon: UserPlus,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
   {
     type: "reply" as ActivityType,
     label: "Replies",
     icon: MessageSquare,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
   {
     type: "mention" as ActivityType,
     label: "Mentions",
     icon: Bell,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
   {
     type: "quote" as ActivityType,
     label: "Quotes",
     icon: Quote,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
   {
     type: "repost" as ActivityType,
     label: "Reposts",
     icon: Share2,
-    color: "text-muted-foreground",
-    bgColor: "bg-muted hover:bg-accent border border-border",
-    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 border border-primary",
+    color: "text-gray-700 dark:text-gray-200",
+    bgColor: "bg-gray-100 text-gray-700 border-gray-200 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-700",
+    activeColor: "bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-primary/80 dark:hover:bg-primary/90 border-primary",
   },
 ]
 
@@ -94,16 +94,16 @@ export function ActivityFilters({
             key={filter.type}
             variant="outline"
             onClick={() => onFilterChange(filter.type)}
+            aria-pressed={isActive}
             className={cn(
-              "relative flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 border-0",
+              "relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 border",
               isActive
                 ? filter.activeColor
-                : filter.bgColor,
-              !isActive && filter.color
+                : filter.bgColor
             )}
           >
             <Icon className="h-4 w-4" />
-            <span className="font-medium">{filter.label}</span>
+            <span>{filter.label}</span>
 
             {/* Count badge */}
             <Badge
@@ -112,7 +112,7 @@ export function ActivityFilters({
                 "ml-1 px-2 py-0.5 text-xs font-semibold",
                 isActive
                   ? "bg-primary-foreground/20 text-primary-foreground border-primary-foreground/30"
-                  : "bg-muted text-muted-foreground border-border"
+                  : "bg-gray-200 text-gray-700 border-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
               )}
             >
               {count}
