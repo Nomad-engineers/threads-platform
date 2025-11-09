@@ -200,12 +200,84 @@ export interface DashboardOverview {
   recentActivity: ActivityItem[];
 }
 
+// Enhanced Activity Types for Filtering
+export type ActivityType =
+  | 'all'
+  | 'like'
+  | 'comment'
+  | 'reply'
+  | 'follow'
+  | 'mention'
+  | 'quote'
+  | 'repost'
+  | 'share';
+
+export interface ActivityUser {
+  id: string;
+  username: string;
+  displayName: string;
+  avatar: string;
+  followerCount: number;
+  isVerified: boolean;
+  isVip: boolean;
+}
+
+export interface ActivityTarget {
+  id: string;
+  type: 'post' | 'comment' | 'thread';
+  content: string;
+  author: ActivityUser;
+  postedAt: Date;
+  engagementMetrics?: {
+    likes: number;
+    comments: number;
+    reposts: number;
+    views: number;
+  };
+}
+
+export interface ActivityMetadata {
+  postId?: string;
+  commentId?: string;
+  threadId?: string;
+  sentiment?: 'positive' | 'neutral' | 'negative';
+  reach?: number;
+  impressions?: number;
+  isReply?: boolean;
+  isQuote?: boolean;
+  originalContent?: string;
+  replyDepth?: number;
+  mentions?: string[];
+  hashtags?: string[];
+}
+
 export interface ActivityItem {
   id: string;
-  type: 'post' | 'comment' | 'like' | 'follow';
-  description: string;
+  type: ActivityType;
+  user: ActivityUser;
+  action: string;
+  target?: ActivityTarget;
   timestamp: Date;
-  metadata?: any;
+  isRead: boolean;
+  metadata: ActivityMetadata;
+  priority: 'low' | 'medium' | 'high';
+}
+
+export interface ActivityFilter {
+  type: ActivityType;
+  dateRange?: DateRange;
+  search?: string;
+  isRead?: boolean;
+  priority?: 'low' | 'medium' | 'high';
+  userId?: string;
+}
+
+export interface ActivityStats {
+  total: number;
+  byType: Record<ActivityType, number>;
+  unreadCount: number;
+  todayCount: number;
+  thisWeekCount: number;
 }
 
 // Chart data types

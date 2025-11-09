@@ -536,8 +536,6 @@ export default function HomePage() {
               <ul className="space-y-3">
                 {[
                   { href: "/about", label: "About" },
-                  { href: "/blog", label: "Blog" },
-                  { href: "/careers", label: "Careers" },
                   { href: "/contact", label: "Contact" }
                 ].map((item, index) => (
                   <li key={index}>
@@ -556,7 +554,6 @@ export default function HomePage() {
                   { href: "/privacy", label: "Privacy Policy" },
                   { href: "/terms", label: "Terms of Service" },
                   { href: "/refund", label: "Refund Policy" },
-                  { href: "/cookies", label: "Cookie Policy" }
                 ].map((item, index) => (
                   <li key={index}>
                     <Link href={item.href} className="text-gray-600 hover:text-black transition-colors duration-200">
@@ -571,7 +568,7 @@ export default function HomePage() {
           <div className="border-t border-gray-200 mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-gray-500">
-                &copy; 2024 Threadlytics. All rights reserved.
+                &copy; 2026 Threadlytics. All rights reserved.
               </p>
               <div className="flex items-center gap-6 text-sm text-gray-500">
                 <span>Made for creators</span>

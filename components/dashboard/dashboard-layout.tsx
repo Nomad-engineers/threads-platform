@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { SidebarNav } from "./sidebar-nav"
+import { TabSwitchBar } from "./tab-switch-bar"
 import { TopBar } from "./top-bar"
 import { cn } from "@/lib/utils"
+
+type SidebarType = "dashboard" | "analytics" | "activities"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -14,13 +16,26 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [activeSidebar, setActiveSidebar] = useState<SidebarType>("dashboard")
+  const pathname = usePathname()
+
+  // Determine active sidebar based on pathname
+  useEffect(() => {
+    if (pathname.startsWith("/dashboard/analytics")) {
+      setActiveSidebar("analytics")
+    } else if (pathname.startsWith("/dashboard/activities")) {
+      setActiveSidebar("activities")
+    } else {
+      setActiveSidebar("dashboard")
+    }
+  }, [pathname])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-50 bg-gray-900/80 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -28,50 +43,37 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-card border-r transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="flex h-full flex-col">
-          {/* Logo */}
-          <div className="flex h-16 items-center px-6">
-            <h1 className="text-xl font-bold text-foreground">
-              Threadlytics
-            </h1>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="ml-auto lg:hidden"
-              onClick={() => setSidebarOpen(false)}
-            >
-              <X className="h-5 w-5" />
-            </Button>
-          </div>
-
-          <Separator />
-
-          {/* Navigation */}
-          <nav className="flex-1 space-y-2 p-4">
-            <SidebarNav />
-          </nav>
-
-          {/* Footer */}
-          <div className="p-4">
-            <Separator className="mb-4" />
-            <div className="text-xs text-muted-foreground">
-              © 2024 Threadlytics
-            </div>
-          </div>
+        {/* Mobile close button */}
+        <div className="flex h-12 items-center px-6 lg:hidden">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="ml-auto"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <X className="h-5 w-5" />
+          </Button>
         </div>
       </div>
 
       {/* Main content */}
       <div className="lg:pl-64">
+        {/* Tab Switch Bar */}
+        <TabSwitchBar
+          activeTab={activeSidebar}
+          onTabChange={setActiveSidebar}
+          className="sticky top-0 z-40"
+        />
+
         {/* Top bar */}
         <TopBar onMenuClick={() => setSidebarOpen(true)} />
 
         {/* Page content */}
-        <main className="min-h-[calc(100vh-4rem)] p-6">
+        <main className="min-h-[calc(100vh-8rem)] p-6">
           {children}
         </main>
       </div>
