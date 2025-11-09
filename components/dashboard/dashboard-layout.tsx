@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TabSwitchBar } from "./tab-switch-bar"
@@ -18,6 +18,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activeSidebar, setActiveSidebar] = useState<SidebarType>("dashboard")
   const pathname = usePathname()
+  const router = useRouter()
 
   // Determine active sidebar based on pathname
   useEffect(() => {
@@ -29,6 +30,22 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       setActiveSidebar("dashboard")
     }
   }, [pathname])
+
+  // Handle tab navigation
+  const handleTabChange = (tab: SidebarType) => {
+    setActiveSidebar(tab)
+    switch (tab) {
+      case "dashboard":
+        router.push("/dashboard")
+        break
+      case "analytics":
+        router.push("/dashboard/analytics")
+        break
+      case "activities":
+        router.push("/dashboard/activities")
+        break
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -65,7 +82,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         {/* Tab Switch Bar */}
         <TabSwitchBar
           activeTab={activeSidebar}
-          onTabChange={setActiveSidebar}
+          onTabChange={handleTabChange}
           className="sticky top-0 z-40"
         />
 
