@@ -4,6 +4,9 @@
 3. kingsleyomedia: https://www.instagram.com/kingsleyomedia/
 4. Growth Guru: https://www.instagram.com/growth____guru/
 5. creatorhacks: https://www.instagram.com/creatorhacks/
+6. EashaS: https://www.threads.com/@esattivibes.digital
+7. digitalproductsd: https://www.threads.com/@digitalproductsd
+8. Jessica Girl: https://www.threads.com/@jessicaproducts
 
 ## Messages for Influencer
 
@@ -11,9 +14,13 @@
 Hi [Influencer's Name],
 
 ```
-I’m excited to invite you to be part of the exclusive beta testing group for Threadlytics, a new SaaS platform designed for Threads influencers. This is a chance to get early access to cutting-edge analytics, scheduling, and AI-powered features tailored for creators like you.
+I’m excited to invite you to be part of the exclusive beta testing group for Threadlytics, 
+a new SaaS platform designed for Threads influencers. This is a chance to get early access to cutting-edge analytics, 
+scheduling, and AI-powered features tailored for creators like you.
 
-As a thank you, we’d offer you a custom promo code so you can share Threadlytics with your audience. For every subscriber who signs up using your code, you’ll earn a recurring revenue share of 30-40% of their subscription fee — paid out regularly as we agree.
+As a thank you, we’d offer you a custom promo code so you can share Threadlytics with your audience. 
+For every subscriber who signs up using your code, 
+you’ll earn a recurring revenue share of 30-40% of their subscription fee — paid out regularly as we agree.
 
 This is a great opportunity to grow alongside the platform and receive ongoing income for empowering your followers.
 
@@ -50,7 +57,7 @@ Thank you for being an essential part of our growth! Your referrals help us impr
 If you have feedback or need support, feel free to reach out.
 
 Best regards,
-[Your Name]
+Temirlan (tima.nomad)
 Threadlytics Team
 ```
 
@@ -76,7 +83,7 @@ Upcoming Payout Date: [Date]
 We appreciate your continued support and look forward to your feedback.
 
 Keep growing,
-[Your Name]
+Temirlan (tima.nomad)
 Threadlytics Team
 ```
 
