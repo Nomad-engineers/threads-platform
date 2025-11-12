@@ -41,24 +41,26 @@ export function ClientOnlyEventCard({
 
     return (
       <div
-        className={`h-full rounded-md border p-2 transition-all ${colorClass}`}
+        className={`h-full rounded-md border p-2 sm:p-3 transition-all overflow-hidden min-h-[120px] sm:min-h-[130px] md:min-h-[140px] ${colorClass}`}
         onClick={(e) => {
           e.stopPropagation()
           onClick?.()
         }}
       >
-        <div className="flex items-start justify-between mb-1">
-          <div className="flex items-center gap-1 min-w-0">
-            <h4 className="text-xs font-semibold truncate">
+        <div className="flex items-start justify-between mb-1.5">
+          <div className="flex items-center gap-1.5 min-w-0 flex-1">
+            <h4 className="text-xs font-semibold truncate text-foreground leading-tight">
               {event.title}
             </h4>
           </div>
         </div>
-        <div className="text-xs opacity-90">
-          {event.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {duration}min
+        <div className="flex items-center gap-1.5 text-xs opacity-90 mb-1">
+          <span className="font-medium">
+            {event.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {duration}min
+          </span>
         </div>
-        {event.description && event.description.length < 50 && (
-          <div className="text-xs opacity-75 mt-1 line-clamp-1">
+        {event.description && (
+          <div className="text-xs opacity-75 line-clamp-2 leading-relaxed">
             {event.description}
           </div>
         )}

@@ -200,7 +200,7 @@ export function WeekGrid({
                         return (
                           <div
                             key={event.id}
-                            className="absolute left-1 right-1 z-10"
+                            className="absolute left-1 max-w-sm right-1 mx-auto z-10"
                             style={{
                               top: `${position.top}%`,
                               height: `${position.height}%`,

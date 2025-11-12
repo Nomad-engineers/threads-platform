@@ -83,9 +83,9 @@ export function TimeGrid({
         </div>
 
         {/* Calendar grid */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative min-w-0">
           {/* Hour columns */}
-          <div className="relative">
+          <div className="relative h-full">
             {hours.map((hour) => (
               <HourColumn
                 key={hour}

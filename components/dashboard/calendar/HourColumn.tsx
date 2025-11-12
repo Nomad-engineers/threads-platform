@@ -73,14 +73,18 @@ export function HourColumn({
           const top = (topMinutes / 60) * 100
           const height = (durationMinutes / 60) * 100
 
+          // Calculate minimum height to ensure content readability
+          const calculatedHeight = Math.max(height, 30) // Ensure minimum 30% of hour slot
+          const minHeightPixels = Math.max(120, (durationMinutes / 60) * 64) // Minimum 120px or proportional to duration
+
           return (
             <div
               key={event.id}
-              className="absolute left-1 right-1 pointer-events-auto"
+              className="absolute left-1 max-w-md right-1 mx-auto pointer-events-auto"
               style={{
                 top: `${top}%`,
-                height: `${height}%`,
-                minHeight: '20px',
+                height: `${calculatedHeight}%`,
+                minHeight: `${minHeightPixels}px`,
               }}
             >
               <ClientOnlyEventCard
