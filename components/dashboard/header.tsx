@@ -67,20 +67,22 @@ export function Header({ onMenuClick, className }: HeaderProps) {
       "sticky top-0 z-30 flex h-16 items-center gap-4 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/90 shadow-sm transition-colors duration-300",
       className
     )}>
-      {/* Left side: Navigation */}
-      <div className="flex items-center gap-1 flex-1">
-        {/* Mobile menu button */}
-        <Button
-          variant="outline"
-          size="icon"
-          className="lg:hidden mr-2"
-          onClick={onMenuClick}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+      {/* Navigation container with consistent padding */}
+      <div className="flex items-center justify-between w-full px-4 sm:px-6 lg:px-8">
+        {/* Left side: Navigation */}
+        <div className="flex items-center gap-1 flex-1">
+          {/* Mobile menu button */}
+          <Button
+            variant="outline"
+            size="icon"
+            className="lg:hidden mr-2"
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
 
-        {/* Navigation tabs */}
-        <div className="flex items-center gap-1">
+          {/* Navigation tabs */}
+          <div className="flex items-center gap-1">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id
             return (
@@ -99,16 +101,16 @@ export function Header({ onMenuClick, className }: HeaderProps) {
               </Button>
             )
           })}
+          </div>
         </div>
-      </div>
 
-      {/* Right side: User controls */}
-      <div className="flex items-center gap-3">
-        {/* Theme Toggle */}
-        <ThemeToggle />
+        {/* Right side: User controls */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
-        {/* User menu */}
-        <DropdownMenu>
+          {/* User menu */}
+          <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
               variant="ghost"
@@ -137,6 +139,7 @@ export function Header({ onMenuClick, className }: HeaderProps) {
             <DropdownMenuItem>Log out</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
     </header>
   )

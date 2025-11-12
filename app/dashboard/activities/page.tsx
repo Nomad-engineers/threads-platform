@@ -41,7 +41,7 @@ const stats = [
 
 export default function ActivitiesPage() {
   return (
-    <div className="space-y-6">
+    <div className="px-4 sm:px-6 lg:px-8 py-6 space-y-6">
       {/* Page Header */}
       <div className="border-b border-border pb-6">
         <h1 className="text-3xl font-light tracking-tight text-foreground">Activities</h1>
