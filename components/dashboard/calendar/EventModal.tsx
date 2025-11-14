@@ -5,11 +5,11 @@ import { format, addHours } from 'date-fns'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { CalendarEvent, EventModalProps } from './types'
-import { Calendar, Clock, MessageSquare, Trash2 } from 'lucide-react'
+import { DateTimePicker } from '@/components/ui/datetime-picker'
+import { DateTimePickerValue } from '@/types/date-time-picker'
+import { Calendar, Trash2 } from 'lucide-react'
 
 export function EventModal({
   event,
@@ -21,10 +21,16 @@ export function EventModal({
 }: EventModalProps) {
   const [formData, setFormData] = useState({
     title: event?.title || '',
-    description: event?.description || '',
-    type: event?.type || 'scheduled_post' as const,
-    startTime: event?.startTime || (selectedSlot ? addHours(selectedSlot.date, selectedSlot.hour) : new Date()),
-    endTime: event?.endTime || (selectedSlot ? addHours(selectedSlot.date, selectedSlot.hour + 1) : addHours(new Date(), 1)),
+    topic: event?.topic || '',
+  })
+
+  const [selectedDateTime, setSelectedDateTime] = useState<DateTimePickerValue>(() => {
+    const initialDate = event?.startTime || (selectedSlot ? addHours(selectedSlot.date, selectedSlot.hour || 0) : new Date())
+    return {
+      date: initialDate,
+      time: format(initialDate, 'HH:mm'),
+      timezone: 'Asia/Almaty',
+    }
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -34,8 +40,14 @@ export function EventModal({
     setIsSubmitting(true)
 
     try {
+      // Combine date and time from DateTimePicker
+      const [hours, minutes] = selectedDateTime.time.split(':').map(Number)
+      const combinedDateTime = new Date(selectedDateTime.date)
+      combinedDateTime.setHours(hours, minutes, 0, 0)
+
       const eventData = {
         ...formData,
+        startTime: combinedDateTime,
         ...(event && { id: event.id }),
       }
 
@@ -62,13 +74,7 @@ export function EventModal({
     }
   }
 
-  const handleTimeChange = (field: 'startTime' | 'endTime', value: string) => {
-    const [hours, minutes] = value.split(':').map(Number)
-    const newDate = new Date(formData[field])
-    newDate.setHours(hours, minutes, 0, 0)
-    setFormData(prev => ({ ...prev, [field]: newDate }))
-  }
-
+  
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -77,57 +83,18 @@ export function EventModal({
             {event ? (
               <>
                 <Calendar className="h-5 w-5" />
-                Edit Event
+                Edit Post
               </>
             ) : (
               <>
                 <Calendar className="h-5 w-5" />
-                New Event
+                Create New Post
               </>
             )}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Event Type */}
-          <div className="space-y-2">
-            <Label htmlFor="type">Event Type</Label>
-            <Select
-              value={formData.type}
-              onValueChange={(value: any) => setFormData(prev => ({ ...prev, type: value }))}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="scheduled_post">
-                  <div className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4" />
-                    Scheduled Post
-                  </div>
-                </SelectItem>
-                <SelectItem value="analytics_review">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    Analytics Review
-                  </div>
-                </SelectItem>
-                <SelectItem value="content_planning">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    Content Planning
-                  </div>
-                </SelectItem>
-                <SelectItem value="meeting">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    Meeting
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Title */}
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
@@ -135,56 +102,31 @@ export function EventModal({
               id="title"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              placeholder="Event title"
+              placeholder="Post title"
               required
             />
           </div>
 
-          {/* Description */}
+          {/* Topic */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Event description (optional)"
-              rows={3}
+            <Label htmlFor="topic">Topic</Label>
+            <Input
+              id="topic"
+              value={formData.topic}
+              onChange={(e) => setFormData(prev => ({ ...prev, topic: e.target.value }))}
+              placeholder="Topic (optional)"
             />
           </div>
 
-          {/* Time Selection */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startTime">Start Time</Label>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="startTime"
-                  type="time"
-                  value={format(formData.startTime, 'HH:mm')}
-                  onChange={(e) => handleTimeChange('startTime', e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endTime">End Time</Label>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-muted-foreground" />
-                <Input
-                  id="endTime"
-                  type="time"
-                  value={format(formData.endTime, 'HH:mm')}
-                  onChange={(e) => handleTimeChange('endTime', e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Date Display */}
-          <div className="text-sm text-muted-foreground">
-            {format(formData.startTime, 'EEEE, MMMM d, yyyy')}
+          {/* Date and Time Selection */}
+          <div className="space-y-2">
+            <Label>Date and Time</Label>
+            <DateTimePicker
+              value={selectedDateTime}
+              onChange={setSelectedDateTime}
+              timezone="Asia/Almaty"
+              placeholder="Select date and time for your post"
+            />
           </div>
 
           {/* Actions */}

@@ -49,18 +49,18 @@ export function CalendarView({
     setSelectedSlot(undefined)
   }, [])
 
-  const handleEventMove = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
-    onEventMove?.(eventId, newStartTime, newEndTime)
+  const handleEventMove = useCallback((eventId: string, newStartTime: Date) => {
+    onEventMove?.(eventId, newStartTime)
   }, [onEventMove])
 
-  const handleEventResize = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
-    onEventResize?.(eventId, newStartTime, newEndTime)
+  const handleEventResize = useCallback((eventId: string, newStartTime: Date) => {
+    onEventResize?.(eventId, newStartTime)
   }, [onEventResize])
 
   const handleSaveEvent = useCallback((eventData: Partial<CalendarEvent>) => {
     if (selectedEvent?.id) {
       // Update existing event
-      onEventMove?.(selectedEvent.id, eventData.startTime!, eventData.endTime!)
+      onEventMove?.(selectedEvent.id, eventData.startTime!)
     } else {
       // Create new event
       onCreateEvent?.(eventData)
@@ -77,19 +77,19 @@ export function CalendarView({
   const getFilteredEvents = () => {
     if (viewMode === 'day') {
       return events.filter(event =>
-        isSameDay(event.startTime, currentDate) || isSameDay(event.endTime, currentDate)
+        isSameDay(event.startTime, currentDate)
       )
     } else if (viewMode === 'week') {
       const weekStart = startOfWeek(currentDate)
       const weekEnd = addDays(weekStart, 6)
       return events.filter(event =>
-        event.startTime <= weekEnd && event.endTime >= weekStart
+        event.startTime >= weekStart && event.startTime <= weekEnd
       )
     } else {
       const monthStart = startOfMonth(currentDate)
       const monthEnd = endOfMonth(currentDate)
       return events.filter(event =>
-        event.startTime <= monthEnd && event.endTime >= monthStart
+        event.startTime >= monthStart && event.startTime <= monthEnd
       )
     }
   }

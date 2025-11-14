@@ -13,34 +13,25 @@ const sampleEvents: CalendarEvent[] = [
   {
     id: '1',
     title: 'Morning Threads Post',
-    description: 'Share tips about content creation best practices',
+    topic: 'Content Creation Tips',
     startTime: addHours(startOfDay(new Date()), 9),
-    endTime: addHours(startOfDay(new Date()), 10),
-    type: 'scheduled_post',
   },
   {
     id: '2',
-    title: 'Analytics Review',
-    description: 'Review weekly performance metrics',
+    title: 'Afternoon Threads Post',
+    topic: 'Analytics Insights',
     startTime: addHours(startOfDay(new Date()), 14),
-    endTime: addHours(startOfDay(new Date()), 15),
-    type: 'analytics_review',
   },
   {
     id: '3',
-    title: 'Content Planning Session',
-    description: 'Plan next week\'s content calendar',
+    title: 'Evening Threads Post',
     startTime: addHours(startOfDay(new Date()), 16),
-    endTime: addHours(startOfDay(new Date()), 17.5),
-    type: 'content_planning',
   },
   {
     id: '4',
-    title: 'Team Standup',
-    description: 'Daily sync with the content team',
+    title: 'Quick Update Post',
+    topic: 'Team Updates',
     startTime: addHours(startOfDay(new Date()), 10),
-    endTime: addHours(startOfDay(new Date()), 10.5),
-    type: 'meeting',
   },
 ]
 
@@ -57,18 +48,18 @@ export default function DashboardPage() {
     console.log('Slot clicked:', date, hour)
   }, [])
 
-  const handleEventMove = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
+  const handleEventMove = useCallback((eventId: string, newStartTime: Date) => {
     setEvents(prev => prev.map(event =>
       event.id === eventId
-        ? { ...event, startTime: newStartTime, endTime: newEndTime }
+        ? { ...event, startTime: newStartTime }
         : event
     ))
   }, [])
 
-  const handleEventResize = useCallback((eventId: string, newStartTime: Date, newEndTime: Date) => {
+  const handleEventResize = useCallback((eventId: string, newStartTime: Date) => {
     setEvents(prev => prev.map(event =>
       event.id === eventId
-        ? { ...event, startTime: newStartTime, endTime: newEndTime }
+        ? { ...event, startTime: newStartTime }
         : event
     ))
   }, [])
@@ -76,11 +67,9 @@ export default function DashboardPage() {
   const handleCreateEvent = useCallback((eventData: Partial<CalendarEvent>) => {
     const newEvent: CalendarEvent = {
       id: Date.now().toString(),
-      title: eventData.title || 'New Event',
-      description: eventData.description,
+      title: eventData.title || 'New Post',
+      topic: eventData.topic,
       startTime: eventData.startTime || new Date(),
-      endTime: eventData.endTime || addHours(new Date(), 1),
-      type: eventData.type || 'scheduled_post',
     }
     setEvents(prev => [...prev, newEvent])
   }, [])

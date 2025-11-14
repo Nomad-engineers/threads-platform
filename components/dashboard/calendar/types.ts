@@ -3,11 +3,9 @@ export type ViewMode = 'day' | 'week' | 'month'
 export interface CalendarEvent {
   id: string
   title: string
-  description?: string | undefined
+  topic?: string | undefined
   startTime: Date
-  endTime: Date
   color?: string | undefined
-  type?: 'scheduled_post' | 'analytics_review' | 'content_planning' | 'meeting' | undefined
 }
 
 export interface TimeSlot {
@@ -20,8 +18,8 @@ export interface CalendarViewProps {
   events: CalendarEvent[]
   onEventClick?: (event: CalendarEvent) => void
   onSlotClick?: (date: Date, hour: number) => void
-  onEventMove?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
-  onEventResize?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
+  onEventMove?: (eventId: string, newStartTime: Date) => void
+  onEventResize?: (eventId: string, newStartTime: Date) => void
 }
 
 export interface EventCardProps {
@@ -37,8 +35,8 @@ export interface TimeGridProps {
   events: CalendarEvent[]
   onEventClick?: (event: CalendarEvent) => void
   onSlotClick?: (date: Date, hour: number) => void
-  onEventMove?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
-  onEventResize?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
+  onEventMove?: (eventId: string, newStartTime: Date) => void
+  onEventResize?: (eventId: string, newStartTime: Date) => void
 }
 
 export interface EventModalProps {
@@ -63,8 +61,8 @@ export interface WeekGridProps {
   events: CalendarEvent[]
   onEventClick?: (event: CalendarEvent) => void
   onSlotClick?: (date: Date, hour: number) => void
-  onEventMove?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
-  onEventResize?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
+  onEventMove?: (eventId: string, newStartTime: Date) => void
+  onEventResize?: (eventId: string, newStartTime: Date) => void
 }
 
 export interface MonthGridProps {
@@ -72,5 +70,5 @@ export interface MonthGridProps {
   events: CalendarEvent[]
   onEventClick?: (event: CalendarEvent) => void
   onSlotClick?: (date: Date) => void
-  onEventMove?: (eventId: string, newStartTime: Date, newEndTime: Date) => void
+  onEventMove?: (eventId: string, newStartTime: Date) => void
 }
