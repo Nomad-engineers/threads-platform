@@ -558,3 +558,45 @@
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   }
 }
+
+/* Scroll area fixes for modal contexts */
+@layer utilities {
+  /* Ensure scroll areas work properly within modals */
+  [data-manual-time-scroll] .overflow-y-auto {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Fix scrolling issues when body has overflow:hidden */
+  body:has([role="dialog"]) [data-manual-time-scroll] .overflow-y-auto,
+  body.overflow-hidden [data-manual-time-scroll] .overflow-y-auto {
+    position: relative !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Ensure modal scroll areas capture events properly */
+  [role="dialog"] [data-manual-time-scroll] {
+    pointer-events: auto !important;
+  }
+
+  [role="dialog"] [data-manual-time-scroll] .overflow-y-auto {
+    pointer-events: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  /* Prevent event bubbling from blocking scroll */
+  [data-manual-time-scroll] button {
+    pointer-events: auto !important;
+  }
+
+  /* Enhanced touch scrolling for mobile */
+  @media (pointer: coarse) {
+    [data-manual-time-scroll] .overflow-y-auto {
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: contain !important;
+      touch-action: pan-y !important;
+    }
+  }
+}

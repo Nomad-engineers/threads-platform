@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
@@ -13,16 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Calendar } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
 import {
   CalendarIcon,
@@ -31,9 +20,9 @@ import {
   Image,
   Send,
   Save,
-  X,
 } from "lucide-react"
 import { format } from "date-fns"
+import { DateTimePicker } from "@/components/ui/datetime-picker"
 
 interface PostSchedulerProps {
   onSchedule?: (post: {
@@ -50,10 +39,12 @@ interface PostSchedulerProps {
 
 export function PostScheduler({ onSchedule, onSaveDraft, className }: PostSchedulerProps) {
   const [content, setContent] = useState("")
-  const [scheduledDate, setScheduledDate] = useState<Date>()
-  const [scheduledTime, setScheduledTime] = useState("12:00")
+  const [scheduledDateTime, setScheduledDateTime] = useState<{
+    date: Date
+    time: string
+    timezone: string
+  }>()
   const [platform, setPlatform] = useState("threads")
-  const [showCalendar, setShowCalendar] = useState(false)
 
   const optimalTimes = [
     { day: "Monday", times: ["9:00 AM", "12:00 PM", "6:00 PM"] },
@@ -72,28 +63,21 @@ export function PostScheduler({ onSchedule, onSaveDraft, className }: PostSchedu
   ]
 
   const handleSchedule = () => {
-    if (!content || !scheduledDate) return
+    if (!content || !scheduledDateTime) return
 
-    const scheduledDateTime = new Date(scheduledDate)
-    const [hours, minutes] = scheduledTime.split(":")
-    const [period] = scheduledTime.split(" ")
-    let hour = parseInt(hours)
-
-    if (period === "PM" && hour !== 12) hour += 12
-    if (period === "AM" && hour === 12) hour = 0
-
-    scheduledDateTime.setHours(hour, parseInt(minutes))
+    const scheduledFor = new Date(scheduledDateTime.date)
+    const [hours, minutes] = scheduledDateTime.time.split(":")
+    scheduledFor.setHours(parseInt(hours), parseInt(minutes))
 
     onSchedule?.({
       content,
-      scheduledFor: scheduledDateTime,
+      scheduledFor,
       platform,
     })
 
     // Reset form
     setContent("")
-    setScheduledDate(undefined)
-    setScheduledTime("12:00")
+    setScheduledDateTime(undefined)
   }
 
   const handleSaveDraft = () => {
@@ -169,43 +153,11 @@ export function PostScheduler({ onSchedule, onSaveDraft, className }: PostSchedu
         {/* Scheduling */}
         <div className="space-y-2">
           <label className="text-sm font-medium">Schedule for</label>
-          <div className="flex gap-2">
-            <Dialog open={showCalendar} onOpenChange={setShowCalendar}>
-              <DialogTrigger asChild>
-                <Button variant="outline" className="flex-1">
-                  <CalendarIcon className="h-4 w-4 mr-2" />
-                  {scheduledDate ? format(scheduledDate, "MMM dd, yyyy") : "Select date"}
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Select Date</DialogTitle>
-                  <DialogDescription>
-                    Choose when you'd like to publish this post
-                  </DialogDescription>
-                </DialogHeader>
-                <Calendar
-                  mode="single"
-                  selected={scheduledDate}
-                  onSelect={setScheduledDate}
-                  disabled={(date) => date < new Date()}
-                  className="rounded-md border"
-                />
-                <DialogFooter>
-                  <Button onClick={() => setShowCalendar(false)}>
-                    Confirm
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-
-            <Input
-              type="time"
-              value={scheduledTime}
-              onChange={(e) => setScheduledTime(e.target.value)}
-              className="w-32"
-            />
-          </div>
+          <DateTimePicker
+            value={scheduledDateTime}
+            onChange={setScheduledDateTime}
+            timezone="Asia/Almaty"
+          />
         </div>
 
         {/* Optimal Times */}

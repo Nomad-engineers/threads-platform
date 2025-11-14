@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { CalendarEvent, EventModalProps } from './types'
 import { DateTimePicker } from '@/components/ui/datetime-picker'
-import { DateTimePickerValue } from '@/types/date-time-picker'
+import { DateTimePickerValue, PostingSlot } from '@/types/date-time-picker'
 import { Calendar, Trash2 } from 'lucide-react'
 
 export function EventModal({
@@ -74,7 +74,23 @@ export function EventModal({
     }
   }
 
-  
+  const customPostingSlots: PostingSlot[] = [
+    { id: "1", time: "09:57", label: "9:57 AM" },
+    { id: "2", time: "07:31", label: "7:31 PM" },
+    { id: "3", time: "14:15", label: "2:15 PM" },
+    { id: "4", time: "10:00", label: "10:00 AM" },
+    { id: "5", time: "17:45", label: "5:45 PM" },
+    { id: "6", time: "23:30", label: "11:30 PM" },
+    { id: "7", time: "08:00", label: "8:00 AM" },
+  ]
+
+  const createCombinedDateTime = (value: DateTimePickerValue) => {
+    const [hours, minutes] = value.time.split(':').map(Number)
+    const combined = new Date(value.date)
+    combined.setHours(hours || 0, minutes || 0, 0, 0)
+    return combined
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
@@ -126,9 +142,8 @@ export function EventModal({
               onChange={setSelectedDateTime}
               timezone="Asia/Almaty"
               placeholder="Select date and time for your post"
-            />
+            />            
           </div>
-
           {/* Actions */}
           <div className="flex items-center justify-between pt-4">
             <div>

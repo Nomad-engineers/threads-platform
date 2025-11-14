@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils"
 
 import { CalendarHeader } from "@/components/date-time-picker/calendar-header"
 import { PostingSlots } from "@/components/date-time-picker/posting-slots"
-import { TimeScroll } from "@/components/date-time-picker/time-scroll"
 import { ManualTimePicker } from "@/components/date-time-picker/manual-time-picker"
 
 import {
@@ -52,26 +51,7 @@ export function DateTimePicker({
 
   const slots = postingSlots || defaultPostingSlots
 
-  // Generate time options (every 15 minutes)
-  const generateTimeOptions = () => {
-    const times: string[] = []
-    for (let hour = 0; hour < 24; hour++) {
-      for (let minute = 0; minute < 60; minute += 15) {
-        const time = `${hour.toString().padStart(2, "0")}:${minute
-          .toString()
-          .padStart(2, "0")}`
-        const displayTime = format(
-          new Date().setHours(hour, minute, 0, 0),
-          "h:mm a"
-        )
-        times.push(displayTime)
-      }
-    }
-    return times
-  }
-
-  const timeOptions = generateTimeOptions()
-
+  
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
       setSelectedDate(date)
@@ -88,25 +68,7 @@ export function DateTimePicker({
     }
   }
 
-  const handleTimeSelect = (timeDisplay: string) => {
-    // Convert display time (e.g., "9:00 AM") to HH:mm format
-    const [time, period] = timeDisplay.split(" ")
-    const [hours, minutes] = time.split(":").map(Number)
-
-    let hour24 = hours
-    if (period === "PM" && hours !== 12) {
-      hour24 += 12
-    } else if (period === "AM" && hours === 12) {
-      hour24 = 0
-    }
-
-    const time24 = `${hour24.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}`
-    setSelectedTime(time24)
-    updateValue(selectedDate, time24)
-  }
-
+  
   const handleManualTimeChange = (time: string) => {
     setSelectedTime(time)
     updateValue(selectedDate, time)
@@ -191,19 +153,7 @@ export function DateTimePicker({
               onSlotSelect={handleSlotSelect}
             />
 
-            {/* Time Scroll */}
-            <TimeScroll
-              times={timeOptions}
-              selectedTime={format(
-                new Date().setHours(
-                  parseInt(selectedTime.split(":")[0]),
-                  parseInt(selectedTime.split(":")[1])
-                ),
-                "h:mm a"
-              )}
-              onTimeSelect={handleTimeSelect}
-            />
-
+  
             {/* Manual Time Picker */}
             <ManualTimePicker
               time={selectedTime}

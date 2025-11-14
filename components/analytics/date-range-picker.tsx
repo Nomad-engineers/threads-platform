@@ -130,14 +130,8 @@ export function DateRangePicker({
                 onSelect={handleDateSelect}
                 month={currentMonth}
                 onMonthChange={setCurrentMonth}
-                numberOfMonths={1}
-                className="rounded-md border"
-                classNames={{
-                  nav: "relative flex w-full items-center justify-between px-2 py-1",
-                  button_previous: "h-10 w-10 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
-                  button_next: "h-10 w-10 flex items-center justify-center rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
-                  month_caption: "text-base font-semibold text-center flex-1 mx-4",
-                }}
+                className="rounded-md w-80"
+                showOutsideDays={false}
               />
             </div>
 
