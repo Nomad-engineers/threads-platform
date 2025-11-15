@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { ThreadsSignInOnlyButton } from '@/components/auth';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -133,7 +134,7 @@ export default function HomePage() {
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="text-lg px-10 py-4 h-14 border-gray-300 text-gray-700 hover:bg-gray-50">
-              <Link href="#features">
+              <Link href="/auth/threads-demo">
                 <Eye className="mr-2 h-5 w-5" />
                 View Demo
               </Link>
