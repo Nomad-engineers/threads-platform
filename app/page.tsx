@@ -112,7 +112,7 @@ export default function HomePage() {
       <section className="py-24 px-6 bg-gray-50">
         <div className="mx-auto max-w-6xl text-center">
           <Badge className="mb-6 bg-black text-white border-0">
-            Trusted by 10,000+ creators
+            Trusted by 100+ creators
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-8 text-black">
