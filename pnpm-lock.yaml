@@ -14,6 +14,15 @@ dependencies:
   '@dnd-kit/utilities':
     specifier: ^3.2.2
     version: 3.2.2(react@19.1.0)
+  '@fortawesome/fontawesome-svg-core':
+    specifier: ^7.1.0
+    version: 7.1.0
+  '@fortawesome/free-brands-svg-icons':
+    specifier: ^7.1.0
+    version: 7.1.0
+  '@fortawesome/react-fontawesome':
+    specifier: ^3.1.0
+    version: 3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.1.0)
   '@next-auth/prisma-adapter':
     specifier: ^1.0.7
     version: 1.0.7(@prisma/client@5.22.0)(next-auth@5.0.0-beta.30)
@@ -101,6 +110,9 @@ dependencies:
   date-fns:
     specifier: ^4.1.0
     version: 4.1.0
+  jose:
+    specifier: ^6.1.1
+    version: 6.1.1
   lucide-react:
     specifier: ^0.294.0
     version: 0.294.0(react@19.1.0)
@@ -253,7 +265,7 @@ packages:
         optional: true
     dependencies:
       '@panva/hkdf': 1.2.1
-      jose: 6.1.0
+      jose: 6.1.1
       oauth4webapi: 3.8.2
       preact: 10.24.3
       preact-render-to-string: 6.5.11(preact@10.24.3)
@@ -943,6 +955,36 @@ packages:
 
   /@floating-ui/utils@0.2.10:
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+    dev: false
+
+  /@fortawesome/fontawesome-common-types@7.1.0:
+    resolution: {integrity: sha512-l/BQM7fYntsCI//du+6sEnHOP6a74UixFyOYUyz2DLMXKx+6DEhfR3F2NYGE45XH1JJuIamacb4IZs9S0ZOWLA==}
+    engines: {node: '>=6'}
+    dev: false
+
+  /@fortawesome/fontawesome-svg-core@7.1.0:
+    resolution: {integrity: sha512-fNxRUk1KhjSbnbuBxlWSnBLKLBNun52ZBTcs22H/xEEzM6Ap81ZFTQ4bZBxVQGQgVY0xugKGoRcCbaKjLQ3XZA==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.1.0
+    dev: false
+
+  /@fortawesome/free-brands-svg-icons@7.1.0:
+    resolution: {integrity: sha512-9byUd9bgNfthsZAjBl6GxOu1VPHgBuRUP9juI7ZoM98h8xNPTCTagfwUFyYscdZq4Hr7gD1azMfM9s5tIWKZZA==}
+    engines: {node: '>=6'}
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 7.1.0
+    dev: false
+
+  /@fortawesome/react-fontawesome@3.1.0(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.1.0):
+    resolution: {integrity: sha512-5OUQH9aDH/xHJwnpD4J7oEdGvFGJgYnGe0UebaPIdMW9UxYC/f5jv2VjVEgnikdJN0HL8yQxp9Nq+7gqGZpIIA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@fortawesome/fontawesome-svg-core': ~6 || ~7
+      react: ^18.0.0 || ^19.0.0
+    dependencies:
+      '@fortawesome/fontawesome-svg-core': 7.1.0
+      react: 19.1.0
     dev: false
 
   /@humanwhocodes/config-array@0.13.0:
@@ -6316,8 +6358,8 @@ packages:
     hasBin: true
     dev: true
 
-  /jose@6.1.0:
-    resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
+  /jose@6.1.1:
+    resolution: {integrity: sha512-GWSqjfOPf4cWOkBzw5THBjtGPhXKqYnfRBzh4Ni+ArTrQQ9unvmsA3oFLqaYKoKe5sjWmGu5wVKg9Ft1i+LQfg==}
     dev: false
 
   /js-tokens@4.0.0:

@@ -13,8 +13,7 @@ const protectedPaths = [
 // Paths that should be accessible without authentication
 const publicPaths = [
   '/',
-  '/login',
-  '/register',
+  '/auth',
   '/auth/threads-demo',
   '/privacy',
   '/terms',
@@ -54,11 +53,11 @@ export function middleware(request: NextRequest) {
 
   // Redirect unauthenticated users from protected paths
   if (isProtectedPath && !authStatus.isAuthenticated) {
-    const loginUrl = new URL('/', request.url);
-    loginUrl.searchParams.set('error', 'authentication_required');
-    loginUrl.searchParams.set('redirect', pathname);
+    const authUrl = new URL('/auth', request.url);
+    authUrl.searchParams.set('error', 'authentication_required');
+    authUrl.searchParams.set('redirect', pathname);
 
-    return NextResponse.redirect(loginUrl);
+    return NextResponse.redirect(authUrl);
   }
 
   // For API routes, return 401 instead of redirect
@@ -70,7 +69,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Redirect authenticated users from auth pages to dashboard
-  if (authStatus.isAuthenticated && (pathname === '/' || pathname === '/login')) {
+  if (authStatus.isAuthenticated && (pathname === '/' || pathname === '/auth')) {
     const dashboardUrl = new URL('/dashboard', request.url);
     return NextResponse.redirect(dashboardUrl);
   }

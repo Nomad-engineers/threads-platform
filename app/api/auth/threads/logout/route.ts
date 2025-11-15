@@ -1,29 +1,30 @@
 import { NextResponse } from 'next/server';
-import { getThreadsTokens } from '@/lib/threads-db';
-import { getThreadsAuthStatus } from '@/lib/threads-auth';
+import { verifyJWT } from '@/lib/jwt';
 import { prisma } from '@/lib/db';
 
 export async function POST(request: Request) {
   try {
-    // Get current user info from cookies before clearing
-    const authStatus = getThreadsAuthStatus(request);
+    // Get the auth token from the request
+    const authHeader = request.headers.get('authorization');
+    const cookies = (request as any).cookies || {};
+    const cookieToken = cookies.get('auth_token')?.value ||
+                      (request as any).cookies?.get('auth_token');
+
+    const token = authHeader?.replace('Bearer ', '') || cookieToken;
 
     // Remove tokens from database if user is authenticated
-    if (authStatus.isAuthenticated && authStatus.user) {
+    if (token) {
       try {
-        // Get user from database using Threads user ID
-        const dbUser = await prisma.user.findUnique({
-          where: { threadsUserId: authStatus.user.id },
-          select: { id: true }
-        });
+        // Verify the JWT token and get user info
+        const jwtPayload = await verifyJWT(token);
 
-        if (dbUser) {
+        if (jwtPayload) {
           // Delete tokens from database
           await prisma.threadsToken.delete({
-            where: { userId: dbUser.id }
+            where: { userId: jwtPayload.userId }
           });
 
-          console.log(`Removed Threads tokens for user: ${dbUser.id}`);
+          console.log(`Removed Threads tokens for user: ${jwtPayload.userId}`);
         }
       } catch (dbError) {
         console.error('Failed to remove tokens from database:', dbError);
@@ -36,8 +37,10 @@ export async function POST(request: Request) {
       message: 'Successfully logged out'
     });
 
-    // Clear all Threads-related cookies
+    // Clear all authentication-related cookies
     const cookiesToClear = [
+      'auth_token',
+      'user_data',
       'threads_access_token',
       'threads_refresh_token',
       'threads_token_expires_at',
@@ -60,7 +63,10 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Logout error:', error);
     return NextResponse.json(
-      { error: 'Failed to logout' },
+      {
+        success: false,
+        error: 'Failed to logout'
+      },
       { status: 500 }
     );
   }

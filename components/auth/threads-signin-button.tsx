@@ -3,7 +3,9 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2, Instagram } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThreads } from '@fortawesome/free-brands-svg-icons';
 import { useThreadsAuth } from '@/lib/threads-auth';
 
 interface ThreadsSignInButtonProps {
@@ -27,8 +29,22 @@ export function ThreadsSignInButton({
     setIsLoading(true);
 
     try {
-      // Redirect to OAuth endpoint
-      window.location.href = '/api/auth/threads';
+      // Call the OAuth start endpoint to get redirect URL
+      const response = await fetch('/api/auth/threads/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.redirect_url) {
+        // Redirect to Threads OAuth
+        window.location.href = data.redirect_url;
+      } else {
+        throw new Error(data.error || 'Failed to initiate OAuth flow');
+      }
     } catch (error) {
       console.error('Sign-in error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to sign in with Threads';
@@ -104,7 +120,7 @@ export function ThreadsSignInButton({
     return (
       <div className="flex items-center gap-2">
         <div className="flex items-center gap-2 px-3 py-2 bg-muted rounded-md">
-          <Instagram className="h-4 w-4" />
+          <FontAwesomeIcon icon={faThreads} className="h-5 w-5" />
           <span className="text-sm font-medium">@{user.username}</span>
           {needsRefresh && (
             <Button
@@ -146,7 +162,7 @@ export function ThreadsSignInButton({
         </>
       ) : (
         <>
-          <Instagram className="h-4 w-4" />
+          <FontAwesomeIcon icon={faThreads} className="h-5 w-5" />
           Sign in with Threads
         </>
       )}
@@ -168,8 +184,22 @@ export function ThreadsSignInOnlyButton({
     setIsLoading(true);
 
     try {
-      // Redirect to OAuth endpoint
-      window.location.href = '/api/auth/threads';
+      // Call the OAuth start endpoint to get redirect URL
+      const response = await fetch('/api/auth/threads/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.redirect_url) {
+        // Redirect to Threads OAuth
+        window.location.href = data.redirect_url;
+      } else {
+        throw new Error(data.error || 'Failed to initiate OAuth flow');
+      }
     } catch (error) {
       console.error('Sign-in error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Failed to sign in with Threads';
@@ -201,7 +231,7 @@ export function ThreadsSignInOnlyButton({
         </>
       ) : (
         <>
-          <Instagram className="h-4 w-4" />
+          <FontAwesomeIcon icon={faThreads} className="h-5 w-5" />
           Sign in with Threads
         </>
       )}

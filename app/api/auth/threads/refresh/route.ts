@@ -1,80 +1,78 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { refreshAccessToken, calculateTokenExpiration } from '@/lib/threads-oauth';
+import { refreshAccessToken } from '@/lib/threads-oauth';
+import { getThreadsTokens, updateTokenLastUsed } from '@/lib/threads-db';
+import { verifyJWT } from '@/lib/jwt';
+import { prisma } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
-    const refreshToken = request.cookies.get('threads_refresh_token')?.value;
+    // Get the auth token from the request
+    const authHeader = request.headers.get('authorization');
+    const cookieToken = request.cookies.get('auth_token')?.value;
 
-    if (!refreshToken) {
+    const token = authHeader?.replace('Bearer ', '') || cookieToken;
+
+    if (!token) {
       return NextResponse.json(
-        { error: 'No refresh token available' },
+        { success: false, error: 'Authentication token is required' },
         { status: 401 }
       );
     }
 
-    const tokenResponse = await refreshAccessToken(refreshToken);
-    const expiresAt = calculateTokenExpiration(tokenResponse.expires_in);
-
-    const response = NextResponse.json({
-      success: true,
-      expiresAt
-    });
-
-    // Update the access token cookie
-    response.cookies.set('threads_access_token', tokenResponse.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: tokenResponse.expires_in,
-      path: '/'
-    });
-
-    // Update refresh token if provided
-    if (tokenResponse.refresh_token) {
-      response.cookies.set('threads_refresh_token', tokenResponse.refresh_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-        path: '/'
-      });
+    // Verify the JWT token and get user info
+    const jwtPayload = await verifyJWT(token);
+    if (!jwtPayload) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid or expired token' },
+        { status: 401 }
+      );
     }
 
-    // Update expiration time
-    response.cookies.set('threads_token_expires_at', expiresAt.toString(), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: tokenResponse.expires_in,
-      path: '/'
+    // Get the user's current tokens from database
+    const tokens = await getThreadsTokens(jwtPayload.userId);
+    if (!tokens || !tokens.refreshToken) {
+      return NextResponse.json(
+        { success: false, error: 'No refresh token available' },
+        { status: 400 }
+      );
+    }
+
+    // Use the refresh token to get a new access token
+    const newTokenResponse = await refreshAccessToken(tokens.refreshToken);
+
+    // Update the tokens in the database
+    await prisma.threadsToken.update({
+      where: { userId: jwtPayload.userId },
+      data: {
+        accessToken: newTokenResponse.access_token,
+        refreshToken: newTokenResponse.refresh_token || tokens.refreshToken,
+        expiresAt: new Date(Date.now() + (newTokenResponse.expires_in * 1000)),
+        lastUsedAt: new Date(),
+      },
     });
 
-    return response;
+    // Update last used timestamp
+    await updateTokenLastUsed(jwtPayload.userId);
+
+    return NextResponse.json({
+      success: true,
+      tokens: {
+        access_token: newTokenResponse.access_token,
+        expires_in: newTokenResponse.expires_in,
+        token_type: newTokenResponse.token_type,
+        scope: newTokenResponse.scope,
+      }
+    });
+
   } catch (error) {
     console.error('Token refresh error:', error);
-
-    // Clear invalid tokens
-    const response = NextResponse.json(
-      { error: 'Failed to refresh token' },
-      { status: 401 }
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Failed to refresh token',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
+      { status: 500 }
     );
-
-    response.cookies.set('threads_access_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0,
-      path: '/'
-    });
-
-    response.cookies.set('threads_refresh_token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0,
-      path: '/'
-    });
-
-    return response;
   }
 }

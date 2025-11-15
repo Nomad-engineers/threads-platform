@@ -15,17 +15,15 @@ datasource db {
 
 model User {
   id                String            @id @default(cuid())
-  email             String?           @unique
-  emailVerified     DateTime?
-  name              String?
-  image             String?
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
 
-  // Threads specific fields
-  threadsUserId     String?           @unique
-  threadsUsername   String?
+  // Threads specific fields (required for OAuth-only auth)
+  threadsUserId     String            @unique
+  threadsUsername   String
   threadsAccountId  String?           @unique
+  fullName          String?           // Threads full name
+  profilePictureUrl String?           // Threads profile picture
 
   // Subscription management
   subscriptionTier  SubscriptionTier  @default(FREE)
@@ -39,8 +37,6 @@ model User {
 
   // Relations
   threadsTokens     ThreadsToken?
-  accounts          Account[]
-  sessions          Session[]
 
   @@map("users")
 }
@@ -50,22 +46,16 @@ model ThreadsToken {
   userId            String            @unique
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Short-lived token (received from code exchange)
-  shortLivedToken   String?           @db.Text
-
-  // Long-lived token (exchanged from short-lived)
-  longLivedToken    String?           @db.Text
+  // Access tokens
+  accessToken       String            @db.Text
+  refreshToken      String?           @db.Text
 
   // Token metadata
   tokenType         String            @default("bearer")
   scope             String?
 
   // Expiration tracking
-  shortLivedExpiresAt DateTime?
-  longLivedExpiresAt  DateTime?
-
-  // Refresh token for getting new access tokens
-  refreshToken      String?           @db.Text
+  expiresAt         DateTime
 
   // Threads account info
   threadsUserId     String
@@ -80,50 +70,6 @@ model ThreadsToken {
   @@map("threads_tokens")
 }
 
-model Account {
-  id                String            @id @default(cuid())
-  userId            String
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?           @db.Text
-  access_token      String?           @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?           @db.Text
-  session_state     String?
-
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
-
-model Session {
-  id                String            @id @default(cuid())
-  sessionToken      String            @unique
-  userId            String
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  expires           DateTime
-
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-
-  @@map("sessions")
-}
-
-model VerificationToken {
-  identifier        String
-  token             String            @unique
-  expires           DateTime
-
-  @@unique([identifier, token])
-  @@map("verification_tokens")
-}
 
 // Enums for subscription management
 enum SubscriptionTier {

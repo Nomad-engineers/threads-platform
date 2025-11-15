@@ -96,10 +96,10 @@ export default function HomePage() {
           </div>
           <div className="flex items-center space-x-6">
             <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
-              <Link href="/login">Sign In</Link>
+              <Link href="/auth">Sign In</Link>
             </Button>
             <Button asChild className="bg-black text-white hover:bg-gray-800">
-              <Link href="/register">
+              <Link href="/auth">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -128,7 +128,7 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
             <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
-              <Link href="/register">
+              <Link href="/auth">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
@@ -471,7 +471,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
-                  <Link href="/register">
+                  <Link href="/auth">
                     Start Free Trial
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>

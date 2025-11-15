@@ -1,113 +1,155 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
   exchangeCodeForToken,
-  exchangeForLongLivedToken,
   getThreadsUser
 } from '@/lib/threads-oauth';
 import {
   createOrUpdateUser,
   storeThreadsTokens
 } from '@/lib/threads-db';
+import { generateJWT } from '@/lib/jwt';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
-    const state = searchParams.get('state');
     const error = searchParams.get('error');
 
     // Check for OAuth errors
     if (error) {
       console.error('OAuth error:', error);
-      return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}?error=${encodeURIComponent(error)}`
-      );
-    }
-
-    // Verify state parameter
-    const storedState = request.cookies.get('threads_oauth_state')?.value;
-    if (!state || !storedState || state !== storedState) {
-      console.error('Invalid state parameter');
-      return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}?error=invalid_state`
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'OAuth authentication failed',
+          details: error
+        },
+        { status: 400 }
       );
     }
 
     if (!code) {
-      console.error('No authorization code received');
-      return NextResponse.redirect(
-        `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}?error=no_code`
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'Authorization code is required'
+        },
+        { status: 400 }
       );
     }
 
     console.log('Starting OAuth callback flow...');
 
-    // 1. Exchange authorization code for short-lived access token
-    console.log('Exchanging authorization code for short-lived token...');
-    const shortLivedTokenResponse = await exchangeCodeForToken(code);
-    console.log('Short-lived token received');
+    // 1. Exchange authorization code for access token
+    console.log('Exchanging authorization code for access token...');
+    const tokenResponse = await exchangeCodeForToken(code);
+    console.log('Access token received');
 
-    // 2. Get user information using short-lived token
+    // 2. Get user information using access token
     console.log('Fetching Threads user information...');
-    const threadsUser = await getThreadsUser(shortLivedTokenResponse.access_token);
+    const threadsUser = await getThreadsUser(tokenResponse.access_token);
     console.log('User info received:', { id: threadsUser.id, username: threadsUser.username });
 
-    // 3. Exchange short-lived token for long-lived token
-    console.log('Exchanging short-lived token for long-lived token...');
-    const longLivedTokenResponse = await exchangeForLongLivedToken(shortLivedTokenResponse.access_token);
-    console.log('Long-lived token received, expires in:', longLivedTokenResponse.expires_in, 'seconds');
-
-    // 4. Create or update user in database
-    console.log('Storing user information in database...');
+    // 3. Create or update user in database (this acts as both registration and login)
+    console.log('Creating/updating user in database...');
     const user = await createOrUpdateUser(threadsUser);
     console.log('User stored/updated in database:', user.id);
 
-    // 5. Store tokens in database
+    // 4. Store tokens in database
     console.log('Storing tokens in database...');
-    await storeThreadsTokens(user.id, shortLivedTokenResponse, longLivedTokenResponse, threadsUser);
+    await storeThreadsTokens(
+      user.id,
+      tokenResponse.access_token,
+      tokenResponse.refresh_token,
+      tokenResponse.expires_in,
+      threadsUser
+    );
     console.log('Tokens stored successfully');
 
-    // 6. Set up session cookies for immediate use
-    const response = NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/dashboard?auth=success`
-    );
+    // 5. Generate JWT token for the user
+    console.log('Generating JWT token...');
+    const jwtToken = await generateJWT(user);
+    console.log('JWT token generated successfully');
 
-    // Store user session data in secure cookies
-    response.cookies.set('threads_user_id', user.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: '/'
-    });
+    // 6. Return success response with user data and JWT
+    const responseData = {
+      success: true,
+      user: {
+        id: user.id,
+        username: user.threadsUsername,
+        fullName: user.fullName,
+        profilePictureUrl: user.profilePictureUrl,
+        subscriptionTier: user.subscriptionTier,
+        subscriptionStatus: user.subscriptionStatus,
+        createdAt: user.createdAt,
+      },
+      token: jwtToken,
+      tokens: {
+        access_token: tokenResponse.access_token,
+        expires_in: tokenResponse.expires_in,
+        token_type: tokenResponse.token_type,
+        scope: tokenResponse.scope,
+      }
+    };
 
-    // Store user data in a regular cookie (for client-side access)
-    response.cookies.set('threads_user', JSON.stringify({
-      id: threadsUser.id,
-      username: threadsUser.username,
-      account_type: threadsUser.account_type,
-      profile_picture_url: threadsUser.threads_profile_picture_url
-    }), {
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-      path: '/'
-    });
+    // Check if this is a web request (browser) vs API request
+    const userAgent = request.headers.get('user-agent') || '';
+    const isWebBrowser = userAgent.includes('Mozilla') && !userAgent.includes('Postman') && !userAgent.includes('curl');
 
-    // Clear the state cookie
-    response.cookies.set('threads_oauth_state', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0,
-      path: '/'
-    });
+    if (isWebBrowser) {
+      // For web browsers, redirect to dashboard with auth success
+      const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      const redirectUrl = new URL('/dashboard', baseUrl);
+      redirectUrl.searchParams.set('auth', 'success');
 
-    return response;
+      const response = NextResponse.redirect(redirectUrl);
+
+      // Set JWT token in httpOnly cookie
+      response.cookies.set('auth_token', jwtToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/'
+      });
+
+      // Set user data in regular cookie for client-side access
+      response.cookies.set('user_data', JSON.stringify(responseData.user), {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/'
+      });
+
+      return response;
+    } else {
+      // For API requests, return JSON response
+      return NextResponse.json(responseData);
+    }
+
   } catch (error) {
     console.error('OAuth callback error:', error);
-    return NextResponse.redirect(
-      `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}?error=oauth_failed`
-    );
+
+    const userAgent = request.headers.get('user-agent') || '';
+    const isWebBrowser = userAgent.includes('Mozilla') && !userAgent.includes('Postman') && !userAgent.includes('curl');
+
+    if (isWebBrowser) {
+      // For web browsers, redirect to auth page with error
+      const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+      const redirectUrl = new URL('/auth', baseUrl);
+      redirectUrl.searchParams.set('error', 'oauth_failed');
+
+      return NextResponse.redirect(redirectUrl);
+    } else {
+      // For API requests, return JSON error
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'OAuth authentication failed',
+          details: error instanceof Error ? error.message : 'Unknown error'
+        },
+        { status: 500 }
+      );
+    }
   }
 }

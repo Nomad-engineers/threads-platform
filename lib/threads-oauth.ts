@@ -30,7 +30,7 @@ export interface ThreadsUser {
 export const THREADS_OAUTH_CONFIG: ThreadsOAuthConfig = {
   clientId: process.env.THREADS_CLIENT_ID || '1165567432148744',
   clientSecret: process.env.THREADS_CLIENT_SECRET || 'e373ac0c13db41f6d55954503396ef15',
-  redirectUri: process.env.THREADS_REDIRECT_URI || 'https://nomad.publicvm.com/api/auth/threads/callback',
+  redirectUri: process.env.THREADS_REDIRECT_URI || 'https://nomad.publicvm.com/auth/threads/callback',
   scopes: [
     'threads_basic',
     'threads_content_publish',
