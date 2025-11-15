@@ -5,6 +5,14 @@ export interface ThreadsOAuthConfig {
   scopes: string[];
 }
 
+export interface ThreadsAuthUrlBuilderConfig {
+  client_id: string;
+  redirect_uri: string;
+  scopes: string[];
+  response_type?: 'code'; // Always 'code' for OAuth 2.0 authorization code flow
+  state?: string; // Optional state parameter for CSRF protection
+}
+
 export interface ThreadsTokenResponse {
   access_token: string;
   token_type: string;
@@ -42,6 +50,7 @@ export const THREADS_OAUTH_CONFIG: ThreadsOAuthConfig = {
 };
 
 export const THREADS_API_BASE_URL = 'https://graph.threads.net';
+export const THREADS_OAUTH_URL = 'https://threads.net/oauth/authorize';
 export const FACEBOOK_OAUTH_URL = 'https://www.facebook.com/v18.0/dialog/oauth';
 
 export function generateThreadsOAuthUrl(state: string): string {
@@ -54,6 +63,80 @@ export function generateThreadsOAuthUrl(state: string): string {
   });
 
   return `${FACEBOOK_OAUTH_URL}?${params.toString()}`;
+}
+
+/**
+ * Builds a reusable OAuth authorization URL for Threads
+ *
+ * @param config - Configuration object containing OAuth parameters
+ * @returns Complete OAuth authorization URL for Threads
+ *
+ * @example
+ * ```typescript
+ * const authUrl = buildThreadsAuthUrl({
+ *   client_id: '1165567432148744',
+ *   redirect_uri: 'https://nomad.publicvm.com/auth/threads/callback',
+ *   scopes: [
+ *     'threads_basic',
+ *     'threads_content_publish',
+ *     'threads_manage_insights',
+ *     'threads_manage_replies',
+ *     'threads_profile_discovery',
+ *     'threads_read_replies'
+ *   ]
+ * });
+ * ```
+ */
+export function buildThreadsAuthUrl(config: ThreadsAuthUrlBuilderConfig): string {
+  // Validate required parameters
+  if (!config.client_id) {
+    throw new Error('client_id is required');
+  }
+
+  if (!config.redirect_uri) {
+    throw new Error('redirect_uri is required');
+  }
+
+  if (!config.scopes || config.scopes.length === 0) {
+    throw new Error('scopes array is required and cannot be empty');
+  }
+
+  // Validate and encode redirect_uri
+  try {
+    new URL(config.redirect_uri);
+  } catch (error) {
+    throw new Error(`Invalid redirect_uri: ${config.redirect_uri}`);
+  }
+
+  // Validate scopes
+  const validScopes = [
+    'threads_basic',
+    'threads_content_publish',
+    'threads_manage_insights',
+    'threads_manage_replies',
+    'threads_profile_discovery',
+    'threads_read_replies'
+  ];
+
+  const invalidScopes = config.scopes.filter(scope => !validScopes.includes(scope));
+  if (invalidScopes.length > 0) {
+    throw new Error(`Invalid scopes: ${invalidScopes.join(', ')}. Valid scopes are: ${validScopes.join(', ')}`);
+  }
+
+  // Build URL parameters
+  const params = new URLSearchParams({
+    client_id: config.client_id,
+    redirect_uri: encodeURIComponent(config.redirect_uri),
+    response_type: config.response_type || 'code',
+    scope: config.scopes.join(',')
+  });
+
+  // Add optional state parameter if provided
+  if (config.state) {
+    params.append('state', config.state);
+  }
+
+  return `${THREADS_OAUTH_URL}?${params.toString()}`;
 }
 
 export function generateSecureState(): string {
