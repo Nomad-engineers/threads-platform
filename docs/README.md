@@ -1,8 +1,8 @@
-# Threadlytics Documentation
+# Threads-Boost Documentation
 
 ## Overview
 
-Threadlytics is a comprehensive analytics and automation platform for Meta's Threads social media platform. This documentation provides technical guidance for developers, operators, and stakeholders working on the Threadlytics platform.
+Threads-Boost is a comprehensive analytics and automation platform for Meta's Threads social media platform. This documentation provides technical guidance for developers, operators, and stakeholders working on the Threads-Boost platform.
 
 ## Getting Started
 
@@ -24,10 +24,10 @@ Threadlytics is a comprehensive analytics and automation platform for Meta's Thr
 ## Quick Links
 
 ### Key Resources
-- **Project Repository**: [GitHub Repository](https://github.com/your-org/threadlytics)
-- **Project Management**: [Linear/Notion Board](https://your-org.linear.app/threadlytics)
-- **API Documentation**: [API Reference](https://api.threadlytics.com/docs)
-- **Status Page**: [System Status](https://status.threadlytics.com)
+- **Project Repository**: [GitHub Repository](https://github.com/your-org/threads-boost)
+- **Project Management**: [Linear/Notion Board](https://your-org.linear.app/threads-boost)
+- **API Documentation**: [API Reference](https://api.threads-boost.online/docs)
+- **Status Page**: [System Status](https://status.threads-boost.online)
 
 ### Documentation Structure
 
@@ -86,8 +86,8 @@ docs/
 ### 1. Setup Development Environment
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/threadlytics.git
-cd threadlytics
+git clone https://github.com/your-org/threads-boost.git
+cd threads-boost
 
 # Install dependencies
 pnpm install
@@ -133,17 +133,17 @@ pnpm dev
 - Secure API authentication with JWT tokens
 
 ### Security Contacts
-- **Security Team**: security@threadlytics.com
-- **Bug Bounty**: security@threadlytics.com
-- **Data Protection Officer**: privacy@threadlytics.com
+- **Security Team**: security@threads-boost.online
+- **Bug Bounty**: security@threads-boost.online
+- **Data Protection Officer**: privacy@threads-boost.online
 
 ## Support
 
 ### Getting Help
 - **Documentation**: Search this site first
-- **Community**: [Discord Server](https://discord.gg/threadlytics)
-- **Support Tickets**: support@threadlytics.com
-- **Bug Reports**: [GitHub Issues](https://github.com/your-org/threadlytics/issues)
+- **Community**: [Discord Server](https://discord.gg/threads-boost)
+- **Support Tickets**: support@threads-boost.online
+- **Bug Reports**: [GitHub Issues](https://github.com/your-org/threads-boost/issues)
 
 ### Response Times
 - **Critical Issues**: 1 hour during business hours
@@ -153,7 +153,7 @@ pnpm dev
 
 ## Contributing
 
-We welcome contributions to Threadlytics! Please see our [contributing guide](development/006-contributing.md) for details on:
+We welcome contributions to Threads-Boost! Please see our [contributing guide](development/006-contributing.md) for details on:
 
 - Code style and standards
 - Pull request process
@@ -181,7 +181,7 @@ We welcome contributions to Threadlytics! Please see our [contributing guide](de
 - [ ] User onboarding flow
 - [ ] Beta testing preparation
 
-See our [public roadmap](https://roadmap.threadlytics.com) for detailed feature planning and timelines.
+See our [public roadmap](https://roadmap.threads-boost.online) for detailed feature planning and timelines.
 
 ---
 

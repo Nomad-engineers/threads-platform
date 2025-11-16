@@ -5,7 +5,7 @@
 
 ## Introduction
 
-At Threadlytics, we want you to be completely satisfied with our social media analytics platform. This Refund Policy outlines our guidelines for refunds on our subscription-based services designed for Meta's Threads.
+At Threads-Boost, we want you to be completely satisfied with our social media analytics platform. This Refund Policy outlines our guidelines for refunds on our subscription-based services designed for Meta's Threads.
 
 If you're not satisfied with our service, we're here to help make things right.
 
@@ -58,7 +58,7 @@ If you're not satisfied with our service, we're here to help make things right.
 
 To request a refund, please provide:
 
-- **Account Email:** The email address associated with your Threadlytics account
+- **Account Email:** The email address associated with your Threads-Boost account
 - **Subscription Details:** Your current plan (Creator, Professional, or Business)
 - **Request Reason:** Brief explanation of why you're requesting a refund
 - **Request Date:** When you're submitting the refund request
@@ -67,12 +67,12 @@ To request a refund, please provide:
 ### 3.2 Submission Methods
 
 **Email (Preferred):**
-- Send your request to: refunds@threadlytics.com
+- Send your request to: refunds@threads-boost.online
 - Subject line: "Refund Request - [Your Account Email]"
 - Response time: Within 24-48 hours
 
 **In-App Request:**
-- Log into your Threadlytics account
+- Log into your Threads-Boost account
 - Navigate to Account Settings → Billing → Refund Request
 - Fill out the refund request form
 - Receive confirmation email within 1 hour
@@ -117,36 +117,36 @@ To request a refund, please provide:
 ### 5.1 Direct Refund Inquiries
 
 **Refund Department:**
-- **Email:** refunds@threadlytics.com
+- **Email:** refunds@threads-boost.online
 - **Response Time:** 24-48 hours
 - **Hours:** Monday-Friday, 9 AM - 6 PM EST
 
 **Priority Support (Business Tier):**
-- **Email:** business-support@threadlytics.com
+- **Email:** business-support@threads-boost.online
 - **Response Time:** 12-24 hours
 - **Phone:** Available upon request for Business tier customers
 
 ### 5.2 General Customer Support
 
 **Support Team:**
-- **Email:** support@threadlytics.com
+- **Email:** support@threads-boost.online
 - **Help Center:** [Your Help Center URL]
 - **Live Chat:** Available in-app during business hours
 
 **Social Media:**
-- **Twitter:** @ThreadlyticsHelp
-- **Threads:** @Threadlytics
+- **Twitter:** @Threads-BoostHelp
+- **Threads:** @Threads-Boost
 - **Response Time:** Social media responses within 4-8 hours
 
 ### 5.3 Escalation Process
 
 **Unresolved Issues:**
-- **Step 1:** Contact refunds@threadlytics.com
-- **Step 2:** If unresolved within 5 business days, escalate to management@threadlytics.com
-- **Step 3:** Final escalation to customer-advocate@threadlytics.com
+- **Step 1:** Contact refunds@threads-boost.online
+- **Step 2:** If unresolved within 5 business days, escalate to management@threads-boost.online
+- **Step 3:** Final escalation to customer-advocate@threads-boost.online
 
 **Formal Complaints:**
-- **Email:** legal@threadlytics.com
+- **Email:** legal@threads-boost.online
 - **Address:** [Your Company Address]
 - **Response:** Formal response within 10 business days
 
@@ -154,7 +154,7 @@ To request a refund, please provide:
 
 ### 6.1 Service Discontinuation
 
-- **Platform Shutdown:** Full pro-rated refund if Threadlytics discontinues service
+- **Platform Shutdown:** Full pro-rated refund if Threads-Boost discontinues service
 - **Feature Removal:** Refund consideration if core features are permanently removed
 - **Price Changes:** No refunds for price changes, but you can cancel anytime
 
@@ -190,11 +190,11 @@ To request a refund, please provide:
 
 If you have any questions about our Refund Policy or need help with a refund request, please don't hesitate to contact us:
 
-**Refund Team:** refunds@threadlytics.com
-**General Support:** support@threadlytics.com
+**Refund Team:** refunds@threads-boost.online
+**General Support:** support@threads-boost.online
 **Urgent Issues:** Call our support line at [Your Phone Number]
 
-**Our Commitment:** We're committed to providing excellent service and fair refund policies. If you're not satisfied with Threadlytics, we want to make it right.
+**Our Commitment:** We're committed to providing excellent service and fair refund policies. If you're not satisfied with Threads-Boost, we want to make it right.
 
 ---
 

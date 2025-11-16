@@ -450,7 +450,7 @@ export default function NotFound() {
                         "focus:ring-4 focus:ring-primary/20 transition-all duration-300 search-enhanced",
                         "focus:border-primary focus:shadow-2xl focus:shadow-primary/10"
                       )}
-                      aria-label="Search Threadlytics features and documentation"
+                      aria-label="Search Threads-Boost features and documentation"
                       aria-describedby="search-description"
                       role="combobox"
                       aria-expanded={showSuggestions}

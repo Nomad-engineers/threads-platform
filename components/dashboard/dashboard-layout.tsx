@@ -17,7 +17,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <ThemeProvider
       defaultTheme="system"
-      storageKey="threadlytics-ui-theme"
+      storageKey="threads-boost-ui-theme"
     >
       <div className="min-h-screen bg-background transition-colors duration-300">
         {/* Mobile sidebar overlay */}

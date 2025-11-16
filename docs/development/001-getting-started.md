@@ -1,8 +1,8 @@
-# Getting Started with Threadlytics Development
+# Getting Started with Threads-Boost Development
 
 ## Overview
 
-This guide helps new developers set up their local development environment for Threadlytics. Threadlytics is built with modern web technologies and follows best practices for scalability and maintainability.
+This guide helps new developers set up their local development environment for Threads-Boost. Threads-Boost is built with modern web technologies and follows best practices for scalability and maintainability.
 
 ## Prerequisites
 
@@ -32,8 +32,8 @@ This guide helps new developers set up their local development environment for T
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/threadlytics.git
-cd threadlytics
+git clone https://github.com/your-org/threads-boost.git
+cd threads-boost
 
 # Verify you're on the correct branch
 git checkout develop
@@ -71,7 +71,7 @@ cp .env.example .env.local
 brew services start postgresql@15
 
 # Create database
-createdb threadlytics_dev
+createdb threads_boost_dev
 
 # Start Redis
 brew services start redis
@@ -118,7 +118,7 @@ Create `.env.local` in the project root with the following:
 
 ```bash
 # Database Configuration
-DATABASE_URL="postgresql://username:password@localhost:5432/threadlytics_dev"
+DATABASE_URL="postgresql://username:password@localhost:5432/threads_boost_dev"
 REDIS_URL="redis://localhost:6379"
 
 # Next.js Configuration
@@ -137,7 +137,7 @@ FIREBASE_CLIENT_SECRET="your-firebase-client-secret"
 
 # Email Service (SendGrid)
 SENDGRID_API_KEY="your-sendgrid-api-key"
-FROM_EMAIL="noreply@threadlytics.dev"
+FROM_EMAIL="noreply@threads-boost.online"
 
 # Payment Processing (Paddle)
 PADDLE_VENDOR_ID="your-paddle-vendor-id"
@@ -190,7 +190,7 @@ pnpm dev:standard
 ### Understanding the Codebase
 
 ```
-threadlytics/
+threads-boost/
 ├── app/                    # Next.js App Router
 │   ├── (auth)/            # Authentication pages
 │   ├── (dashboard)/       # Dashboard pages
@@ -424,9 +424,9 @@ export function OverviewCard({
 
 ### Getting Help
 
-- **Slack/Discord**: #threadlytics-dev channel
-- **GitHub Issues**: [Create new issue](https://github.com/your-org/threadlytics/issues)
-- **Documentation**: [Full documentation](https://docs.threadlytics.com)
+- **Slack/Discord**: #threads-boost-dev channel
+- **GitHub Issues**: [Create new issue](https://github.com/your-org/threads-boost/issues)
+- **Documentation**: [Full documentation](https://docs.threads-boost.online)
 
 ## Best Practices
 
@@ -457,4 +457,4 @@ After completing this setup guide:
 3. Check out the [Testing Guide](004-testing-guide.md)
 4. Join the development team Slack channel
 
-Welcome to the Threadlytics development team! 🚀
+Welcome to the Threads-Boost development team! 🚀

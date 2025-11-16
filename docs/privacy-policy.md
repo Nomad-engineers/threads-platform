@@ -5,9 +5,9 @@
 
 ## Introduction
 
-Threadlytics ("we," "our," or "us") is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, store, and protect your information when you use our social media analytics platform for Meta's Threads.
+Threads-Boost ("we," "our," or "us") is committed to protecting your privacy and personal data. This Privacy Policy explains how we collect, use, store, and protect your information when you use our social media analytics platform for Meta's Threads.
 
-By using Threadlytics, you agree to the collection and use of information in accordance with this policy.
+By using Threads-Boost, you agree to the collection and use of information in accordance with this policy.
 
 ## 1. Information We Collect
 
@@ -120,7 +120,7 @@ You may:
 
 ### 5.4 Exercise Your Rights
 To exercise these rights:
-- **Email:** privacy@threadlytics.com
+- **Email:** privacy@threads-boost.online
 - **Response Time:** We respond within 30 days (extended to 60 days for complex requests)
 - **Verification:** We may request identity verification before processing requests
 
@@ -189,12 +189,12 @@ Our service is not intended for children under 13 years of age. We do not knowin
 ## 11. Contact Information
 
 ### 11.1 Privacy Contact
-- **Email:** privacy@threadlytics.com
+- **Email:** privacy@threads-boost.online
 - **Address:** [Your Company Address]
 - **Phone:** [Your Contact Number]
 
 ### 11.2 Data Protection Officer
-- **Email:** dpo@threadlytics.com
+- **Email:** dpo@threads-boost.online
 - **Responsibilities:** Oversee data protection compliance and user rights
 
 ### 11.3 Regulatory Authorities
@@ -225,6 +225,6 @@ We process your personal data based on the following legal bases:
 ---
 
 **Questions or Concerns?**
-If you have any questions about this Privacy Policy or our data practices, please contact us at privacy@threadlytics.com.
+If you have any questions about this Privacy Policy or our data practices, please contact us at privacy@threads-boost.online.
 
 This Privacy Policy is designed to be transparent and user-friendly while maintaining comprehensive legal compliance with GDPR, CCPA, and other applicable privacy regulations.

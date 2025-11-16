@@ -374,7 +374,7 @@ export default function PrivacyPolicyPage() {
                     <Mail className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Email</div>
-                      <div className="text-sm text-muted-foreground">privacy@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">privacy@threads-boost.online</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">

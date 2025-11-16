@@ -1,4 +1,4 @@
-// Global type definitions for Threadlytics
+// Global type definitions for Threads-Boost
 
 export interface User {
   id: string;

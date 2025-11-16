@@ -2,7 +2,7 @@
 
 ## 🎯 Executive Summary
 
-**Threadlytics** is a comprehensive analytics and automation platform for Threads, targeting the **200 million+ user base** with advanced features that fill critical gaps in Meta's native offering. The platform addresses a **$68M serviceable market opportunity** with first-mover advantage in the dedicated Threads tools space.
+**Threads-Boost** is a comprehensive analytics and automation platform for Threads, targeting the **200 million+ user base** with advanced features that fill critical gaps in Meta's native offering. The platform addresses a **$68M serviceable market opportunity** with first-mover advantage in the dedicated Threads tools space.
 
 **Core Differentiators**: Advanced analytics, comment management, AI-powered optimization, and creator-focused features that surpass existing limited solutions.
 
@@ -123,7 +123,7 @@
 
 2. **Advanced Analytics Suite**
    - Competitors: Basic likes/comments only
-   - Threadlytics: Engagement trends, viral prediction, ROI tracking
+   - Threads-Boost: Engagement trends, viral prediction, ROI tracking
    - Competitor benchmarking and performance insights
 
 3. **AI-Powered Optimization**
