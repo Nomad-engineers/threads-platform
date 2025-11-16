@@ -1,8 +1,8 @@
-# Threadlytics System Architecture Design
+# Threads-Boost System Architecture Design
 
 ## Executive Summary
 
-This document outlines the comprehensive system architecture for Threadlytics, designed to support real-time social media analytics, automated content scheduling, and AI-powered insights. The architecture prioritizes scalability, performance, and maintainability while addressing the unique challenges of third-party API integrations and data-intensive analytics operations.
+This document outlines the comprehensive system architecture for Threads-Boost, designed to support real-time social media analytics, automated content scheduling, and AI-powered insights. The architecture prioritizes scalability, performance, and maintainability while addressing the unique challenges of third-party API integrations and data-intensive analytics operations.
 
 **Architecture Style**: Microservices-inspired with Next.js full-stack approach
 **Scalability Target**: 10,000+ concurrent users, 1M+ posts processed daily

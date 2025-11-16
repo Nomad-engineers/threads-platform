@@ -24,7 +24,7 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXT_PUBLIC_APP_NAME: 'Threadlytics',
+    NEXT_PUBLIC_APP_NAME: 'Threads-Boost',
     NEXT_PUBLIC_APP_DESCRIPTION: 'Analytics and automation platform for Threads',
   },
   // Performance optimizations

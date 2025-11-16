@@ -92,7 +92,7 @@ export default function HomePage() {
             <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
               <BarChart3 className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-black">Threadlytics</span>
+            <span className="text-2xl font-bold text-black">Threads-Boost</span>
           </div>
           <div className="flex items-center space-x-6">
             <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
@@ -251,7 +251,7 @@ export default function HomePage() {
               {
                 name: "Sarah Chen",
                 role: "Content Creator",
-                content: "Threadlytics helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
+                content: "Threads-Boost helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
                 rating: 5,
                 avatar: "👩‍💼"
               },
@@ -466,7 +466,7 @@ export default function HomePage() {
                 Start your free trial today
               </h2>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of creators who are already using Threadlytics to grow their audience
+                Join thousands of creators who are already using Threads-Boost to grow their audience
                 and optimize their content strategy.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -496,7 +496,7 @@ export default function HomePage() {
                 <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-bold text-black">Threadlytics</span>
+                <span className="text-2xl font-bold text-black">Threads-Boost</span>
               </div>
               <p className="text-sm text-gray-600 mb-6">
                 The ultimate analytics platform for Threads creators and businesses who want to grow their audience with data-driven insights.
@@ -569,11 +569,11 @@ export default function HomePage() {
           <div className="border-t border-gray-200 mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-gray-500">
-                &copy; 2026 Threadlytics. All rights reserved.
+                &copy; 2026 Threads-Boost. All rights reserved.
               </p>
               <div className="flex items-center gap-6 text-sm text-gray-500">
                 <span>Made for creators</span>
-                <span>•</span>
+                <span>❤️</span>
                 <span>Version 2.0</span>
               </div>
             </div>

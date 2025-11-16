@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <Shield className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Threadlytics</span>
+            <span className="text-xl font-bold">Threads-Boost</span>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
@@ -65,12 +65,12 @@ export default function PrivacyPolicyPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">
-                Threadlytics (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy and personal data.
+                Threads-Boost (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;) is committed to protecting your privacy and personal data.
                 This Privacy Policy explains how we collect, use, store, and protect your information when you use our
                 social media analytics platform for Meta&apos;s Threads.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                By using Threadlytics, you agree to the collection and use of information in accordance with this policy.
+                By using Threads-Boost, you agree to the collection and use of information in accordance with this policy.
               </p>
             </CardContent>
           </Card>
@@ -298,7 +298,7 @@ export default function PrivacyPolicyPage() {
                 <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Mail className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Email: privacy@threadlytics.com</span>
+                    <span className="font-medium">Email: privacy@threads-boost.online</span>
                   </div>
                   <div className="space-y-1 text-sm text-muted-foreground">
                     <p>• Response Time: We respond within 30 days (extended to 60 days for complex requests)</p>
@@ -401,7 +401,7 @@ export default function PrivacyPolicyPage() {
                 <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
                   <div className="flex items-center gap-2 mb-2">
                     <Shield className="h-5 w-5 text-primary" />
-                    <span className="font-medium">Email: dpo@threadlytics.com</span>
+                    <span className="font-medium">Email: dpo@threads-boost.online</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Responsibilities: Oversee data protection compliance and user rights
@@ -445,7 +445,10 @@ export default function PrivacyPolicyPage() {
             <p className="text-muted-foreground mb-6">
               <strong>Questions or Concerns?</strong><br />
               If you have any questions about this Privacy Policy or our data practices,
-              please contact us at privacy@threadlytics.com.
+              please contact us at
+            </p>
+            <p className="text-muted-foreground mb-6">
+              privacy@threads-boost.online
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button variant="outline" asChild>
@@ -453,12 +456,6 @@ export default function PrivacyPolicyPage() {
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/refund">Refund Policy</Link>
-              </Button>
-              <Button asChild>
-                <Link href="mailto:privacy@threadlytics.com">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact Privacy Team
-                </Link>
               </Button>
             </div>
           </div>
@@ -474,7 +471,7 @@ export default function PrivacyPolicyPage() {
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                   <Shield className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold">Threadlytics</span>
+                <span className="text-xl font-bold">Threads-Boost</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Analytics and automation platform for Threads creators and businesses.
@@ -509,7 +506,6 @@ export default function PrivacyPolicyPage() {
                 <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
                 <li><Link href="/refund" className="hover:text-foreground transition-colors">Refund Policy</Link></li>
-                <li><Link href="/cookies" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -517,7 +513,7 @@ export default function PrivacyPolicyPage() {
           <Separator className="my-8" />
 
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Threadlytics. All rights reserved.</p>
+            <p>&copy; 2024 Threads-Boost. All rights reserved.</p>
             <div className="flex gap-4">
               <Badge variant="outline" className="text-xs">SOC 2 Compliant</Badge>
               <Badge variant="outline" className="text-xs">GDPR Ready</Badge>
