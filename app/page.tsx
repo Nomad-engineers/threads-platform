@@ -144,9 +144,9 @@ export default function HomePage() {
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { number: "10K+", label: "Creators", icon: Users },
-              { number: "2M+", label: "Posts Analyzed", icon: BarChart3 },
-              { number: "324%", label: "Avg. Growth", icon: TrendingUp }
+              { number: "100+", label: "Creators", icon: Users },
+              { number: "9k+", label: "Posts Analyzed", icon: BarChart3 },
+              { number: "214%", label: "Avg. Growth", icon: TrendingUp }
             ].map((stat, index) => (
               <div key={index} className="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
                 <stat.icon className="h-8 w-8 text-black mb-3 mx-auto" />
