@@ -12,8 +12,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Threadlytics - Analytics for Threads',
-    template: '%s | Threadlytics',
+    default: 'Threads-Boost - Analytics for Threads',
+    template: '%s | Threads-Boost',
   },
   description: 'Comprehensive analytics and automation platform for Meta\'s Threads. Track performance, schedule posts, and grow your audience with data-driven insights.',
   keywords: [
@@ -28,40 +28,40 @@ export const metadata: Metadata = {
     'social media metrics',
     'audience growth',
   ],
-  authors: [{ name: 'Threadlytics Team' }],
-  creator: 'Threadlytics',
-  publisher: 'Threadlytics',
+  authors: [{ name: 'Threads-Boost Team' }],
+  creator: 'Threads-Boost',
+  publisher: 'Threads-Boost',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://threadlytics.com'),
+  metadataBase: new URL('https://threads-boost.online'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://threadlytics.com',
-    title: 'Threadlytics - Analytics for Threads',
+    url: 'https://threads-boost.online',
+    title: 'Threads-Boost - Analytics for Threads',
     description: 'Comprehensive analytics and automation platform for Meta\'s Threads. Track performance, schedule posts, and grow your audience.',
-    siteName: 'Threadlytics',
+    siteName: 'Threads-Boost',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Threadlytics - Analytics for Threads',
+        alt: 'Threads-Boost - Analytics for Threads',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Threadlytics - Analytics for Threads',
+    title: 'Threads-Boost - Analytics for Threads',
     description: 'Comprehensive analytics and automation platform for Meta\'s Threads.',
     images: ['/og-image.png'],
-    creator: '@threadlytics',
+    creator: '@threads-boost',
   },
   robots: {
     index: true,

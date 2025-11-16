@@ -17,7 +17,7 @@ The Threads management tools market is **early-stage with limited dedicated comp
 ### Market Positioning Map
 ```
 High Features    │     Buffer (Multi)      │ Future Position
-                 │                          │  (Threadlytics)
+                 │                          │  (Threads-Boost)
                  │     Later (Multi)        │
 Low Features     │  ThreadTools (Basic)     │  ThreadScheduler
                  └─────────────────────────┘
@@ -133,7 +133,7 @@ Low Features     │  ThreadTools (Basic)     │  ThreadScheduler
 
 ## 4. Feature Comparison Matrix
 
-| Feature | ThreadTools | ThreadScheduler | ThreadsBoost | Buffer | Later | **Threadlytics (Proposed)** |
+| Feature | ThreadTools | ThreadScheduler | ThreadsBoost | Buffer | Later | **Threads-Boost (Proposed)** |
 |---------|-------------|-----------------|--------------|---------|-------|----------------------------|
 | **Basic Posting** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | **Scheduling** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |

@@ -5,7 +5,7 @@
 
 ## 1. Acceptance of Terms
 
-By accessing, registering for, or using Threadlytics ("the Service"), you ("User," "you," or "your") agree to be bound by these Terms of Service ("Terms"), our Privacy Policy, and all applicable laws and regulations.
+By accessing, registering for, or using Threads-Boost ("the Service"), you ("User," "you," or "your") agree to be bound by these Terms of Service ("Terms"), our Privacy Policy, and all applicable laws and regulations.
 
 If you do not agree to these Terms, you may not access or use our Service.
 
@@ -23,7 +23,7 @@ If you do not agree to these Terms, you may not access or use our Service.
 
 ## 2. Service Description
 
-Threadlytics is a social media analytics and automation platform designed for Meta's Threads. We provide tools to help content creators and businesses analyze their Threads performance, manage engagement, and optimize their content strategy.
+Threads-Boost is a social media analytics and automation platform designed for Meta's Threads. We provide tools to help content creators and businesses analyze their Threads performance, manage engagement, and optimize their content strategy.
 
 ### 2.1 Service Tiers
 
@@ -98,7 +98,7 @@ You agree not to:
 ## 4. Account & Access Rules
 
 ### 4.1 Single Account Policy
-- Each user may maintain only one Threadlytics account
+- Each user may maintain only one Threads-Boost account
 - You may not create multiple accounts to bypass limitations
 - Accounts are non-transferable without our written consent
 
@@ -147,12 +147,12 @@ We may suspend or terminate your account if you:
 
 ### 6.1 Your Content
 - You retain full ownership and rights to all content you create or post
-- You grant Threadlytics a limited license to use your content solely to provide our Service
+- You grant Threads-Boost a limited license to use your content solely to provide our Service
 - We do not claim ownership of your Threads posts, comments, or analytics data
 - You may remove your content at any time
 
-### 6.2 Threadlytics Intellectual Property
-- Threadlytics owns all rights to our software, platform, and proprietary technology
+### 6.2 Threads-Boost Intellectual Property
+- Threads-Boost owns all rights to our software, platform, and proprietary technology
 - Our trademarks, logos, and brand elements are protected intellectual property
 - You may not use our intellectual property without our express written permission
 - This includes our analytics algorithms, user interface, and proprietary features
@@ -205,7 +205,7 @@ We may suspend or terminate your account if you:
 - You will not receive refunds for partial months of service
 - Your data will be deleted according to our Privacy Policy
 
-### 8.2 Termination by Threadlytics
+### 8.2 Termination by Threads-Boost
 We may terminate your account for:
 - Material breach of these Terms
 - Violation of Meta's Threads policies
@@ -255,7 +255,7 @@ We may terminate your account for:
 ## 10. General Provisions
 
 ### 10.1 Entire Agreement
-- These Terms constitute the entire agreement between you and Threadlytics
+- These Terms constitute the entire agreement between you and Threads-Boost
 - They supersede all prior agreements, communications, and understandings
 - Changes to these Terms will be effective upon posting to our website
 
@@ -271,7 +271,7 @@ We may terminate your account for:
 
 ### 10.4 Assignment
 - You may not assign or transfer your rights under these Terms
-- Threadlytics may assign these Terms to a successor company
+- Threads-Boost may assign these Terms to a successor company
 - We will notify you of any assignment that affects your rights
 
 ### 10.5 Notices
@@ -304,19 +304,19 @@ We may terminate your account for:
 ## 12. Contact Information
 
 ### 12.1 General Inquiries
-- **Email:** support@threadlytics.com
+- **Email:** support@threads-boost.online
 - **Website:** [Your Website URL]
 
 ### 12.2 Legal Notices
-- **Email:** legal@threadlytics.com
+- **Email:** legal@threads-boost.online
 - **Address:** [Your Company Address]
 
 ### 12.3 Privacy Concerns
-- **Email:** privacy@threadlytics.com
+- **Email:** privacy@threads-boost.online
 - See our Privacy Policy for detailed privacy information
 
 ---
 
-**By using Threadlytics, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.**
+**By using Threads-Boost, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.**
 
-**These Terms are designed to be fair and balanced, protecting both Threadlytics and our users while enabling us to provide valuable analytics and automation services for the Threads community.**
+**These Terms are designed to be fair and balanced, protecting both Threads-Boost and our users while enabling us to provide valuable analytics and automation services for the Threads community.**

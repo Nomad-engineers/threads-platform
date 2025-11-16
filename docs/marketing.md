@@ -14,11 +14,11 @@
 Hi [Influencer's Name],
 
 ```
-I’m excited to invite you to be part of the exclusive beta testing group for Threadlytics, 
-a new SaaS platform designed for Threads influencers. This is a chance to get early access to cutting-edge analytics, 
+I'm excited to invite you to be part of the exclusive beta testing group for Threads-Boost,
+a new SaaS platform designed for Threads influencers. This is a chance to get early access to cutting-edge analytics,
 scheduling, and AI-powered features tailored for creators like you.
 
-As a thank you, we’d offer you a custom promo code so you can share Threadlytics with your audience. 
+As a thank you, we'd offer you a custom promo code so you can share Threads-Boost with your audience. 
 For every subscriber who signs up using your code, 
 you’ll earn a recurring revenue share of 30-40% of their subscription fee — paid out regularly as we agree.
 
@@ -35,10 +35,10 @@ Temirlan (tima.nomad)
 ### Influencer Monthly Performance Report Template
 
 ```
-Subject: Your Threadlytics Affiliate Performance - [Month/Year]
+Subject: Your Threads-Boost Affiliate Performance - [Month/Year]
 Hi [Influencer's Name],
 
-Here’s your Threadlytics affiliate performance summary for [Month/Year]:
+Here's your Threads-Boost affiliate performance summary for [Month/Year]:
 
 New Users Referred: [Number]
 
@@ -58,17 +58,17 @@ If you have feedback or need support, feel free to reach out.
 
 Best regards,
 Temirlan (tima.nomad)
-Threadlytics Team
+Threads-Boost Team
 ```
 
 ### Influencer Bi-Weekly Engagement & Earnings Update Template
 
 ```
-Subject: Quick Update: Your Threadlytics Earnings & Impact
+Subject: Quick Update: Your Threads-Boost Earnings & Impact
 
 Hi [Influencer's Name],
 
-Just a quick update on your Threadlytics affiliate stats for the past two weeks:
+Just a quick update on your Threads-Boost affiliate stats for the past two weeks:
 
 New Signups Using Your Code: [Number]
 
@@ -84,7 +84,7 @@ We appreciate your continued support and look forward to your feedback.
 
 Keep growing,
 Temirlan (tima.nomad)
-Threadlytics Team
+Threads-Boost Team
 ```
 
 # Reddit 
@@ -105,7 +105,7 @@ Subreddits Matching Your Project’s Niche and Audience
 Looking for Threads Influencers to Beta Test New SaaS Platform!
 
 Hi Redditors,
-I’m launching Threadlytics, a platform designed for Threads influencers to schedule posts, manage engagement, and grow their audience with AI-powered tools. We’re currently inviting a small group of creators (1K-50K followers) to join our beta testing program.
+I'm launching Threads-Boost, a platform designed for Threads influencers to schedule posts, manage engagement, and grow their audience with AI-powered tools. We're currently inviting a small group of creators (1K-50K followers) to join our beta testing program.
 
 Beta testers get exclusive early access, direct input on features, and a chance to earn recurring revenue through custom promo codes.
 

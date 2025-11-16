@@ -1,4 +1,4 @@
-# Threadlytics 404 Page Design
+# Threads-Boost 404 Page Design
 
 > **File Location**: `/app/not-found.tsx`
 > **Design System**: Server Live Color Scheme
@@ -9,13 +9,13 @@
 
 ## 🎨 Design Overview
 
-The Threadlytics 404 page transforms a traditional error page into an engaging, on-brand experience that maintains user engagement and provides clear navigation paths back to key features.
+The Threads-Boost 404 page transforms a traditional error page into an engaging, on-brand experience that maintains user engagement and provides clear navigation paths back to key features.
 
 ### Design Philosophy
 
 1. **User-Centric**: Turns frustration into opportunity with helpful navigation
 2. **Brand Consistent**: Uses Server Live color scheme and design patterns
-3. **Analytics Themed**: Incorporates Threadlytics' data-driven personality
+3. **Analytics Themed**: Incorporates Threads-Boost's data-driven personality
 4. **Accessible**: WCAG compliant with proper ARIA labels and keyboard navigation
 5. **Responsive**: Optimized for all device sizes and orientations
 
@@ -403,4 +403,4 @@ const suggestions = [
 
 ---
 
-*This 404 page design transforms a potential user frustration point into an engaging, brand-consistent experience that reinforces Threadlytics' value proposition while maintaining high accessibility and performance standards.*
+*This 404 page design transforms a potential user frustration point into an engaging, brand-consistent experience that reinforces Threads-Boost's value proposition while maintaining high accessibility and performance standards.*

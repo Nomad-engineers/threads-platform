@@ -34,7 +34,7 @@ export default function TermsOfServicePage() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <FileText className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Threadlytics</span>
+            <span className="text-xl font-bold">Threads-Boost</span>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
@@ -60,7 +60,7 @@ export default function TermsOfServicePage() {
               Terms of Service
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              Rules and guidelines for using Threadlytics services
+              Rules and guidelines for using Threads-Boost services
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
@@ -84,7 +84,7 @@ export default function TermsOfServicePage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">
-                By accessing, registering for, or using Threadlytics (&quot;the Service&quot;), you (&quot;User,&quot; &quot;you,&quot; or &quot;your&quot;) agree to be bound by these Terms of Service (&quot;Terms&quot;), our Privacy Policy, and all applicable laws and regulations.
+                By accessing, registering for, or using Threads-Boost (&quot;the Service&quot;), you (&quot;User,&quot; &quot;you,&quot; or &quot;your&quot;) agree to be bound by these Terms of Service (&quot;Terms&quot;), our Privacy Policy, and all applicable laws and regulations.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 If you do not agree to these Terms, you may not access or use our Service.
@@ -129,7 +129,7 @@ export default function TermsOfServicePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <p className="text-muted-foreground leading-relaxed">
-                Threadlytics is a social media analytics and automation platform designed for Meta&apos;s Threads. We provide tools to help content creators and businesses analyze their Threads performance, manage engagement, and optimize their content strategy.
+                Threads-Boost is a social media analytics and automation platform designed for Meta&apos;s Threads. We provide tools to help content creators and businesses analyze their Threads performance, manage engagement, and optimize their content strategy.
               </p>
 
               <div>
@@ -299,7 +299,7 @@ export default function TermsOfServicePage() {
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
-                    <span>Each user may maintain only one Threadlytics account</span>
+                    <span>Each user may maintain only one Threads-Boost account</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></span>
@@ -408,7 +408,7 @@ export default function TermsOfServicePage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>You grant Threadlytics a limited license to use your content solely to provide our Service</span>
+                    <span>You grant Threads-Boost a limited license to use your content solely to provide our Service</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -424,11 +424,11 @@ export default function TermsOfServicePage() {
               <Separator />
 
               <div>
-                <h3 className="text-lg font-semibold mb-3">Threadlytics Intellectual Property</h3>
+                <h3 className="text-lg font-semibold mb-3">Threads-Boost Intellectual Property</h3>
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <Lock className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                    <span>Threadlytics owns all rights to our software, platform, and proprietary technology</span>
+                    <span>Threads-Boost owns all rights to our software, platform, and proprietary technology</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Lock className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
@@ -520,7 +520,7 @@ export default function TermsOfServicePage() {
               <Separator />
 
               <div>
-                <h3 className="text-lg font-semibold mb-3">Termination by Threadlytics</h3>
+                <h3 className="text-lg font-semibold mb-3">Termination by Threads-Boost</h3>
                 <p className="text-muted-foreground mb-3">We may terminate your account for:</p>
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
@@ -599,7 +599,7 @@ export default function TermsOfServicePage() {
                     Entire Agreement
                   </h4>
                   <p className="text-sm text-muted-foreground">
-                    These Terms constitute the entire agreement between you and Threadlytics, superseding all prior agreements.
+                    These Terms constitute the entire agreement between you and Threads-Boost, superseding all prior agreements.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
@@ -682,21 +682,21 @@ export default function TermsOfServicePage() {
                     <Mail className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">General Inquiries</div>
-                      <div className="text-sm text-muted-foreground">support@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">support@threads-boost.online</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
                     <Scale className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Legal Notices</div>
-                      <div className="text-sm text-muted-foreground">legal@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">legal@threads-boost.online</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
                     <Shield className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Privacy Concerns</div>
-                      <div className="text-sm text-muted-foreground">privacy@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">privacy@threads-boost.online</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
@@ -715,10 +715,10 @@ export default function TermsOfServicePage() {
           <div className="text-center py-8">
             <div className="p-6 rounded-lg bg-primary/5 border border-primary/20 mb-6">
               <p className="text-muted-foreground mb-4">
-                <strong className="text-foreground">By using Threadlytics, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</strong>
+                <strong className="text-foreground">By using Threads-Boost, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service.</strong>
               </p>
               <p className="text-sm text-muted-foreground">
-                These Terms are designed to be fair and balanced, protecting both Threadlytics and our users while enabling us to provide valuable analytics and automation services for the Threads community.
+                These Terms are designed to be fair and balanced, protecting both Threads-Boost and our users while enabling us to provide valuable analytics and automation services for the Threads community.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -727,12 +727,6 @@ export default function TermsOfServicePage() {
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/refund">Refund Policy</Link>
-              </Button>
-              <Button asChild>
-                <Link href="mailto:support@threadlytics.com">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Contact Support
-                </Link>
               </Button>
             </div>
           </div>
@@ -748,7 +742,7 @@ export default function TermsOfServicePage() {
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                   <FileText className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold">Threadlytics</span>
+                <span className="text-xl font-bold">Threads-Boost</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Analytics and automation platform for Threads creators and businesses.
@@ -784,7 +778,6 @@ export default function TermsOfServicePage() {
                 <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
                 <li><Link href="/refund" className="hover:text-foreground transition-colors">Refund Policy</Link></li>
-                <li><Link href="/cookies" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -792,7 +785,7 @@ export default function TermsOfServicePage() {
           <Separator className="my-8" />
 
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Threadlytics. All rights reserved.</p>
+            <p>&copy; 2024 Threads-Boost. All rights reserved.</p>
             <div className="flex gap-4">
               <Badge variant="outline" className="text-xs">SOC 2 Compliant</Badge>
               <Badge variant="outline" className="text-xs">GDPR Ready</Badge>

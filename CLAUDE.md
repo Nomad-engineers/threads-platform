@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Threadlytics is a comprehensive analytics and automation platform for Meta's Threads social media platform. Built with Next.js 15, React 19, TypeScript, and Tailwind CSS v4, it provides content creators and businesses with advanced analytics, scheduling, and AI-powered insights.
+Threads-Boost is a comprehensive analytics and automation platform for Meta's Threads social media platform. Built with Next.js 15, React 19, TypeScript, and Tailwind CSS v4, it provides content creators and businesses with advanced analytics, scheduling, and AI-powered insights.
 
 ## Development Commands
 

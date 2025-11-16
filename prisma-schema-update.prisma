@@ -1,0 +1,94 @@
+// Updated Prisma Schema for Threads OAuth Only Authentication
+// This shows the diff from current schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String            @id @default(cuid())
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // === THREADS OAUTH FIELDS ===
+  // Primary identifier for Threads OAuth
+  threadsUserId     String            @unique
+
+  // Threads profile information
+  threadsUsername   String
+  threadsFullName   String?           // NEW: Consistent field naming
+  threadsProfilePic String?           // NEW: Consistent field naming
+  threadsAccountId  String?           @unique
+
+  // === LEGACY ALIASES (Backward Compatibility) ===
+  // Keep existing fields for backward compatibility
+  fullName          String?           // @deprecated: Use threadsFullName instead
+  profilePictureUrl String?           // @deprecated: Use threadsProfilePic instead
+
+  // Subscription management
+  subscriptionTier  SubscriptionTier  @default(FREE)
+  subscriptionStatus SubscriptionStatus @default(ACTIVE)
+
+  // Timezone and preferences
+  timezone          String            @default("UTC")
+
+  // Sync tracking
+  lastSyncAt        DateTime?
+
+  // Relations
+  threadsTokens     ThreadsToken?
+
+  @@map("users")
+}
+
+model ThreadsToken {
+  id                String            @id @default(cuid())
+  userId            String            @unique
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // OAuth tokens
+  accessToken       String            @db.Text
+  refreshToken      String?           @db.Text
+
+  // Token metadata
+  tokenType         String            @default("bearer")
+  scope             String?
+
+  // Enhanced expiration tracking
+  expiresAt         DateTime
+  issuedAt          DateTime?         // NEW: When token was issued
+  lastRefreshedAt   DateTime?         // NEW: When token was last refreshed
+
+  // Threads account info (redundancy for safety)
+  threadsUserId     String
+  threadsUsername   String
+  threadsAccountId  String?
+
+  // Enhanced metadata
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  lastUsedAt        DateTime?
+  isValid           Boolean           @default(true)  // NEW: Token validity flag
+
+  @@map("threads_tokens")
+}
+
+// Enums remain unchanged
+enum SubscriptionTier {
+  FREE
+  CREATOR
+  PROFESSIONAL
+  BUSINESS
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELED
+  PENDING
+}

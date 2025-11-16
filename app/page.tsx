@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { ThreadsSignInOnlyButton } from '@/components/auth';
 import { useState } from 'react';
 
 export default function HomePage() {
@@ -91,14 +92,14 @@ export default function HomePage() {
             <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
               <BarChart3 className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-black">Threadlytics</span>
+            <span className="text-2xl font-bold text-black">Threads-Boost</span>
           </div>
           <div className="flex items-center space-x-6">
             <Button variant="ghost" asChild className="text-gray-600 hover:text-black">
-              <Link href="/login">Sign In</Link>
+              <Link href="/auth">Sign In</Link>
             </Button>
             <Button asChild className="bg-black text-white hover:bg-gray-800">
-              <Link href="/register">
+              <Link href="/auth">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -111,7 +112,7 @@ export default function HomePage() {
       <section className="py-24 px-6 bg-gray-50">
         <div className="mx-auto max-w-6xl text-center">
           <Badge className="mb-6 bg-black text-white border-0">
-            Trusted by 10,000+ creators
+            Trusted by 100+ creators
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-8 text-black">
@@ -127,13 +128,13 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-20">
             <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
-              <Link href="/register">
+              <Link href="/auth">
                 Start Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild className="text-lg px-10 py-4 h-14 border-gray-300 text-gray-700 hover:bg-gray-50">
-              <Link href="#features">
+              <Link href="/auth/threads-demo">
                 <Eye className="mr-2 h-5 w-5" />
                 View Demo
               </Link>
@@ -143,9 +144,9 @@ export default function HomePage() {
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { number: "10K+", label: "Creators", icon: Users },
-              { number: "2M+", label: "Posts Analyzed", icon: BarChart3 },
-              { number: "324%", label: "Avg. Growth", icon: TrendingUp }
+              { number: "100+", label: "Creators", icon: Users },
+              { number: "9k+", label: "Posts Analyzed", icon: BarChart3 },
+              { number: "214%", label: "Avg. Growth", icon: TrendingUp }
             ].map((stat, index) => (
               <div key={index} className="bg-white rounded-lg p-6 border border-gray-200 hover:shadow-lg transition-shadow duration-300">
                 <stat.icon className="h-8 w-8 text-black mb-3 mx-auto" />
@@ -250,7 +251,7 @@ export default function HomePage() {
               {
                 name: "Sarah Chen",
                 role: "Content Creator",
-                content: "Threadlytics helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
+                content: "Threads-Boost helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
                 rating: 5,
                 avatar: "👩‍💼"
               },
@@ -465,12 +466,12 @@ export default function HomePage() {
                 Start your free trial today
               </h2>
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of creators who are already using Threadlytics to grow their audience
+                Join thousands of creators who are already using Threads-Boost to grow their audience
                 and optimize their content strategy.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
                 <Button size="lg" asChild className="bg-black text-white hover:bg-gray-800 text-lg px-10 py-4 h-14">
-                  <Link href="/register">
+                  <Link href="/auth">
                     Start Free Trial
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
@@ -495,7 +496,7 @@ export default function HomePage() {
                 <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-bold text-black">Threadlytics</span>
+                <span className="text-2xl font-bold text-black">Threads-Boost</span>
               </div>
               <p className="text-sm text-gray-600 mb-6">
                 The ultimate analytics platform for Threads creators and businesses who want to grow their audience with data-driven insights.
@@ -568,11 +569,11 @@ export default function HomePage() {
           <div className="border-t border-gray-200 mt-12 pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <p className="text-sm text-gray-500">
-                &copy; 2026 Threadlytics. All rights reserved.
+                &copy; 2026 Threads-Boost. All rights reserved.
               </p>
               <div className="flex items-center gap-6 text-sm text-gray-500">
                 <span>Made for creators</span>
-                <span>•</span>
+                <span>❤️</span>
                 <span>Version 2.0</span>
               </div>
             </div>

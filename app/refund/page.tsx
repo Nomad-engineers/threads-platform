@@ -15,7 +15,7 @@ export default function RefundPolicyPage() {
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
               <DollarSign className="h-5 w-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold">Threadlytics</span>
+            <span className="text-xl font-bold">Threads-Boost</span>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" asChild>
@@ -41,7 +41,7 @@ export default function RefundPolicyPage() {
               Refund Policy
             </h1>
             <p className="text-lg text-muted-foreground mb-6">
-              Fair and transparent guidelines for refunds on Threadlytics subscriptions
+              Fair and transparent guidelines for refunds on Threads-Boost subscriptions
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
@@ -65,7 +65,7 @@ export default function RefundPolicyPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-muted-foreground leading-relaxed">
-                At Threadlytics, we want you to be completely satisfied with our social media analytics platform.
+                At Threads-Boost, we want you to be completely satisfied with our social media analytics platform.
                 This Refund Policy outlines our guidelines for refunds on our subscription-based services designed for Meta&apos;s Threads.
               </p>
               <p className="text-muted-foreground leading-relaxed">
@@ -248,7 +248,7 @@ export default function RefundPolicyPage() {
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-                    <span><strong>Account Email:</strong> The email address associated with your Threadlytics account</span>
+                    <span><strong>Account Email:</strong> The email address associated with your Threads-Boost account</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></span>
@@ -280,7 +280,7 @@ export default function RefundPolicyPage() {
                       <span className="font-medium">Email (Preferred)</span>
                     </div>
                     <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Send your request to: <strong>refunds@threadlytics.com</strong></li>
+                      <li>• Send your request to: <strong>refunds@threads-boost.online</strong></li>
                       <li>• Subject line: "Refund Request - [Your Account Email]"</li>
                       <li>• Response time: Within 24-48 hours</li>
                     </ul>
@@ -292,7 +292,7 @@ export default function RefundPolicyPage() {
                       <span className="font-medium">In-App Request</span>
                     </div>
                     <ul className="space-y-1 text-sm text-muted-foreground">
-                      <li>• Log into your Threadlytics account</li>
+                      <li>• Log into your Threads-Boost account</li>
                       <li>• Navigate to Account Settings → Billing → Refund Request</li>
                       <li>• Fill out the refund request form</li>
                       <li>• Receive confirmation email within 1 hour</li>
@@ -430,7 +430,7 @@ export default function RefundPolicyPage() {
                     <Mail className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Refund Department</div>
-                      <div className="text-sm text-muted-foreground">refunds@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">refunds@threads-boost.online</div>
                       <div className="text-xs text-muted-foreground">Response Time: 24-48 hours | Monday-Friday, 9 AM - 6 PM EST</div>
                     </div>
                   </div>
@@ -438,7 +438,7 @@ export default function RefundPolicyPage() {
                     <Shield className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Priority Support (Business Tier)</div>
-                      <div className="text-sm text-muted-foreground">business-support@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">business-support@threads-boost.online</div>
                       <div className="text-xs text-muted-foreground">Response Time: 12-24 hours | Phone Available Upon Request</div>
                     </div>
                   </div>
@@ -454,7 +454,7 @@ export default function RefundPolicyPage() {
                     <Users className="h-5 w-5 text-primary" />
                     <div>
                       <div className="font-medium">Support Team</div>
-                      <div className="text-sm text-muted-foreground">support@threadlytics.com</div>
+                      <div className="text-sm text-muted-foreground">support@threads-boost.online</div>
                       <div className="text-xs text-muted-foreground">Live Chat Available In-App During Business Hours</div>
                     </div>
                   </div>
@@ -468,13 +468,13 @@ export default function RefundPolicyPage() {
                 <div className="p-4 rounded-lg bg-orange-50 border border-orange-200">
                   <h4 className="font-medium mb-2 text-orange-800">Unresolved Issues:</h4>
                   <ol className="space-y-1 text-sm text-orange-700 ml-4">
-                    <li>1. Contact refunds@threadlytics.com</li>
-                    <li>2. If unresolved within 5 business days, escalate to management@threadlytics.com</li>
-                    <li>3. Final escalation to customer-advocate@threadlytics.com</li>
+                    <li>1. Contact refunds@threads-boost.online</li>
+                    <li>2. If unresolved within 5 business days, escalate to management@threads-boost.online</li>
+                    <li>3. Final escalation to customer-advocate@threads-boost.online</li>
                   </ol>
                   <h4 className="font-medium mb-2 mt-3 text-orange-800">Formal Complaints:</h4>
                   <ul className="space-y-1 text-sm text-orange-700 ml-4">
-                    <li>• Email: legal@threadlytics.com</li>
+                    <li>• Email: legal@threads-boost.online</li>
                     <li>• Response: Formal response within 10 business days</li>
                   </ul>
                 </div>
@@ -496,7 +496,7 @@ export default function RefundPolicyPage() {
                 <ul className="space-y-2 text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-chart-1 mt-2 flex-shrink-0"></span>
-                    <span><strong>Platform Shutdown:</strong> Full pro-rated refund if Threadlytics discontinues service</span>
+                    <span><strong>Platform Shutdown:</strong> Full pro-rated refund if Threads-Boost discontinues service</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="w-2 h-2 rounded-full bg-chart-1 mt-2 flex-shrink-0"></span>
@@ -612,12 +612,12 @@ export default function RefundPolicyPage() {
                 <div className="p-4 rounded-lg bg-muted/50">
                   <Mail className="h-6 w-6 text-primary mx-auto mb-2" />
                   <div className="font-medium">Refund Team</div>
-                  <div className="text-sm text-muted-foreground">refunds@threadlytics.com</div>
+                  <div className="text-sm text-muted-foreground">refunds@threads-boost.online</div>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <Users className="h-6 w-6 text-primary mx-auto mb-2" />
                   <div className="font-medium">General Support</div>
-                  <div className="text-sm text-muted-foreground">support@threadlytics.com</div>
+                  <div className="text-sm text-muted-foreground">support@threads-boost.online</div>
                 </div>
                 <div className="p-4 rounded-lg bg-muted/50">
                   <Phone className="h-6 w-6 text-primary mx-auto mb-2" />
@@ -630,7 +630,7 @@ export default function RefundPolicyPage() {
             <div className="p-6 rounded-lg bg-primary/5 border border-primary/20 mb-8">
               <p className="text-muted-foreground mb-4">
                 <strong className="text-foreground">Our Commitment:</strong> We&apos;re committed to providing excellent service and fair refund policies.
-                If you&apos;re not satisfied with Threadlytics, we want to make it right.
+                If you&apos;re not satisfied with Threads-Boost, we want to make it right.
               </p>
               <p className="text-sm text-muted-foreground">
                 This policy is designed to be fair and transparent while protecting both our customers and our business.
@@ -644,12 +644,6 @@ export default function RefundPolicyPage() {
               </Button>
               <Button variant="outline" asChild>
                 <Link href="/terms">View Terms of Service</Link>
-              </Button>
-              <Button asChild>
-                <Link href="mailto:refunds@threadlytics.com">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Request Refund
-                </Link>
               </Button>
             </div>
           </div>
@@ -665,7 +659,7 @@ export default function RefundPolicyPage() {
                 <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
                   <DollarSign className="h-5 w-5 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold">Threadlytics</span>
+                <span className="text-xl font-bold">Threads-Boost</span>
               </div>
               <p className="text-sm text-muted-foreground mb-4">
                 Analytics and automation platform for Threads creators and businesses.
@@ -700,7 +694,6 @@ export default function RefundPolicyPage() {
                 <li><Link href="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link></li>
                 <li><Link href="/refund-policy" className="hover:text-foreground transition-colors">Refund Policy</Link></li>
-                <li><Link href="/cookies" className="hover:text-foreground transition-colors">Cookie Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -708,7 +701,7 @@ export default function RefundPolicyPage() {
           <Separator className="my-8" />
 
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Threadlytics. All rights reserved.</p>
+            <p>&copy; 2024 Threads-Boost. All rights reserved.</p>
             <div className="flex gap-4">
               <Badge variant="outline" className="text-xs">Fair Refund Policy</Badge>
               <Badge variant="outline" className="text-xs">Customer Focused</Badge>

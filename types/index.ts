@@ -1,12 +1,14 @@
-// Global type definitions for Threadlytics
+// Global type definitions for Threads-Boost
 
 export interface User {
   id: string;
-  email: string;
-  threadsUserId?: string;
-  threadsUsername?: string;
-  subscriptionTier: 'free' | 'creator' | 'professional' | 'business';
-  subscriptionStatus: 'active' | 'inactive' | 'canceled';
+  threadsUserId: string;
+  threadsUsername: string;
+  threadsAccountId?: string;
+  fullName?: string;
+  profilePictureUrl?: string;
+  subscriptionTier: 'FREE' | 'CREATOR' | 'PROFESSIONAL' | 'BUSINESS';
+  subscriptionStatus: 'ACTIVE' | 'INACTIVE' | 'CANCELED' | 'PENDING';
   timezone: string;
   createdAt: Date;
   updatedAt: Date;
@@ -141,22 +143,29 @@ export interface CommentFilters {
   search?: string;
 }
 
-// API Request/Response types
-export interface LoginRequest {
-  email: string;
-  password?: string;
+// OAuth API Request/Response types
+export interface OAuthStartResponse {
+  success: boolean;
+  redirect_url: string;
+  state: string;
 }
 
-export interface RegisterRequest {
-  email: string;
-  password: string;
-  agreeToTerms: boolean;
+export interface OAuthCallbackResponse {
+  success: boolean;
+  user: User;
+  token: string;
+  tokens: {
+    access_token: string;
+    expires_in: number;
+    token_type: string;
+    scope?: string;
+  };
 }
 
 export interface AuthResponse {
+  success: boolean;
   user: User;
-  accessToken: string;
-  refreshToken: string;
+  token: string;
 }
 
 export interface CreateScheduledPostRequest {

@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String            @id @default(cuid())
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+
+  // Threads specific fields (required for OAuth-only auth)
+  threadsUserId     String            @unique
+  threadsUsername   String
+  threadsAccountId  String?           @unique
+  fullName          String?           // Threads full name
+  profilePictureUrl String?           // Threads profile picture
+
+  // Subscription management
+  subscriptionTier  SubscriptionTier  @default(FREE)
+  subscriptionStatus SubscriptionStatus @default(ACTIVE)
+
+  // Timezone and preferences
+  timezone          String            @default("UTC")
+
+  // Sync tracking
+  lastSyncAt        DateTime?
+
+  // Relations
+  threadsTokens     ThreadsToken?
+
+  @@map("users")
+}
+
+model ThreadsToken {
+  id                String            @id @default(cuid())
+  userId            String            @unique
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Access tokens
+  accessToken       String            @db.Text
+  refreshToken      String?           @db.Text
+
+  // Token metadata
+  tokenType         String            @default("bearer")
+  scope             String?
+
+  // Expiration tracking
+  expiresAt         DateTime
+
+  // Threads account info
+  threadsUserId     String
+  threadsUsername   String
+  threadsAccountId  String?
+
+  // Metadata
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  lastUsedAt        DateTime?
+
+  @@map("threads_tokens")
+}
+
+
+// Enums for subscription management
+enum SubscriptionTier {
+  FREE
+  CREATOR
+  PROFESSIONAL
+  BUSINESS
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  INACTIVE
+  CANCELED
+  PENDING
+}

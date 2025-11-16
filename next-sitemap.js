@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://threadlytics.com',
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://threads-boost.online',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   sitemapSize: 7000,

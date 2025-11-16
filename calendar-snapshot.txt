@@ -1,4 +1,4 @@
-uid=7_0 RootWebArea "Threadlytics - Analytics for Threads" url="http://localhost:3005/dashboard"
+uid=7_0 RootWebArea "Threads-Boost - Analytics for Threads" url="http://localhost:3005/dashboard"
   uid=7_1 button "Dashboard"
   uid=7_2 button "Analytics"
   uid=7_3 button "Activities"

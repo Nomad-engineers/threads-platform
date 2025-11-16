@@ -362,7 +362,7 @@ export default function NotFound() {
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <BarChart3 className="h-5 w-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold">Threadlytics</span>
+              <span className="text-xl font-bold">Threads-Boost</span>
             </Link>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" asChild>
@@ -450,7 +450,7 @@ export default function NotFound() {
                         "focus:ring-4 focus:ring-primary/20 transition-all duration-300 search-enhanced",
                         "focus:border-primary focus:shadow-2xl focus:shadow-primary/10"
                       )}
-                      aria-label="Search Threadlytics features and documentation"
+                      aria-label="Search Threads-Boost features and documentation"
                       aria-describedby="search-description"
                       role="combobox"
                       aria-expanded={showSuggestions}
@@ -513,7 +513,7 @@ export default function NotFound() {
                   )}
                 </form>
                 <p id="search-description" className="sr-only">
-                  Use this search to find pages, features, or content on Threadlytics
+                  Use this search to find pages, features, or content on Threads-Boost
                 </p>
               </div>
             </div>
@@ -614,7 +614,7 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <BarChart3 className="h-5 w-5" />
-                <span>&copy; 2024 Threadlytics. Analytics & automation for Threads.</span>
+                <span>&copy; 2024 Threads-Boost. Analytics & automation for Threads.</span>
               </div>
               <div className="flex gap-4">
                 <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>

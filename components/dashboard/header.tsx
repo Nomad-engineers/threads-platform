@@ -1,6 +1,6 @@
 "use client"
 
-import { Menu } from "lucide-react"
+import { Menu, LogOut, User, CreditCard, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
@@ -15,6 +15,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LayoutDashboard, BarChart3, Activity } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
+import { ThreadsBadge } from "@/components/auth/threads-badge"
+import { useThreadsAuth } from "@/lib/threads-auth"
 
 interface HeaderProps {
   onMenuClick?: () => void
@@ -48,6 +50,7 @@ const tabs = [
 export function Header({ onMenuClick, className }: HeaderProps) {
   const pathname = usePathname()
   const router = useRouter()
+  const { logout, user } = useThreadsAuth()
 
   // Determine active tab based on current pathname
   const getActiveTab = (): "dashboard" | "analytics" | "activities" => {
@@ -60,6 +63,11 @@ export function Header({ onMenuClick, className }: HeaderProps) {
 
   const handleTabClick = (href: string) => {
     router.push(href)
+  }
+
+  const handleLogout = async () => {
+    await logout()
+    router.push('/')
   }
 
   return (
@@ -106,6 +114,9 @@ export function Header({ onMenuClick, className }: HeaderProps) {
 
         {/* Right side: User controls */}
         <div className="flex items-center gap-3">
+          {/* Threads Badge */}
+          <ThreadsBadge compact />
+
           {/* Theme Toggle */}
           <ThemeToggle />
 
@@ -117,26 +128,45 @@ export function Header({ onMenuClick, className }: HeaderProps) {
               className="relative h-8 w-8 rounded-full"
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage src="/avatars/user.jpg" alt="User" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarImage
+                  src={user?.threads_profile_picture_url}
+                  alt={user?.username || "User"}
+                />
+                <AvatarFallback>
+                  {user?.username?.charAt(0).toUpperCase() || 'U'}
+                </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">John Doe</p>
+                <p className="text-sm font-medium leading-none">
+                  {user?.username || 'User'}
+                </p>
                 <p className="text-xs leading-none text-muted-foreground">
-                  john@example.com
+                  @{user?.username || 'threads_user'}
                 </p>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <CreditCard className="mr-2 h-4 w-4" />
+              Billing
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Log out</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
         </div>

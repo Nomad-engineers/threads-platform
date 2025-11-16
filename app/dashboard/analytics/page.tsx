@@ -90,7 +90,7 @@ const topPosts = [
   },
   {
     id: "3",
-    content: "Behind the scenes at Threadlytics HQ...",
+    content: "Behind the scenes at Threads-Boost HQ...",
     engagement: 6700,
     reach: 28000,
     rate: 6.1,
