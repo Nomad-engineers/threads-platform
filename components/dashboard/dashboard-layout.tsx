@@ -54,7 +54,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
           <Header onMenuClick={() => setSidebarOpen(true)} />
 
           {/* Page content */}
-          <main className="min-h-[calc(100vh-4rem)] w-full transition-colors duration-300">
+          <main className="min-h-[calc(100vh-4rem)] w-full transition-colors duration-300 scroll-clamp-y">
             {children}
           </main>
         </div>

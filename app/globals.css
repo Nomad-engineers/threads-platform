@@ -176,14 +176,54 @@
     color: var(--foreground);
     font-feature-settings: "rlig" 1, "calt" 1;
     transition: background-color 0.3s ease, color 0.3s ease;
+    /* Flutter-style clamping scroll physics */
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+    overflow-x: hidden;
+  }
+
+  /* Apply clamping scroll to all scrollable containers */
+  html, body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+  }
+
+  /* Remove iOS elastic bounce and stretch effects */
+  * {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
   }
 }
 
 /* Custom scrollbar */
 @layer utilities {
+  /* Flutter-style clamping scroll utilities */
+  .scroll-clamp {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .scroll-clamp-x {
+    overscroll-behavior-x: none;
+    -webkit-overflow-scrolling: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .scroll-clamp-y {
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: auto;
   }
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -561,18 +601,18 @@
 
 /* Scroll area fixes for modal contexts */
 @layer utilities {
-  /* Ensure scroll areas work properly within modals */
+  /* Ensure scroll areas work properly within modals - with clamping physics */
   [data-manual-time-scroll] .overflow-y-auto {
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: auto !important;
+    overscroll-behavior: none !important;
   }
 
   /* Fix scrolling issues when body has overflow:hidden */
   body:has([role="dialog"]) [data-manual-time-scroll] .overflow-y-auto,
   body.overflow-hidden [data-manual-time-scroll] .overflow-y-auto {
     position: relative !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: auto !important;
+    overscroll-behavior: none !important;
   }
 
   /* Ensure modal scroll areas capture events properly */
@@ -582,8 +622,8 @@
 
   [role="dialog"] [data-manual-time-scroll] .overflow-y-auto {
     pointer-events: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior: contain !important;
+    -webkit-overflow-scrolling: auto !important;
+    overscroll-behavior: none !important;
   }
 
   /* Prevent event bubbling from blocking scroll */
@@ -591,11 +631,11 @@
     pointer-events: auto !important;
   }
 
-  /* Enhanced touch scrolling for mobile */
+  /* Enhanced touch scrolling for mobile - with clamping physics */
   @media (pointer: coarse) {
     [data-manual-time-scroll] .overflow-y-auto {
-      -webkit-overflow-scrolling: touch !important;
-      overscroll-behavior: contain !important;
+      -webkit-overflow-scrolling: auto !important;
+      overscroll-behavior: none !important;
       touch-action: pan-y !important;
     }
   }

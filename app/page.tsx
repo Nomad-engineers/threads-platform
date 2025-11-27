@@ -217,7 +217,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white scroll-clamp-y">
       {/* Navigation */}
       <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <nav className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
@@ -539,7 +539,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                <span>10,000+ creators</span>
+                <span>100+ creators</span>
               </div>
             </div>
           </div>
