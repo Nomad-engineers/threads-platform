@@ -9,13 +9,22 @@ import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useState, useEffect, useRef, useCallback } from 'react';
 
+// Profile picture URLs for Threads users
+const profilePictures = {
+  sarahcreates: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
+  marcusdigital: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+  emmawrites: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+  alexkimmusic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+  lisacreates: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face"
+};
+
 // Testimonial data
 const testimonials = [
   {
     id: 1,
     name: "Sarah Chen",
     username: "@sarahcreates",
-    avatar: "👩‍🎨",
+    avatar: profilePictures.sarahcreates,
     rating: 5,
     message: "Threads-Boost has completely transformed my content strategy. I've seen a 300% increase in engagement in just 3 months!"
   },
@@ -23,7 +32,7 @@ const testimonials = [
     id: 2,
     name: "Marcus Rodriguez",
     username: "@marcusdigital",
-    avatar: "👨‍💻",
+    avatar: profilePictures.marcusdigital,
     rating: 5,
     message: "The analytics are incredibly detailed. I finally understand what content resonates with my audience. Game changer!"
   },
@@ -31,7 +40,7 @@ const testimonials = [
     id: 3,
     name: "Emma Thompson",
     username: "@emmawrites",
-    avatar: "👩‍💼",
+    avatar: profilePictures.emmawrites,
     rating: 5,
     message: "Scheduling posts has saved me so much time. The AI suggestions for optimal posting times are remarkably accurate."
   },
@@ -39,7 +48,7 @@ const testimonials = [
     id: 4,
     name: "Alex Kim",
     username: "@alexkimmusic",
-    avatar: "🎵",
+    avatar: profilePictures.alexkimmusic,
     rating: 5,
     message: "The comment management features are brilliant. I can engage with my community much more effectively now."
   },
@@ -47,7 +56,7 @@ const testimonials = [
     id: 5,
     name: "Lisa Anderson",
     username: "@lisacreates",
-    avatar: "🌟",
+    avatar: profilePictures.lisacreates,
     rating: 5,
     message: "Best investment I've made for my social media growth. The insights are priceless and the scheduling is seamless."
   }
@@ -110,7 +119,11 @@ const AutoSlider: React.FC = () => {
                   "{testimonial.message}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="text-2xl flex-shrink-0">{testimonial.avatar}</div>
+                  <img
+                    src={testimonial.avatar}
+                    alt={`${testimonial.name}'s profile picture`}
+                    className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <div className="font-semibold text-black text-sm truncate">{testimonial.name}</div>
                     <div className="text-xs text-gray-600 truncate">{testimonial.username}</div>
