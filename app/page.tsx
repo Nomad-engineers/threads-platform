@@ -1,14 +1,134 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Star, Users, Zap, Shield, Globe, Target, Eye, Sparkles } from 'lucide-react';
+import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Users, Zap, Shield, Globe, Target, Eye, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { ThreadsSignInOnlyButton } from '@/components/auth';
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+
+// Testimonial data
+const testimonials = [
+  {
+    id: 1,
+    name: "Sarah Chen",
+    username: "@sarahcreates",
+    avatar: "👩‍🎨",
+    rating: 5,
+    message: "Threads-Boost has completely transformed my content strategy. I've seen a 300% increase in engagement in just 3 months!"
+  },
+  {
+    id: 2,
+    name: "Marcus Rodriguez",
+    username: "@marcusdigital",
+    avatar: "👨‍💻",
+    rating: 5,
+    message: "The analytics are incredibly detailed. I finally understand what content resonates with my audience. Game changer!"
+  },
+  {
+    id: 3,
+    name: "Emma Thompson",
+    username: "@emmawrites",
+    avatar: "👩‍💼",
+    rating: 5,
+    message: "Scheduling posts has saved me so much time. The AI suggestions for optimal posting times are remarkably accurate."
+  },
+  {
+    id: 4,
+    name: "Alex Kim",
+    username: "@alexkimmusic",
+    avatar: "🎵",
+    rating: 5,
+    message: "The comment management features are brilliant. I can engage with my community much more effectively now."
+  },
+  {
+    id: 5,
+    name: "Lisa Anderson",
+    username: "@lisacreates",
+    avatar: "🌟",
+    rating: 5,
+    message: "Best investment I've made for my social media growth. The insights are priceless and the scheduling is seamless."
+  }
+];
+
+// Simple AutoSlider Component with continuous CSS animation
+const AutoSlider: React.FC = () => {
+  // Duplicate content for seamless loop
+  const duplicatedTestimonials = [...testimonials, ...testimonials];
+
+  const handleTestimonialClick = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden py-8">
+      {/* Gradient fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-gray-50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-gray-50 to-transparent z-10 pointer-events-none" />
+
+      <div className="overflow-hidden">
+        <style jsx>{`
+          @keyframes scroll-left {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+
+          .scroll-animation {
+            animation: scroll-left 60s linear infinite;
+          }
+        `}</style>
+
+        <div className="flex gap-6 scroll-animation" style={{ display: 'flex', width: 'fit-content' }}>
+          {duplicatedTestimonials.map((testimonial, index) => (
+            <Card
+              key={`${testimonial.id}-${index}`}
+              className="group relative bg-white border border-gray-200 hover:shadow-xl transition-all duration-300 hover:scale-105 hover:-translate-y-1 cursor-pointer flex-shrink-0 w-80 h-48 mx-3"
+              onClick={() => handleTestimonialClick(`https://threads.net${testimonial.username}`)}
+              tabIndex={0}
+              role="button"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleTestimonialClick(`https://threads.net${testimonial.username}`);
+                }
+              }}
+              aria-label={`View ${testimonial.name}'s Threads profile: ${testimonial.message}`}
+            >
+              <CardContent className="p-6 h-full flex flex-col justify-between">
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-4 w-4 fill-yellow-500 text-yellow-500" />
+                  ))}
+                </div>
+                <p className="text-gray-700 text-sm mb-4 italic line-clamp-3 flex-grow">
+                  "{testimonial.message}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl flex-shrink-0">{testimonial.avatar}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-black text-sm truncate">{testimonial.name}</div>
+                    <div className="text-xs text-gray-600 truncate">{testimonial.username}</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Accessibility indicator */}
+      <div className="sr-only" aria-live="polite" aria-atomic="true">
+        Auto-scrolling testimonials carousel with continuous movement.
+      </div>
+    </div>
+  );
+};
 
 export default function HomePage() {
   const [isAnnual, setIsAnnual] = useState(false);
@@ -245,49 +365,9 @@ export default function HomePage() {
             </h2>
           </div>
 
-          {/* Testimonials */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {[
-              {
-                name: "Sarah Chen",
-                role: "Content Creator",
-                content: "Threads-Boost helped me grow my following by 400% in just 3 months. The AI insights are game-changing!",
-                rating: 5,
-                avatar: "👩‍💼"
-              },
-              {
-                name: "Marcus Rodriguez",
-                role: "Digital Marketer",
-                content: "The scheduling feature alone saved me 10+ hours per week. Absolutely essential for serious creators.",
-                rating: 5,
-                avatar: "👨‍💻"
-              },
-              {
-                name: "Emma Thompson",
-                role: "Brand Strategist",
-                content: "Best analytics tool for Threads I've used. The insights are detailed yet easy to understand.",
-                rating: 5,
-                avatar: "👩‍🎨"
-              }
-            ].map((testimonial, index) => (
-              <Card key={index} className="border border-gray-200 bg-white p-8 hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center gap-2 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
-                  ))}
-                </div>
-                <p className="text-gray-700 mb-6 italic">
-                  "{testimonial.content}"
-                </p>
-                <div className="flex items-center gap-4">
-                  <div className="text-3xl">{testimonial.avatar}</div>
-                  <div>
-                    <div className="font-semibold text-black">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
-                  </div>
-                </div>
-              </Card>
-            ))}
+          {/* Optimized AutoSlider */}
+          <div className="mb-20">
+            <AutoSlider />
           </div>
 
           {/* Trust indicators */}
