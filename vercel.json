@@ -1,7 +1,7 @@
 {
   "buildCommand": "pnpm build",
   "outputDirectory": ".next",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --frozen-lockfile",
   "framework": "nextjs",
   "functions": {
     "app/api/**/*.ts": {
@@ -10,5 +10,10 @@
   },
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "build": {
+    "env": {
+      "PRISMA_GENERATE_SKIP_AUTOIMPORT": "false"
+    }
   }
 }

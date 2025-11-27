@@ -7,7 +7,7 @@
     "dev": "next dev --turbopack",
     "dev:standard": "next dev",
     "dev:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "build:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm build",
     "start": "next start",
     "lint": "next lint",
@@ -24,6 +24,7 @@
     "db:studio": "prisma studio",
     "db:seed": "tsx prisma/seed.ts",
     "analyze": "cross-env ANALYZE=true next build",
+    "postinstall": "prisma generate",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
