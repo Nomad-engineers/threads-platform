@@ -4,7 +4,7 @@ import {
   refreshAccessToken,
   THREADS_API_BASE_URL
 } from './threads-oauth';
-import { getThreadsTokens, updateTokenLastUsed, isLongLivedTokenExpired } from './threads-db';
+import { getThreadsTokens, updateTokenLastUsed, isAccessTokenExpired } from './threads-db';
 import { prisma } from './db';
 
 // Enhanced TypeScript types for Threads API responses
@@ -130,7 +130,7 @@ export class ThreadsApiClient {
    */
   private async isTokenExpired(): Promise<boolean> {
     try {
-      return await isLongLivedTokenExpired(this.config.userId);
+      return await isAccessTokenExpired(this.config.userId);
     } catch (error) {
       this.logger('ERROR', 'Failed to check token expiration', error);
       return true; // Assume expired if we can't check

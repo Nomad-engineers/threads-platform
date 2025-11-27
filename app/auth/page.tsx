@@ -4,14 +4,14 @@ import Link from 'next/link';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThreads } from '@fortawesome/free-brands-svg-icons';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function AuthPage() {
+function AuthPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const router = useRouter();
@@ -201,5 +201,28 @@ export default function AuthPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="w-full max-w-md">
+          <Card className="border-0 shadow-none">
+            <CardContent className="p-8 text-center space-y-6">
+              <Skeleton className="h-16 w-16 rounded-2xl mx-auto" />
+              <div className="space-y-3">
+                <Skeleton className="h-8 w-48 mx-auto rounded-lg" />
+                <Skeleton className="h-4 w-64 mx-auto rounded-md" />
+              </div>
+              <Skeleton className="h-14 w-full rounded-xl" />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    }>
+      <AuthPageContent />
+    </Suspense>
   );
 }
