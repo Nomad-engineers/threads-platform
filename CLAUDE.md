@@ -11,7 +11,9 @@ Threads-Boost is a comprehensive analytics and automation platform for Meta's Th
 ### Core Development
 - `pnpm dev` - Start development server with Turbopack (recommended)
 - `pnpm dev:standard` - Start development server without Turbopack
-- `pnpm build` - Build for production
+- `pnpm dev:clean` - Clean cache and start development server
+- `pnpm build` - Build for production (includes Prisma generation)
+- `pnpm build:clean` - Clean cache and build for production
 - `pnpm start` - Start production server
 - `pnpm analyze` - Analyze bundle size (sets ANALYZE=true)
 
@@ -34,6 +36,10 @@ Threads-Boost is a comprehensive analytics and automation platform for Meta's Th
 - `pnpm db:studio` - Open Prisma Studio database browser
 - `pnpm db:seed` - Seed database with sample data
 
+### Additional Commands
+- `pnpm postinstall` - Generate Prisma client (runs automatically after install)
+- `pnpm postbuild` - Generate sitemap after build
+
 ## Architecture Overview
 
 ### Full-Stack Next.js Structure
@@ -41,7 +47,7 @@ Threads-Boost is a comprehensive analytics and automation platform for Meta's Th
 - **Route Groups**: `(auth)` for authentication pages, `(dashboard)` for main application
 - **API Routes**: RESTful API in `app/api/` with middleware for rate limiting and auth
 - **Database**: PostgreSQL with Prisma ORM and Redis caching
-- **Authentication**: Firebase Auth with OAuth 2.0 (Google/Meta providers)
+- **Authentication**: Threads OAuth 2.0 with token-based session management
 
 ### Key Directories
 - `app/` - Next.js App Router pages and API routes
@@ -59,14 +65,14 @@ Threads-Boost is a comprehensive analytics and automation platform for Meta's Th
 ## Database Schema
 
 ### Core Tables
-- `users` - User accounts and authentication data
-- `threads_posts` - Posts data and engagement metrics
-- `threads_comments` - Comment data and management
-- `scheduled_posts` - Content scheduling queue
-- `daily_analytics` - Aggregated analytics data
-- `user_settings` - User preferences and configuration
-- `subscriptions` - Billing and subscription tiers
-- `activity_logs` - Audit trail and user actions
+- `users` - User accounts with Threads-specific authentication fields
+- `threads_tokens` - OAuth tokens and session management for Threads API
+
+### Database Schema Features
+- **Threads-centric authentication** (OAuth-only, no email/password)
+- **Subscription tiers** - FREE, CREATOR, PROFESSIONAL, BUSINESS
+- **Token management** with refresh capabilities and expiration tracking
+- **Timezone support** for global users
 
 ### Database Operations
 Always use Prisma client for database operations. The client is generated with TypeScript types for type safety.
@@ -91,11 +97,11 @@ Always use Prisma client for database operations. The client is generated with T
 
 ## Authentication & Authorization
 
-### Firebase Auth Integration
-- OAuth 2.0 flow with Google and Meta providers
-- JWT token-based session management
+### Threads OAuth Integration
+- OAuth 2.0 flow with Threads API
+- Token-based session management with refresh capabilities
 - Role-based access control by subscription tier
-- User data synchronization with Threads API
+- Threads-specific user data (threadsUserId, threadsUsername)
 
 ### Permission Matrix
 - **Free**: Basic analytics (10 posts/week, 30 days data)
@@ -202,15 +208,15 @@ Always use Prisma client for database operations. The client is generated with T
 - `REDIS_URL` - Redis connection string
 - `NEXTAUTH_URL` and `NEXTAUTH_SECRET` - NextAuth configuration
 - `THREADS_CLIENT_ID/SECRET` - Threads API credentials
-- `FIREBASE_PROJECT_ID/CLIENT_ID/CLIENT_SECRET` - Firebase configuration
+- `THREADS_REDIRECT_URI` - OAuth callback URL
 - `SENDGRID_API_KEY` - Email service configuration
 - `PADDLE_VENDOR_ID/AUTH_CODE` - Payment processing
 
 ### Development Setup
 1. Copy `.env.example` to `.env.local`
 2. Configure local PostgreSQL and Redis instances
-3. Set up Firebase project and enable required services
-4. Obtain Threads API developer credentials
+3. Obtain Threads API developer credentials
+4. Configure OAuth redirect URI in Threads developer console
 5. Run `pnpm db:migrate` and `pnpm db:seed` for database setup
 
 ## Deployment
@@ -222,16 +228,16 @@ Always use Prisma client for database operations. The client is generated with T
 - Integrated analytics and monitoring
 
 ### Build Process
+- Prisma client generation
 - TypeScript compilation and type checking
-- ESLint and Prettier code formatting
-- Jest test execution
+- ESLint code formatting
 - Next.js optimization and bundling
-- Static asset optimization
+- Sitemap generation
 
 ## Common Development Workflows
 
 ### Adding New Features
-1. Create feature branch from `develop`
+1. Create feature branch from `main`
 2. Implement components, API routes, and database changes
 3. Add comprehensive tests
 4. Update documentation if needed
@@ -274,3 +280,18 @@ Always use Prisma client for database operations. The client is generated with T
 - **Component Library**: Based on [shadcn/ui](https://ui.shadcn.com/)
 
 This codebase follows modern React and Next.js best practices with a focus on performance, scalability, and developer experience.
+
+## Technology Stack Specifics
+
+### Key Dependencies
+- **Next.js 15.5.4** with React 19.1.0 - Latest features including App Router and Server Components
+- **TypeScript 5.x** - Type safety across the entire stack
+- **Tailwind CSS v4** - Modern utility-first CSS framework
+- **Prisma 5.x** - Type-safe database ORM with PostgreSQL
+- **shadcn/ui** - Professional component library built on Radix UI
+- **NextAuth 5.0** - Authentication with Threads OAuth integration
+- **Redis** - High-performance caching and session storage
+
+### Package Manager
+- **pnpm 8+** - Efficient, disk-space saving package manager
+- All scripts use pnpm for consistency
