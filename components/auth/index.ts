@@ -1,2 +1,4 @@
-export { ThreadsSignInButton, ThreadsSignInOnlyButton } from './threads-signin-button';
-export { ThreadsAuthStatus } from './threads-auth-status';
+// Auth components exports
+
+export { ThreadsBadge, ThreadsProfileCard } from './threads-badge';
+export { AuthGuard, PremiumGuard, ProfessionalGuard, BusinessGuard } from './auth-guard';

@@ -3,34 +3,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
-import { AuthResponse, AuthState } from '@/types/auth'
 import { CONSOLE_MESSAGES } from '@/lib/constants'
-
-// Helper function to get API URL
-function getLoginApiUrl(): string {
-  const redirectUri =
-    process.env.NEXT_PUBLIC_THREADS_REDIRECT_URI || 'https://0cf8138f070a.ngrok-free.app/auth'
-  const apiBaseUrl =
-    process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://threads-platform-cms.vercel.app/api'
-  return `${apiBaseUrl}/users/login?redirect_uri=${redirectUri}`
-}
-
-// Helper function to get OAuth URL
-function getThreadsOAuthUrl(): string {
-  const clientId = process.env.NEXT_PUBLIC_THREADS_CLIENT_ID || '1165567432148744'
-  const redirectUri =
-    process.env.NEXT_PUBLIC_THREADS_REDIRECT_URI || 'https://0cf8138f070a.ngrok-free.app/auth'
-  const scopes = [
-    'threads_basic',
-    'threads_content_publish',
-    'threads_manage_insights',
-    'threads_manage_replies',
-    'threads_profile_discovery',
-    'threads_read_replies',
-  ]
-  const scopeString = scopes.join(',')
-  return `https://threads.net/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scopeString}`
-}
+import {
+  AUTH_CONFIG,
+  authStorage,
+  authApi,
+  generateThreadsOAuthUrl,
+  hasAuthCode,
+  parseAuthCode,
+  clearAuthCodeFromUrl,
+} from '@/lib/auth'
+import type { AuthState, AuthResponse } from '@/types/auth'
 
 export function useThreadsAuth() {
   const router = useRouter()
@@ -45,96 +28,133 @@ export function useThreadsAuth() {
     error: null,
   })
 
+  // State setters
   const setLoading = (isLoading: boolean) => setState(prev => ({ ...prev, isLoading }))
-
   const setRedirecting = (isRedirecting: boolean) => setState(prev => ({ ...prev, isRedirecting }))
-
   const setError = (error: string | null) => setState(prev => ({ ...prev, error }))
+  const setUser = (user: any) => setState(prev => ({ ...prev, user, isAuthenticated: !!user }))
 
+  // Send auth code to backend
   const sendAuthCode = useCallback(
     async (code: string): Promise<void> => {
       try {
-        const response = await fetch(getLoginApiUrl(), {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Code: code,
-          },
+        setLoading(true)
+
+        const data: AuthResponse = await authApi.sendAuthCode(code)
+        console.log(CONSOLE_MESSAGES.AUTH_SUCCESSFUL, data)
+
+        // Store tokens and user data
+        const { accessToken, user } = data
+        authStorage.setAccessToken(accessToken)
+        authStorage.setUser(user)
+
+        // Update state
+        setUser(user)
+
+        toast({
+          title: user?.name ? `Welcome ${user.name}!` : 'Welcome!',
+          description: 'Successfully authenticated with Threads.',
         })
 
-        if (response.ok) {
-          const data: AuthResponse = await response.json()
-          console.log(CONSOLE_MESSAGES.AUTH_SUCCESSFUL, data)
-
-          const { accessToken, user } = data
-          localStorage.setItem('accessToken', accessToken)
-
-          setState(prev => ({
-            ...prev,
-            isAuthenticated: true,
-            user: user || null,
-          }))
-
-          toast({
-            title: user?.name ? `Welcome ${user.name}!` : 'Welcome!',
-            description: 'Successfully authenticated with Threads.',
-          })
-
-          console.log(CONSOLE_MESSAGES.REDIRECTING)
-          router.push('/dashboard')
-        } else {
-          console.error(CONSOLE_MESSAGES.API_REQUEST_FAILED, response.status, response.statusText)
-          throw Error('Authentication Error')
-        }
+        console.log(CONSOLE_MESSAGES.REDIRECTING)
+        router.push(AUTH_CONFIG.ui.defaultRedirect)
       } catch (error) {
         console.error(CONSOLE_MESSAGES.AUTH_FAILED, error)
-        setError(error instanceof Error ? error.message : 'Authentication failed')
+        const errorMessage = error instanceof Error ? error.message : 'Authentication failed'
+        setError(errorMessage)
+
         toast({
           title: 'Authentication Error',
-          description: error instanceof Error ? error.message : 'Authentication failed',
+          description: errorMessage,
           variant: 'destructive',
         })
+
         setRedirecting(false)
+      } finally {
+        setLoading(false)
       }
     },
     [router, toast]
   )
 
+  // Initialize auth state from storage
   useEffect(() => {
-    // Parse the URL to get the authorization code
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
+    const initializeAuth = () => {
+      try {
+        const accessToken = authStorage.getAccessToken()
+        const storedUser = authStorage.getUser()
 
-    if (code && !isProcessed.current) {
-      isProcessed.current = true
-      setRedirecting(true)
-      // Remove any #_ fragments and clean the code
-      const cleanCode = code.replace(/#_.*$/, '')
-      console.log(CONSOLE_MESSAGES.AUTH_CODE_EXTRACTED, cleanCode)
-      sendAuthCode(cleanCode)
+        if (accessToken && storedUser) {
+          setUser(storedUser)
+        }
+      } catch (error) {
+        console.error('Failed to initialize auth state:', error)
+        authStorage.clearAuthData()
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    initializeAuth()
+  }, [])
+
+  // Handle OAuth callback
+  useEffect(() => {
+    if (hasAuthCode() && !isProcessed.current) {
+      const code = parseAuthCode(window.location.search)
+      if (code) {
+        isProcessed.current = true
+        clearAuthCodeFromUrl()
+        sendAuthCode(code)
+      }
     }
   }, [sendAuthCode])
 
-  const handleAuthWithThreads = useCallback(async (): Promise<void> => {
-    setLoading(true)
-
+  // Login with Threads
+  const handleAuthWithThreads = useCallback(() => {
     try {
-      // Direct redirect to Threads OAuth
-      window.location.href = getThreadsOAuthUrl()
+      setRedirecting(true)
+      const oauthUrl = generateThreadsOAuthUrl()
+      window.location.href = oauthUrl
     } catch (error) {
-      console.error(CONSOLE_MESSAGES.AUTH_ERROR, error)
-      setError('Failed to connect to Threads. Please try again.')
-      toast({
-        title: 'Connection Error',
-        description: 'Failed to connect to Threads. Please try again.',
-        variant: 'destructive',
-      })
-      setLoading(false)
+      console.error('Failed to generate OAuth URL:', error)
+      setError('Failed to start authentication')
+      setRedirecting(false)
     }
-  }, [toast])
+  }, [])
+
+  // Logout
+  const logout = useCallback(async () => {
+    try {
+      setLoading(true)
+      await authApi.logout()
+    } catch (error) {
+      console.warn('Logout API call failed:', error)
+    } finally {
+      authStorage.clearAuthData()
+      setUser(null)
+      setError(null)
+      setLoading(false)
+      router.push(AUTH_CONFIG.ui.authPage)
+    }
+  }, [router])
+
+  // Refresh user data
+  const refreshUserData = useCallback(async () => {
+    try {
+      const userData = await authApi.getUserProfile()
+      authStorage.setUser(userData)
+      setUser(userData)
+    } catch (error) {
+      console.error('Failed to refresh user data:', error)
+      setError('Failed to refresh user data')
+    }
+  }, [])
 
   return {
     ...state,
     handleAuthWithThreads,
+    logout,
+    refreshUserData,
   }
 }
