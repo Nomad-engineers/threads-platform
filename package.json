@@ -4,7 +4,7 @@
   "private": true,
   "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "PORT=3000 next dev --turbopack",
     "dev:standard": "next dev",
     "dev:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm dev",
     "build": "prisma generate && next build",

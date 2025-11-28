@@ -51,14 +51,8 @@ export function middleware(request: NextRequest) {
   // Get authentication status
   const authStatus = getThreadsAuthStatus(request);
 
-  // Redirect unauthenticated users from protected paths
-  if (isProtectedPath && !authStatus.isAuthenticated) {
-    const authUrl = new URL('/auth', request.url);
-    authUrl.searchParams.set('error', 'authentication_required');
-    authUrl.searchParams.set('redirect', pathname);
-
-    return NextResponse.redirect(authUrl);
-  }
+  // Allow access to dashboard - authentication will be checked on client side
+  // Don't redirect from middleware since we use localStorage
 
   // For API routes, return 401 instead of redirect
   if (pathname.startsWith('/api/') && isProtectedPath && !authStatus.isAuthenticated) {
@@ -68,11 +62,7 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // Redirect authenticated users from auth pages to dashboard
-  if (authStatus.isAuthenticated && (pathname === '/' || pathname === '/auth')) {
-    const dashboardUrl = new URL('/dashboard', request.url);
-    return NextResponse.redirect(dashboardUrl);
-  }
+  // Don't redirect authenticated users - let client handle auth flow
 
   // Add auth headers to requests for downstream usage
   const response = NextResponse.next();
