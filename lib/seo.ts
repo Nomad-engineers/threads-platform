@@ -725,15 +725,6 @@ export function generateStructuredJSONLD(data: Record<string, any>[]): string {
   return data.map(item => JSON.stringify(item, null, 2)).join('\n');
 }
 
-// Slug generation for clean URLs
-export function generateSlug(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9 -]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-'); // Remove duplicate hyphens
-}
 
 // Generate canonical URL
 export function generateCanonicalUrl(path: string = ''): string {
@@ -790,25 +781,6 @@ export function getCommercialKeywords(): string[] {
   return TARGET_KEYWORDS.commercial;
 }
 
-// Calculate reading time
-export function calculateReadingTime(content: string): number {
-  const wordsPerMinute = 200;
-  const words = content.trim().split(/\s+/).length;
-  return Math.ceil(words / wordsPerMinute);
-}
-
-// Generate excerpt
-export function generateExcerpt(content: string, maxLength: number = 160): string {
-  const cleanContent = content.replace(/[^a-zA-Z0-9\s]/g, '').trim();
-  if (cleanContent.length <= maxLength) return cleanContent;
-
-  const truncated = cleanContent.substring(0, maxLength).trim();
-  const lastSpaceIndex = truncated.lastIndexOf(' ');
-
-  return lastSpaceIndex > 0
-    ? truncated.substring(0, lastSpaceIndex) + '...'
-    : truncated + '...';
-}
 
 // SEO validation utilities
 export const seoValidators = {
