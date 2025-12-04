@@ -1,13 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import Head from 'next/head';
 import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Users, Zap, Shield, Globe, Target, Eye, Sparkles, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState } from 'react';
 
 // Profile picture URLs for Threads users
 const profilePictures = {
@@ -146,6 +147,84 @@ const AutoSlider: React.FC = () => {
 export default function HomePage() {
   const [isAnnual, setIsAnnual] = useState(false);
 
+  // Enhanced SEO keywords for home page - optimized with content marketing strategy
+  // High-Intent Commercial: pricing, subscription, ROI, business account management
+  // Question-Based: how to grow Threads, schedule posts, analyze performance
+  // Competitor: vs Hootsuite, Buffer, Later, Sprout Social comparison
+  // Long-Tail: for creators, agencies, enterprise, AI insights, API integration
+  // Benefit-Oriented: increase engagement, save time, boost reach, maximize ROI
+  // 2025 Trends: AI optimization, video analytics, social commerce, predictive analytics
+  const keywords = [
+    'Threads analytics pricing',
+    'Threads automation subscription',
+    'best Threads analytics platform 2025',
+    'Threads business account management',
+    'how to grow Threads followers',
+    'how to schedule Threads posts automatically',
+    'how to analyze Threads performance metrics',
+    'Threads vs Hootsuite analytics comparison',
+    'Threads vs Buffer pricing comparison',
+    'best Threads alternative to Later',
+    'Threads analytics for content creators',
+    'automated Threads posting for agencies',
+    'enterprise Threads automation tools',
+    'AI-powered Threads optimization',
+    'Threads hashtag performance tracking',
+    'Threads engagement rate calculator',
+    'Threads content calendar management',
+    'increase Threads engagement with analytics',
+    'grow Threads followers automatically',
+    'save time with Threads automation',
+    'boost Threads reach and visibility',
+    'improve Threads content performance insights',
+    'Threads analytics ROI calculator',
+    'Threads analytics free trial',
+    'Threads video performance tracking',
+    'Threads analytics API integration',
+    'predictive Threads analytics AI',
+    'Threads analytics team collaboration',
+    'Threads analytics custom reports export',
+    'Threads competitor benchmarking tool',
+    'Threads sentiment analysis platform',
+    'real-time Threads trend tracking',
+    'Threads analytics for e-commerce',
+    'Threads influencer marketing tools',
+    'Threads social commerce integration',
+    'Threads analytics dashboard reporting',
+    'Threads marketing automation suite',
+    'Threads content strategy optimizer',
+    'Threads analytics machine learning',
+    'Threads analytics customer support',
+    'professional Threads marketing dashboard',
+    'Threads analytics data security',
+    'comprehensive Threads management platform',
+    'Threads analytics mobile app',
+    'Threads analytics API documentation',
+    'Threads analytics integration guide',
+    'Threads analytics pricing plans',
+    'Threads analytics enterprise solutions',
+    'Threads analytics for small business',
+    'Threads analytics for startups',
+    'Threads analytics for media companies',
+    'Threads analytics case studies',
+    'Threads analytics success stories',
+    'Threads analytics testimonials',
+    'Threads analytics demo account',
+    'Threads analytics onboarding process',
+    'Threads analytics tutorial videos',
+    'Threads analytics best practices',
+    'Threads analytics industry reports',
+    'Threads analytics feature comparison',
+    'Threads analytics user reviews',
+    'Threads analytics expert opinions'
+  ];
+
+  const seoData = {
+    title: 'Threads-Boost - Best Threads Analytics Tool 2024 | Automation & Growth',
+    description: 'The #1 Threads analytics platform. Advanced automation, competitor analysis, and AI-powered insights. Track performance, schedule posts, and grow your Threads audience. Start free trial.',
+    keywords
+  };
+
   const pricingPlans = [
     {
       name: "Starter",
@@ -217,9 +296,59 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-white scroll-clamp-y">
-      {/* Navigation */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <>
+      {/* SEO Meta Tags */}
+      <Head>
+        <title>{seoData.title}</title>
+        <meta name="description" content={seoData.description} />
+        <meta name="keywords" content={seoData.keywords.join(', ')} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={seoData.title} />
+        <meta property="og:description" content={seoData.description} />
+        <meta property="og:url" content="https://threads-boost.online" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://threads-boost.online/og-image.png" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={seoData.title} />
+        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:image" content="https://threads-boost.online/og-image.png" />
+
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://threads-boost.online" />
+
+        {/* Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Threads-Boost",
+              "url": "https://threads-boost.online",
+              "description": seoData.description,
+              "applicationCategory": "BusinessApplication",
+              "operatingSystem": "Web Browser",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "100"
+              }
+            })
+          }}
+        />
+      </Head>
+
+      <div className="min-h-screen bg-white scroll-clamp-y">
+        {/* Navigation */}
+        <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <nav className="mx-auto max-w-6xl px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-lg bg-black flex items-center justify-center">
@@ -249,7 +378,7 @@ export default function HomePage() {
           </Badge>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-8 text-black">
-            Analytics & Automatization
+            Analytics & Automation
             <br />
             for Threads
           </h1>
@@ -674,5 +803,6 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
+    </>
   );
 }
