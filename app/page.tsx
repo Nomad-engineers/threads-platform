@@ -220,9 +220,10 @@ export default function HomePage() {
   ];
 
   const seoData = {
-    title: 'Threads-Boost - Best Threads Analytics Tool 2024 | Automation & Growth',
-    description: 'The #1 Threads analytics platform. Advanced automation, competitor analysis, and AI-powered insights. Track performance, schedule posts, and grow your Threads audience. Start free trial.',
-    keywords
+    // Page-specific title that complements the layout template
+    pageTitle: 'Threads Analytics & Automation Platform - Grow Your Audience',
+    description: 'The #1 Threads analytics platform with AI-powered insights, automation, and growth tools. Track performance, schedule posts, and boost engagement. Start your free trial today!',
+    keywords: keywords.slice(0, 50) // Use top 50 most relevant keywords
   };
 
   const pricingPlans = [
@@ -297,49 +298,144 @@ export default function HomePage() {
 
   return (
     <>
-      {/* SEO Meta Tags */}
+      {/* Page-specific meta tags and structured data */}
       <Head>
-        <title>{seoData.title}</title>
+        {/* Page-specific meta tags - these override layout for this page */}
+        <title>{seoData.pageTitle}</title>
         <meta name="description" content={seoData.description} />
         <meta name="keywords" content={seoData.keywords.join(', ')} />
 
-        {/* Open Graph */}
-        <meta property="og:title" content={seoData.title} />
+        {/* Page-specific Open Graph tags */}
+        <meta property="og:title" content={seoData.pageTitle} />
         <meta property="og:description" content={seoData.description} />
         <meta property="og:url" content="https://threads-boost.online" />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://threads-boost.online/og-image.png" />
+        <meta property="og:image" content="https://threads-boost.online/og-image.svg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Threads Analytics & Automation Platform" />
 
-        {/* Twitter Card */}
+        {/* Twitter Card with updated image */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seoData.title} />
+        <meta name="twitter:title" content={seoData.pageTitle} />
         <meta name="twitter:description" content={seoData.description} />
-        <meta name="twitter:image" content="https://threads-boost.online/og-image.png" />
+        <meta name="twitter:image" content="https://threads-boost.online/og-image.svg" />
 
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://threads-boost.online" />
+        {/* Viewport for mobile optimization */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 
-        {/* Structured Data */}
+        {/* Additional mobile optimization */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+        {/* Theme color for mobile browsers */}
+        <meta name="theme-color" content="#000000" />
+        <meta name="msapplication-TileColor" content="#000000" />
+
+        {/* Page-specific structured data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "Threads-Boost",
-              "url": "https://threads-boost.online",
+              "@type": "WebPage",
+              "name": seoData.pageTitle,
               "description": seoData.description,
-              "applicationCategory": "BusinessApplication",
-              "operatingSystem": "Web Browser",
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "USD"
+              "url": "https://threads-boost.online",
+              "mainEntity": {
+                "@type": "Product",
+                "name": "Threads-Boost",
+                "description": "The #1 Threads analytics platform with AI-powered insights, automation, and growth tools",
+                "category": "Social Media Management Tool",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web Browser",
+                "offers": {
+                  "@type": "Offer",
+                  "priceCurrency": "USD",
+                  "price": "0",
+                  "priceValidUntil": "2025-12-31",
+                  "availability": "https://schema.org/InStock",
+                  "url": "https://threads-boost.online"
+                },
+                "aggregateRating": {
+                  "@type": "AggregateRating",
+                  "ratingValue": "4.8",
+                  "reviewCount": "100",
+                  "bestRating": "5"
+                },
+                "review": testimonials.map(testimonial => ({
+                  "@type": "Review",
+                  "author": {
+                    "@type": "Person",
+                    "name": testimonial.name,
+                    "image": testimonial.avatar
+                  },
+                  "datePublished": "2024-01-01",
+                  "reviewRating": {
+                    "@type": "Rating",
+                    "ratingValue": testimonial.rating,
+                    "bestRating": "5"
+                  },
+                  "reviewBody": testimonial.message
+                }))
               },
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.8",
-                "reviewCount": "100"
+              // FAQPage structured data for question-based SEO
+              "faq": {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "How do I get started with Threads-Boost?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Getting started is easy! Simply sign up for a free account, connect your Threads profile, and start exploring our analytics dashboard. You can schedule posts, track performance, and get AI-powered insights right away."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What makes Threads-Boost different from other analytics tools?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Threads-Boost is specifically designed for Threads with AI-powered insights, competitor analysis, and automation features tailored for the platform. We offer real-time analytics, smart scheduling, and engagement tracking that's optimized for Threads' unique ecosystem."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "Can I cancel my subscription anytime?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Yes! You can cancel your subscription at any time with no hidden fees or penalties. We offer a 14-day money-back guarantee, so you can try our platform risk-free."
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "What features are included in the free plan?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Our free plan includes 10 scheduled posts per week, basic analytics for your last 10 posts, content calendar view, single Threads account management, and 30 days of data history. It's perfect for getting started!"
+                    }
+                  },
+                  {
+                    "@type": "Question",
+                    "name": "How does AI-powered posting work?",
+                    "acceptedAnswer": {
+                      "@type": "Answer",
+                      "text": "Our AI analyzes your audience engagement patterns, post performance, and optimal posting times to provide personalized recommendations. It can suggest content ideas, hashtag optimization, and the best times to post for maximum reach."
+                    }
+                  }
+                ]
+              },
+              "breadcrumb": {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://threads-boost.online"
+                  }
+                ]
               }
             })
           }}
