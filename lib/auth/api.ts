@@ -27,7 +27,7 @@ export const authApi = {
     // Add redirectUri as query parameter if configured
     if (redirectUri) {
       const separator = url.includes('?') ? '&' : '?'
-      url = `${url}${separator}redirectUri=${encodeURIComponent(redirectUri)}`
+      url = `${url}${separator}redirect_uri=${encodeURIComponent(redirectUri)}`
     }
 
     const response = await fetch(url, {

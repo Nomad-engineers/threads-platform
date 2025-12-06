@@ -88,8 +88,8 @@ class Users {
 **Authentication Flow - sendAuthCode:**
 - Функция `sendAuthCode` теперь добавляет `redirectUri` в query параметры
 - `redirectUri` берется из `NEXT_PUBLIC_THREADS_REDIRECT_URI` env переменной
-- Запрос отправляется на: `GET /users/login?redirectUri=<encoded_url>`
-- Позволяет бэкенду знать куда редиректить пользователя после OAuth
+- Запрос отправляется на: `GET /users/login?redirect_uri=<encoded_url>`
+- Позволяет бэкенду знать куда выполнять redirect пользователя после OAuth
 
 ### Директории проекта
 
