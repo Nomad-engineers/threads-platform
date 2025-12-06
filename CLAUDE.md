@@ -85,6 +85,12 @@ class Users {
 - Выполняет редирект в dashboard после успешного входа
 - Обрабатывает ошибки и устанавливает состояние загрузки
 
+**Authentication Flow - sendAuthCode:**
+- Функция `sendAuthCode` теперь добавляет `redirectUri` в query параметры
+- `redirectUri` берется из `NEXT_PUBLIC_THREADS_REDIRECT_URI` env переменной
+- Запрос отправляется на: `GET /users/login?redirectUri=<encoded_url>`
+- Позволяет бэкенду знать куда редиректить пользователя после OAuth
+
 ### Директории проекта
 
 ```

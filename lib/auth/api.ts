@@ -21,7 +21,16 @@ export const authApi = {
    * Send authorization code to backend
    */
   async sendAuthCode(code: string): Promise<AuthResponse> {
-    const response = await fetch(this.getLoginUrl(), {
+    const redirectUri = AUTH_CONFIG.oauth.redirectUri
+    let url = this.getLoginUrl()
+
+    // Add redirectUri as query parameter if configured
+    if (redirectUri) {
+      const separator = url.includes('?') ? '&' : '?'
+      url = `${url}${separator}redirectUri=${encodeURIComponent(redirectUri)}`
+    }
+
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
