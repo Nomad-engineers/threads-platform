@@ -6,8 +6,8 @@
 export const AUTH_CONFIG = {
   // OAuth configuration
   oauth: {
-    clientId: process.env.NEXT_PUBLIC_THREADS_CLIENT_ID || '1165567432148744',
-    redirectUri: process.env.NEXT_PUBLIC_THREADS_REDIRECT_URI || 'https://0cf8138f070a.ngrok-free.app/auth',
+    clientId: process.env.NEXT_PUBLIC_THREADS_CLIENT_ID || '',
+    redirectUri: process.env.NEXT_PUBLIC_THREADS_REDIRECT_URI || '',
     scopes: [
       'threads_basic',
       'threads_content_publish',
@@ -20,7 +20,7 @@ export const AUTH_CONFIG = {
 
   // API configuration
   api: {
-    baseUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || 'https://threads-platform-cms.vercel.app/api',
+    baseUrl: process.env.NEXT_PUBLIC_BACKEND_API_URL || '',
     endpoints: {
       login: '/users/login',
       logout: '/users/logout',

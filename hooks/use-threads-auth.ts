@@ -139,6 +139,67 @@ export function useThreadsAuth() {
     }
   }, [router])
 
+  // Development login by user ID
+  const handleDevLogin = useCallback(
+    async (userId: string): Promise<void> => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL
+        if (!backendUrl) {
+          throw new Error('Backend API URL not configured')
+        }
+
+        const response = await fetch(`${backendUrl}/users/login/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+
+        const data = await response.json()
+        console.log('Dev login response:', data)
+
+        // Store auth data like in OAuth flow
+        if (data.accessToken) {
+          authStorage.setAccessToken(data.accessToken)
+        }
+
+        if (data.user) {
+          authStorage.setUser(data.user)
+          setUser(data.user)
+
+          toast({
+            title: data.user?.name ? `Welcome ${data.user.name}!` : 'Dev Login Successful',
+            description: `Logged in as user ID: ${userId}`,
+          })
+
+          // Redirect to dashboard
+          router.push(AUTH_CONFIG.ui.defaultRedirect)
+        }
+
+      } catch (error) {
+        console.error('Dev login error:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Dev login failed'
+        setError(errorMessage)
+
+        toast({
+          title: 'Dev Login Error',
+          description: errorMessage,
+          variant: 'destructive',
+        })
+      } finally {
+        setLoading(false)
+      }
+    },
+    [router, toast]
+  )
+
   // Refresh user data
   const refreshUserData = useCallback(async () => {
     try {
@@ -156,5 +217,6 @@ export function useThreadsAuth() {
     handleAuthWithThreads,
     logout,
     refreshUserData,
+    handleDevLogin,
   }
 }
