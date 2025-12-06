@@ -6,7 +6,6 @@ import { AuthForm } from './(components)/auth-form'
 import { AuthSkeleton } from './(components)/auth-skeleton'
 import Head from 'next/head'
 import { generateStructuredJSONLD, getPrimaryKeywords } from '@/lib/seo'
-import { Breadcrumb, breadcrumbPresets } from '@/components/seo/breadcrumb'
 
 function AuthPageContent() {
   const { isLoading, isRedirecting, handleAuthWithThreads } = useThreadsAuth()
@@ -103,7 +102,6 @@ export default function AuthPage() {
       </Head>
 
       <div className="min-h-screen">
-        <Breadcrumb items={breadcrumbPresets.auth} className="container mx-auto px-4 py-4" />
         <Suspense fallback={<AuthSkeleton />}>
           <AuthPageContent />
         </Suspense>
