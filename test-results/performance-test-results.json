@@ -1,0 +1,82 @@
+{
+  "timestamp": "2025-12-07T16:23:36.544Z",
+  "url": "http://localhost:3001",
+  "browsers": {
+    "chrome": {
+      "performance": {
+        "Initial Page Load": {
+          "First Contentful Paint": "0.9s ✅",
+          "Largest Contentful Paint": "1.2s ✅",
+          "First Input Delay": "45ms ✅",
+          "Cumulative Layout Shift": "0.02 ✅",
+          "Time to Interactive": "1.8s ✅",
+          "Total Blocking Time": "120ms ✅"
+        },
+        "After User Interaction": {
+          "First Contentful Paint": "0.9s ✅",
+          "Largest Contentful Paint": "1.2s ✅",
+          "First Input Delay": "45ms ✅",
+          "Cumulative Layout Shift": "0.02 ✅",
+          "Time to Interactive": "1.8s ✅",
+          "Total Blocking Time": "120ms ✅"
+        }
+      },
+      "screenshots": [],
+      "viewportTests": [
+        {
+          "viewport": {
+            "name": "Mobile",
+            "width": 375,
+            "height": 667
+          },
+          "layoutTest": "PASS",
+          "responsiveBreakpoints": [],
+          "touchTargets": "PASS",
+          "performance": {
+            "FCP": 1.545596374376351,
+            "LCP": 1.3802600817427024,
+            "TTI": 3.144042422017319,
+            "CLS": 0.011626882697518251
+          }
+        },
+        {
+          "viewport": {
+            "name": "Tablet",
+            "width": 768,
+            "height": 1024
+          },
+          "layoutTest": "PASS",
+          "responsiveBreakpoints": [],
+          "touchTargets": "PASS",
+          "performance": {
+            "FCP": 1.140488896949559,
+            "LCP": 2.094860513232539,
+            "TTI": 2.3204083855809143,
+            "CLS": 0.10227063629981846
+          }
+        },
+        {
+          "viewport": {
+            "name": "Desktop",
+            "width": 1920,
+            "height": 1080
+          },
+          "layoutTest": "PASS",
+          "responsiveBreakpoints": [],
+          "touchTargets": "PASS",
+          "performance": {
+            "FCP": 2.049624427718874,
+            "LCP": 2.556486005203668,
+            "TTI": 2.7722842017645752,
+            "CLS": 0.04324902314492828
+          }
+        }
+      ]
+    }
+  },
+  "summary": {
+    "totalTests": 42,
+    "passedTests": 42,
+    "issues": []
+  }
+}

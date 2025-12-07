@@ -1,11 +1,11 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://localhost:3000',
+  siteUrl: process.env.SITE_URL || 'https://threads-boost.online',
   generateRobotsTxt: true, // Generate a robots.txt file
   generateIndexSitemap: true, // Generate index sitemap
 
   // Exclude certain routes from sitemap
-  exclude: ['/dashboard'],
+  exclude: ['/dashboard', '/api/', '/login', '/register'],
 
   // Additional paths to include in sitemap
   additionalPaths: async (config) => {
@@ -32,7 +32,7 @@ module.exports = {
     let priority = 0.7
     let changefreq = 'weekly'
 
-    // Home page gets higher priority
+    // Home page gets highest priority
     if (path === '/') {
       priority = 1.0
       changefreq = 'daily'
@@ -50,7 +50,7 @@ module.exports = {
       changefreq = 'yearly'
     }
 
-    // Dashboard pages are excluded via exclude config above
+    // Dashboard and auth pages are excluded via exclude config above
 
     return {
       loc: path,
@@ -66,16 +66,16 @@ module.exports = {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/dashboard', '/api/', '/_next/', '/admin'],
+        disallow: ['/dashboard', '/api/', '/_next/', '/admin', '/login', '/register'],
       },
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/dashboard', '/api/'],
+        disallow: ['/dashboard', '/api/', '/login', '/register'],
       },
     ],
     additionalSitemaps: [
-      `${process.env.SITE_URL || 'https://localhost:3000'}/server-sitemap.xml`,
+      `${process.env.SITE_URL || 'https://threads-boost.online'}/server-sitemap.xml`,
     ],
   },
 

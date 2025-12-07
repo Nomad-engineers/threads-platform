@@ -3,8 +3,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThreads } from '@fortawesome/free-brands-svg-icons';
+import { ThreadsIcon } from '@/components/ui/threads-icon';
 import { creators, Creator } from '@/data/testimonials';
 
 interface TestimonialCardProps {
@@ -47,7 +46,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ creator, onCardClick,
           aria-label={`Open ${creator.name}'s Threads profile in new tab`}
           title={`Open ${creator.name}'s Threads profile`}
         >
-          <FontAwesomeIcon icon={faThreads} className="h-4 w-4" />
+          <ThreadsIcon className="h-4 w-4" />
         </button>
 
         {/* Rating */}

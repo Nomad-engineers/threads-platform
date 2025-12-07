@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { LayoutDashboard, BarChart3, Activity } from "lucide-react"
+import { LayoutDashboard, BarChart3, Activity, Instagram } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import { ThreadsBadge } from "@/components/auth"
 import { useThreadsAuth } from "@/hooks/use-threads-auth"
@@ -30,6 +30,13 @@ const tabs = [
     icon: LayoutDashboard,
     href: "/dashboard",
     description: "Overview and quick actions"
+  },
+  {
+    id: "threads" as const,
+    name: "Threads",
+    icon: Instagram,
+    href: "/dashboard/threads",
+    description: "Connect and manage Threads account"
   },
   {
     id: "analytics" as const,
@@ -53,7 +60,8 @@ export function Header({ onMenuClick, className }: HeaderProps) {
   const { logout, user } = useThreadsAuth()
 
   // Determine active tab based on current pathname
-  const getActiveTab = (): "dashboard" | "analytics" | "activities" => {
+  const getActiveTab = (): "dashboard" | "threads" | "analytics" | "activities" => {
+    if (pathname.includes("/threads")) return "threads"
     if (pathname.includes("/analytics")) return "analytics"
     if (pathname.includes("/activities")) return "activities"
     return "dashboard"
