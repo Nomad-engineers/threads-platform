@@ -1,21 +1,29 @@
-export interface ThreadsUser {
-  id: string
-  username: string
-  name?: string
-  profile_picture_url?: string
+export interface User {
+  id: number;
+  username: string;
+  name?: string | null;
+  picUrl?: string | null;
+  bio?: string | null;
+  isVerified?: boolean | null;
+  token?: string | null;
+  subscriptionTier?: 'FREE' | 'CREATOR' | 'PROFESSIONAL' | 'BUSINESS';
+  account_type?: string;
+  updatedAt: string;
+  createdAt: string;
 }
+
 
 export interface AuthResponse {
   accessToken: string
   tokenType?: string
   expiresIn?: number
-  user?: ThreadsUser
+  user?: User
 }
 
 export interface AuthState {
   isLoading: boolean
   isRedirecting: boolean
   isAuthenticated: boolean
-  user: ThreadsUser | null
+  user: User | null
   error: string | null
 }

@@ -71,7 +71,12 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
       </nav>
 
       {/* Structured Data */}
-      {generateStructuredJSONLD(structuredData)}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: generateStructuredJSONLD(structuredData)
+        }}
+      />
     </>
   );
 }

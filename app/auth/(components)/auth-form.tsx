@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThreads } from '@fortawesome/free-brands-svg-icons'
+import { DevLogin } from '@/components/auth/dev-login'
 
 interface AuthFormProps {
   isLoading: boolean
@@ -78,6 +79,9 @@ export function AuthForm({ isLoading, onAuthWithThreads }: AuthFormProps) {
             </div>
           </CardContent>
         </Card>
+
+        {/* Development login - only visible in dev mode */}
+        {process.env.NODE_ENV === 'development' && <DevLogin />}
       </div>
     </div>
   )

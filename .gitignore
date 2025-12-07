@@ -112,5 +112,4 @@ temp/
 *.sqlite
 *.db
 
-# Prisma
-prisma/migrations/
+.DS_Store

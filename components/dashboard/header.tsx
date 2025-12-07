@@ -15,8 +15,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LayoutDashboard, BarChart3, Activity } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
-import { ThreadsBadge } from "@/components/auth/threads-badge"
-import { useThreadsAuth } from "@/lib/threads-auth"
+import { ThreadsBadge } from "@/components/auth"
+import { useThreadsAuth } from "@/hooks/use-threads-auth"
 
 interface HeaderProps {
   onMenuClick?: () => void
