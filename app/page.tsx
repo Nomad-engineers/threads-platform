@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import Head from 'next/head';
-import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Users, Zap, Shield, Globe, Target, Eye, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, BarChart3, Calendar, MessageSquare, TrendingUp, Check, Users, Zap, Shield, Globe, Target, Eye, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useState } from 'react';
+import PricingSection from '@/components/pricing-section';
 
 // Profile picture URLs for Threads users
 const profilePictures = {
@@ -226,76 +226,7 @@ export default function HomePage() {
     keywords: keywords.slice(0, 50) // Use top 50 most relevant keywords
   };
 
-  const pricingPlans = [
-    {
-      name: "Starter",
-      description: "Perfect for getting started",
-      monthlyPrice: 0,
-      annualPrice: 0,
-      popular: false,
-      features: [
-        { name: "10 scheduled posts per week", tooltip: "Schedule up to 10 posts each week with our calendar view" },
-        { name: "Content calendar view", tooltip: "Visual calendar to manage and organize your content schedule" },
-        { name: "Basic analytics (last 10 posts)", tooltip: "Track performance of your most recent 10 posts" },
-        { name: "Single Threads account", tooltip: "Connect and manage one Threads account" },
-        { name: "Community support", tooltip: "Get help from our community forums" },
-        { name: "30 days data history", tooltip: "Access your analytics data for the past 30 days" }
-      ],
-      cta: { text: "Start Free", variant: "outline" as const }
-    },
-    {
-      name: "Creator",
-      description: "Most popular for growing creators",
-      monthlyPrice: 8,
-      annualPrice: 6,
-      popular: true,
-      features: [
-        { name: "Unlimited scheduled posts", tooltip: "Schedule unlimited posts with advanced queue management" },
-        { name: "Advanced analytics (all historical data)", tooltip: "Complete analytics access to all your historical data" },
-        { name: "Basic comment management", tooltip: "Manage and respond to comments efficiently" },
-        { name: "AI-powered optimal posting times", tooltip: "AI analyzes your audience to suggest best posting times" },
-        { name: "3 months competitor benchmarking", tooltip: "Track and compare with up to 3 competitors" },
-        { name: "Email support (48-hour response)", tooltip: "Get email support within 48 business hours" }
-      ],
-      cta: { text: "Start 14-Day Trial", variant: "default" as const }
-    },
-    {
-      name: "Professional",
-      description: "For professional content creators",
-      monthlyPrice: 20,
-      annualPrice: 16,
-      popular: false,
-      features: [
-        { name: "Advanced comment management", tooltip: "Advanced tools for managing comments and engagement" },
-        { name: "Unlimited competitor benchmarking (10 accounts)", tooltip: "Track unlimited competitors with up to 10 accounts" },
-        { name: "AI content suggestions & hashtag optimization", tooltip: "AI-powered content ideas and hashtag recommendations" },
-        { name: "Data export (CSV, PDF reports)", tooltip: "Export your data in multiple formats for analysis" },
-        { name: "Priority email support (24-hour response)", tooltip: "Priority email support within 24 business hours" },
-        { name: "1 year data history", tooltip: "Access your complete analytics data for the past year" },
-        { name: "Custom branding on reports", tooltip: "Add your brand logo and colors to exported reports" }
-      ],
-      cta: { text: "Start 14-Day Trial", variant: "outline" as const }
-    },
-    {
-      name: "Business",
-      description: "For teams and agencies",
-      monthlyPrice: 49,
-      annualPrice: 39,
-      popular: false,
-      features: [
-        { name: "Team collaboration (3 team members)", tooltip: "Invite up to 3 team members to collaborate" },
-        { name: "Advanced analytics (ROI tracking)", tooltip: "Track return on investment and advanced metrics" },
-        { name: "White-label reporting", tooltip: "Remove branding and add your own on reports" },
-        { name: "API access (reasonable limits)", tooltip: "Access our API for custom integrations" },
-        { name: "Phone support during business hours", tooltip: "Direct phone support during business hours" },
-        { name: "Unlimited data history", tooltip: "Access all your historical data without limits" },
-        { name: "Custom integrations (Zapier, webhooks)", tooltip: "Connect with 1000+ apps via Zapier and webhooks" },
-        { name: "Compliance features (GDPR, data retention)", tooltip: "Enterprise-grade compliance and data controls" }
-      ],
-      cta: { text: "Contact Sales", variant: "outline" as const }
-    }
-  ];
-
+  
   return (
     <>
       {/* Page-specific meta tags and structured data */}
@@ -577,7 +508,9 @@ export default function HomePage() {
                   <ul className="space-y-3">
                     {feature.features.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-3 text-sm text-gray-600">
-                        <Check className="h-5 w-5 text-green-600 flex-shrink-0" />
+                        <svg className="h-5 w-5 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -663,90 +596,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <TooltipProvider>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-              {pricingPlans.map((plan, index) => (
-                <Card
-                  key={index}
-                  className={`relative group transition-all duration-300 hover:scale-105 hover:-translate-y-1 ${
-                    plan.popular
-                      ? 'border-2 border-black bg-gray-50 shadow-xl'
-                      : 'border border-gray-200 bg-white hover:shadow-lg hover:border-gray-400'
-                  }`}
-                >
-                  {plan.popular && (
-                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                      <div className="relative">
-                        <div className="bg-gradient-to-r from-black to-gray-800 text-white px-8 py-3 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
-                          <Sparkles className="h-4 w-4" />
-                          Most Popular
-                          <Sparkles className="h-4 w-4" />
-                        </div>
-                        <div className="absolute inset-0 bg-black rounded-full blur-lg opacity-30 -z-10"></div>
-                      </div>
-                    </div>
-                  )}
-
-                  <CardHeader className="text-center pb-8 pt-8">
-                    <CardTitle className={`text-2xl mb-2 ${plan.popular ? 'text-black' : 'text-gray-900'}`}>
-                      {plan.name}
-                    </CardTitle>
-                    <div className="flex items-baseline justify-center gap-1 mb-2">
-                      <span className="text-5xl font-bold text-black">
-                        ${isAnnual ? plan.annualPrice : plan.monthlyPrice}
-                      </span>
-                      {(plan.monthlyPrice > 0 || plan.annualPrice > 0) && (
-                        <span className="text-lg font-normal text-gray-600">/mo</span>
-                      )}
-                    </div>
-                    {plan.monthlyPrice > 0 && plan.annualPrice > 0 && (
-                      <CardDescription className="text-gray-600">
-                        <span className="text-sm">
-                          ${isAnnual ? plan.monthlyPrice : plan.annualPrice}/month billed {isAnnual ? 'annually' : 'monthly'}
-                        </span>
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-
-                  <CardContent className="space-y-6">
-                    <ul className="space-y-3">
-                      {plan.features.map((feature, idx) => (
-                        <Tooltip key={idx}>
-                          <TooltipTrigger asChild>
-                            <li className="flex items-center gap-3 text-gray-700 text-sm cursor-help group">
-                              <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                                plan.popular
-                                  ? 'bg-black text-white group-hover:scale-110 transition-transform'
-                                  : 'bg-green-100 text-green-600 group-hover:scale-110 transition-transform'
-                              }`}>
-                                <Check className="h-3 w-3" />
-                              </div>
-                              <span className="group-hover:text-black transition-colors">{feature.name}</span>
-                            </li>
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-xs p-3 bg-gray-900 text-white border-gray-700">
-                            <p className="text-sm">{feature.tooltip}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      ))}
-                    </ul>
-
-                    <Button
-                      variant={plan.cta.variant}
-                      className={`w-full h-12 transition-all duration-300 ${
-                        plan.popular
-                          ? 'bg-black text-white hover:bg-gray-800 hover:scale-105 hover:shadow-lg'
-                          : 'border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 hover:scale-105'
-                      }`}
-                    >
-                      {plan.cta.text}
-                      {plan.cta.text.includes("Trial") && <ArrowRight className="ml-2 h-4 w-4" />}
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TooltipProvider>
+          <PricingSection isAnnual={isAnnual} />
 
           {/* Additional Info */}
           <div className="text-center mt-16">

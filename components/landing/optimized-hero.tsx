@@ -281,7 +281,7 @@ export function OptimizedHero() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <ThreadsIcon className="h-6 w-6" />
-                          <span className="font-bold">Live Analytics Demo</span>
+                          <h3 className="font-bold text-base">Live Analytics Demo</h3>
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="h-2 w-2 bg-green-400 rounded-full animate-pulse"></div>
