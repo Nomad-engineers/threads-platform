@@ -5,8 +5,8 @@
   "packageManager": "pnpm@8.15.0",
   "scripts": {
     "dev": "PORT=3000 next dev --turbopack",
-    "dev:standard": "next dev",
-    "dev:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm dev",
+    "dev:stable": "PORT=3000 next dev",
+    "dev:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm dev:stable",
     "build": "next build",
     "build:analyze": "cross-env ANALYZE=true next build",
     "build:clean": "rm -rf .next && rm -f tsconfig.tsbuildinfo && pnpm build",
@@ -101,7 +101,8 @@
     "postcss": "^8.4.32",
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "^0.5.7",
-    "tailwindcss": "^4.0.0-alpha.15"
+    "tailwindcss": "^4.0.0-alpha.15",
+    "ts-loader": "^9.5.1"
   },
   "engines": {
     "node": ">=18.0.0",

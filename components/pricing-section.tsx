@@ -176,12 +176,10 @@ function PricingCard({ plan, isAnnual }: PricingCardProps) {
 
           {/* CTA Button */}
           <Button
+            size="lg"
             className={cn(
-              "w-full h-12 font-medium transition-all duration-200",
-              "hover:scale-105 active:scale-95",
-              plan.highlighted
-                ? "bg-black text-white hover:bg-gray-900 shadow-lg hover:shadow-xl"
-                : "bg-white text-black border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-100"
+              "w-full font-medium",
+              "hover:scale-105 active:scale-95 transition-transform duration-200"
             )}
             variant={plan.highlighted ? "default" : "outline"}
           >

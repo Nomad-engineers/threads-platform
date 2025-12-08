@@ -3,6 +3,8 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
+    // HMR stability improvements
+    webpackBuildWorker: true,
   },
   typescript: {
     ignoreBuildErrors: true,
@@ -10,7 +12,11 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  images: { 
+  // React 19 and HMR stability fixes
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  images: {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
@@ -52,8 +58,6 @@ const nextConfig = {
 
   // Optimizations for static generation
   generateEtags: false,
-
-  // Bundle optimization - removed modularizeImports for lucide-react as it's causing import issues
 
   // Security headers
   async headers() {
@@ -120,6 +124,20 @@ const nextConfig = {
       },
     ];
   },
+
+  // Webpack configuration for HMR stability
+  webpack: (config, { dev, isServer }) => {
+    // HMR fixes for React 19
+    if (dev && !isServer) {
+      // Ensure proper module factory handling
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: ['**/node_modules/**'],
+      };
+    }
+
+    return config;
+  },
 };
 
 // Bundle analyzer (only in analyze mode)
@@ -154,7 +172,7 @@ module.exports = withSentryConfig(
     // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
     // This can increase your server load as well as your hosting bill.
     // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-    // side errors will fail.
+    // side errors side errors will fail.
     tunnelRoute: "/monitoring",
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
