@@ -15,7 +15,7 @@ import { Progress } from '@/components/ui/progress'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
 import {
-  ThreadsIcon,
+  AtSignIcon,
   CheckCircle,
   AlertCircle,
   BarChart3,
@@ -59,7 +59,7 @@ export function ThreadsConnect() {
         <Card className="max-w-md mx-auto">
           <CardHeader className="text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-black">
-              <ThreadsIcon className="h-6 w-6 text-white" />
+              <AtSignIcon className="h-6 w-6 text-white" />
             </div>
             <CardTitle>Connect to Threads</CardTitle>
             <CardDescription>
@@ -72,7 +72,7 @@ export function ThreadsConnect() {
               className="w-full"
               size="lg"
             >
-              <ThreadsIcon className="mr-2 h-4 w-4" />
+              <AtSignIcon className="mr-2 h-4 w-4" />
               Connect with Threads
             </Button>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -108,7 +108,7 @@ export function ThreadsConnect() {
           </Avatar>
           <div>
             <h1 className="text-2xl font-bold flex items-center gap-2">
-              <ThreadsIcon className="h-6 w-6" />
+              <AtSignIcon className="h-6 w-6" />
               {profile?.username || user?.username}
               {profile?.is_verified && (
                 <Badge variant="secondary" className="bg-blue-100 text-blue-800">
