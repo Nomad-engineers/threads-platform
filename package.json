@@ -77,12 +77,12 @@
     "web-vitals": "^5.1.0",
     "zod": "^3.22.4",
     "autoprefixer": "^10.4.21",
+    "@tailwindcss/typography": "^0.5.10",
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.5.6",
     "@playwright/test": "^1.40.0",
-    "@tailwindcss/typography": "^0.5.10",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.5.1",
