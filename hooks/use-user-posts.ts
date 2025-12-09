@@ -109,6 +109,45 @@ export function useUserPosts() {
     }
   }, [state.hasMore, state.isLoading, state.after, fetchPosts])
 
+  // Delete a post
+  const deletePost = useCallback(
+    async (postId: string) => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        await authApi.deletePost(postId)
+
+        setState(prev => ({
+          ...prev,
+          posts: prev.posts.filter(post => post.id !== postId),
+        }))
+
+        toast({
+          title: 'Success',
+          description: 'Post deleted successfully',
+        })
+
+        return true
+      } catch (error) {
+        console.error('Failed to delete post:', error)
+        const errorMessage = error instanceof Error ? error.message : 'Failed to delete post'
+        setError(errorMessage)
+
+        toast({
+          title: 'Error',
+          description: errorMessage,
+          variant: 'destructive',
+        })
+
+        return false
+      } finally {
+        setLoading(false)
+      }
+    },
+    [toast]
+  )
+
   // Refresh posts (reset and fetch from start)
   const refresh = useCallback(() => {
     setState(prev => ({
@@ -130,5 +169,6 @@ export function useUserPosts() {
     fetchPosts,
     loadMore,
     refresh,
+    deletePost,
   }
 }

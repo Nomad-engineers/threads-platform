@@ -216,10 +216,6 @@ export function ThreadsConnect() {
         {/* Media Tab */}
         <TabsContent value="media" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Recent Posts</CardTitle>
-              <CardDescription>Your latest Threads content</CardDescription>
-            </CardHeader>
             <CardContent>
               {mediaLoading ? (
                 <div className="flex items-center justify-center py-8">

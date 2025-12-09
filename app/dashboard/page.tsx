@@ -1,14 +1,13 @@
 "use client"
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { CalendarView, CalendarEvent, ViewMode } from '@/components/dashboard/calendar'
 import { CalendarViewSelector } from '@/components/dashboard/calendar/CalendarViewSelector'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CalendarDays, ChevronLeft, ChevronRight, MessageCircle, Heart, Share2, Repeat2 } from 'lucide-react'
-import { format, addDays, startOfDay, addHours, startOfWeek, addWeeks, addMonths } from 'date-fns'
-import { useUserPosts } from '@/hooks/use-user-posts'
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react'
+import { format, addDays, addHours, startOfDay, startOfWeek, addWeeks, addMonths } from 'date-fns'
+import { RecentPosts } from '@/components/dashboard/recent-posts'
 
 // Sample events for demonstration
 const sampleEvents: CalendarEvent[] = [
@@ -41,7 +40,6 @@ export default function DashboardPage() {
   const [currentDate, setCurrentDate] = useState(new Date())
   const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents)
   const [viewMode, setViewMode] = useState<ViewMode>('week')
-  const { posts, isLoading: postsLoading, error: postsError, refresh } = useUserPosts()
 
   const handleEventClick = useCallback((event: CalendarEvent) => {
     console.log('Event clicked:', event)
@@ -173,118 +171,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* Recent Posts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Recent Posts</h2>
-            <Button variant="outline" size="sm" onClick={refresh}>
-              Refresh
-            </Button>
-          </div>
-
-          {postsError && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center text-muted-foreground">
-                  <p>Error loading posts: {postsError}</p>
-                  <Button variant="outline" size="sm" className="mt-2" onClick={refresh}>
-                    Try Again
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {postsLoading && posts.length === 0 && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center text-muted-foreground">
-                  <p>Loading posts...</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {!postsLoading && !postsError && posts.length === 0 && (
-            <Card>
-              <CardContent className="pt-6">
-                <div className="text-center text-muted-foreground">
-                  <p>No posts found</p>
-                  <p className="text-sm">Your recent Threads posts will appear here</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          <div className="space-y-4">
-            {posts.map((post) => (
-              <Card key={post.id} className="w-full">
-                <CardContent className="pt-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <Badge variant={post.media_type === 'TEXT' ? 'default' : 'secondary'}>
-                        {post.media_type || 'TEXT'}
-                      </Badge>
-                      <span className="text-sm text-muted-foreground">
-                        {formatPostTime(post.timestamp)}
-                      </span>
-                    </div>
-
-                    <p className="text-sm">{post.content}</p>
-
-                    {post.media_url && post.media_type !== 'TEXT' && (
-                      <div className="mt-2">
-                        <img
-                          src={post.media_url}
-                          alt="Post media"
-                          className="rounded-md max-w-full h-auto"
-                          style={{ maxHeight: '200px' }}
-                        />
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-4 pt-2">
-                      {post.like_count !== undefined && (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Heart className="h-4 w-4" />
-                          {post.like_count}
-                        </div>
-                      )}
-                      {post.reply_count !== undefined && (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <MessageCircle className="h-4 w-4" />
-                          {post.reply_count}
-                        </div>
-                      )}
-                      {post.repost_count !== undefined && (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Repeat2 className="h-4 w-4" />
-                          {post.repost_count}
-                        </div>
-                      )}
-                      {post.share_count !== undefined && (
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Share2 className="h-4 w-4" />
-                          {post.share_count}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
+      {/* Main Content */}
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 overflow-hidden">
         {/* Calendar Section */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Schedule</h2>
-          <div className="min-h-[400px]">
+        <div className="lg:col-span-2">
+          <div className="h-full">
             <CalendarView
-              currentDate={currentDate}
               events={events}
               viewMode={viewMode}
+              currentDate={currentDate}
               onEventClick={handleEventClick}
               onSlotClick={handleSlotClick}
               onEventMove={handleEventMove}
