@@ -53,119 +53,205 @@
   --radius-border-radius: var(--radius);
 
   /* Font families */
-  --font-family-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-family-sans: var(--font-inter), system-ui, sans-serif;
   --font-family-mono: var(--font-geist-mono), monospace;
 }
 
 @layer base {
   :root {
     /* Server Live Light Mode Theme - OKLCH Color Space */
-    --background: oklch(1 0 0);           /* Pure White */
-    --foreground: oklch(0.145 0 0);       /* Dark Charcoal */
-    --card: oklch(1 0 0);                 /* White Cards */
-    --card-foreground: oklch(0.145 0 0);   /* Dark Text */
-    --popover: oklch(1 0 0);              /* White Popovers */
-    --popover-foreground: oklch(0.145 0 0); /* Dark Text */
-    --primary: oklch(0.205 0 0);          /* Primary Dark */
-    --primary-foreground: oklch(0.985 0 0); /* Near White */
-    --secondary: oklch(0.97 0 0);         /* Light Gray */
-    --secondary-foreground: oklch(0.205 0 0); /* Dark Text */
-    --muted: oklch(0.97 0 0);            /* Muted Light */
-    --muted-foreground: oklch(0.556 0 0);  /* Medium Gray */
-    --accent: oklch(0.97 0 0);            /* Accent Light */
-    --accent-foreground: oklch(0.205 0 0); /* Dark Text */
-    --destructive: oklch(0.577 0.245 27.325); /* Muted Red */
-    --destructive-foreground: oklch(0.985 0 0); /* Near White */
-    --border: oklch(0.922 0 0);          /* Light Border */
-    --input: oklch(0.922 0 0);           /* Input Background */
-    --ring: oklch(0.708 0 0);             /* Focus Ring */
+    --background: oklch(1 0 0);
+    /* Pure White */
+    --foreground: oklch(0.145 0 0);
+    /* Dark Charcoal */
+    --card: oklch(1 0 0);
+    /* White Cards */
+    --card-foreground: oklch(0.145 0 0);
+    /* Dark Text */
+    --popover: oklch(1 0 0);
+    /* White Popovers */
+    --popover-foreground: oklch(0.145 0 0);
+    /* Dark Text */
+    --primary: oklch(0.205 0 0);
+    /* Primary Dark */
+    --primary-foreground: oklch(0.985 0 0);
+    /* Near White */
+    --secondary: oklch(0.97 0 0);
+    /* Light Gray */
+    --secondary-foreground: oklch(0.205 0 0);
+    /* Dark Text */
+    --muted: oklch(0.97 0 0);
+    /* Muted Light */
+    --muted-foreground: oklch(0.556 0 0);
+    /* Medium Gray */
+    --accent: oklch(0.97 0 0);
+    /* Accent Light */
+    --accent-foreground: oklch(0.205 0 0);
+    /* Dark Text */
+    --destructive: oklch(0.577 0.245 27.325);
+    /* Muted Red */
+    --destructive-foreground: oklch(0.985 0 0);
+    /* Near White */
+    --border: oklch(0.922 0 0);
+    /* Light Border */
+    --input: oklch(0.922 0 0);
+    /* Input Background */
+    --ring: oklch(0.708 0 0);
+    /* Focus Ring */
 
     /* Sidebar Colors - Light Mode */
-    --sidebar: oklch(0.985 0 0);             /* Very Light Gray */
-    --sidebar-foreground: oklch(0.145 0 0); /* Dark Text */
-    --sidebar-primary: oklch(0.205 0 0);    /* Primary Dark */
-    --sidebar-primary-foreground: oklch(0.985 0 0); /* Light Text */
-    --sidebar-accent: oklch(0.97 0 0);      /* Light Accent */
-    --sidebar-accent-foreground: oklch(0.205 0 0); /* Dark Text */
-    --sidebar-border: oklch(0.922 0 0);     /* Light Border */
-    --sidebar-ring: oklch(0.708 0 0);       /* Focus Ring */
+    --sidebar: oklch(0.985 0 0);
+    /* Very Light Gray */
+    --sidebar-foreground: oklch(0.145 0 0);
+    /* Dark Text */
+    --sidebar-primary: oklch(0.205 0 0);
+    /* Primary Dark */
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --sidebar-accent: oklch(0.97 0 0);
+    /* Light Accent */
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    /* Dark Text */
+    --sidebar-border: oklch(0.922 0 0);
+    /* Light Border */
+    --sidebar-ring: oklch(0.708 0 0);
+    /* Focus Ring */
 
     /* Chart Colors - Light Mode (converted to HSL for compatibility) */
-    --chart-1: 28 100% 60%;  /* Orange */
-    --chart-2: 185 100% 60%; /* Cyan */
-    --chart-3: 227 100% 40%; /* Blue */
-    --chart-4: 84 100% 65%;  /* Yellow-Green */
-    --chart-5: 70 100% 60%;  /* Yellow */
+    --chart-1: 28 100% 60%;
+    /* Orange */
+    --chart-2: 185 100% 60%;
+    /* Cyan */
+    --chart-3: 227 100% 40%;
+    /* Blue */
+    --chart-4: 84 100% 65%;
+    /* Yellow-Green */
+    --chart-5: 70 100% 60%;
+    /* Yellow */
 
     /* Semantic Status Colors - Light Mode (converted to HSL for compatibility) */
-    --success: 142 60% 50%;    /* Green */
-    --success-foreground: 142 60% 95%;  /* Near White */
-    --warning: 69 100% 60%;    /* Orange */
-    --warning-foreground: 69 100% 15%;  /* Dark Text */
-    --error: 27 100% 55%;     /* Red */
-    --error-foreground: 27 100% 95%;    /* Near White */
+    --success: 142 60% 50%;
+    /* Green */
+    --success-foreground: 142 60% 95%;
+    /* Near White */
+    --warning: 69 100% 60%;
+    /* Orange */
+    --warning-foreground: 69 100% 15%;
+    /* Dark Text */
+    --error: 27 100% 55%;
+    /* Red */
+    --error-foreground: 27 100% 95%;
+    /* Near White */
 
     /* System Properties */
-    --radius: 0.625rem;                   /* 10px base radius */
+    --radius: 0.625rem;
+    /* 10px base radius */
 
     /* Special Effects Colors */
-    --sunpillar-1: hsl(2, 100%, 73%);      /* Red */
-    --sunpillar-2: hsl(53, 100%, 69%);     /* Yellow */
-    --sunpillar-3: hsl(93, 100%, 69%);     /* Green */
-    --sunpillar-4: hsl(176, 100%, 76%);    /* Cyan */
-    --sunpillar-5: hsl(228, 100%, 74%);    /* Blue */
-    --sunpillar-6: hsl(283, 100%, 73%);    /* Purple */
-    --gradient-cyan: #00ffaac4;            /* Bright Cyan */
-    --gradient-blue: #00c1ffff;            /* Sky Blue */
-    --gradient-purple: #c137ffff;          /* Purple */
+    --sunpillar-1: hsl(2, 100%, 73%);
+    /* Red */
+    --sunpillar-2: hsl(53, 100%, 69%);
+    /* Yellow */
+    --sunpillar-3: hsl(93, 100%, 69%);
+    /* Green */
+    --sunpillar-4: hsl(176, 100%, 76%);
+    /* Cyan */
+    --sunpillar-5: hsl(228, 100%, 74%);
+    /* Blue */
+    --sunpillar-6: hsl(283, 100%, 73%);
+    /* Purple */
+    --gradient-cyan: #00ffaac4;
+    /* Bright Cyan */
+    --gradient-blue: #00c1ffff;
+    /* Sky Blue */
+    --gradient-purple: #c137ffff;
+    /* Purple */
   }
 
   .dark {
     /* Server Live Dark Mode Theme - OKLCH Color Space */
-    --background: oklch(0.145 0 0);       /* Dark Charcoal */
-    --foreground: oklch(0.985 0 0);       /* Near White */
-    --card: oklch(0.205 0 0);            /* Dark Cards */
-    --card-foreground: oklch(0.985 0 0);  /* Light Text */
-    --popover: oklch(0.205 0 0);         /* Dark Popovers */
-    --popover-foreground: oklch(0.985 0 0); /* Light Text */
-    --primary: oklch(0.922 0 0);          /* Light Primary */
-    --primary-foreground: oklch(0.205 0 0); /* Dark Text */
-    --secondary: oklch(0.269 0 0);        /* Medium Dark */
-    --secondary-foreground: oklch(0.985 0 0); /* Light Text */
-    --muted: oklch(0.269 0 0);           /* Muted Dark */
-    --muted-foreground: oklch(0.708 0 0); /* Medium Gray */
-    --accent: oklch(0.269 0 0);           /* Dark Accent */
-    --accent-foreground: oklch(0.985 0 0); /* Light Text */
-    --destructive: oklch(0.704 0.191 22.216); /* Bright Red */
-    --destructive-foreground: oklch(0.985 0 0); /* Near White */
-    --border: oklch(1 0 0 / 10%);        /* 10% White Border */
-    --input: oklch(1 0 0 / 15%);         /* 15% White Input */
-    --ring: oklch(0.556 0 0);            /* Focus Ring */
+    --background: oklch(0.145 0 0);
+    /* Dark Charcoal */
+    --foreground: oklch(0.985 0 0);
+    /* Near White */
+    --card: oklch(0.205 0 0);
+    /* Dark Cards */
+    --card-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --popover: oklch(0.205 0 0);
+    /* Dark Popovers */
+    --popover-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --primary: oklch(0.922 0 0);
+    /* Light Primary */
+    --primary-foreground: oklch(0.205 0 0);
+    /* Dark Text */
+    --secondary: oklch(0.269 0 0);
+    /* Medium Dark */
+    --secondary-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --muted: oklch(0.269 0 0);
+    /* Muted Dark */
+    --muted-foreground: oklch(0.708 0 0);
+    /* Medium Gray */
+    --accent: oklch(0.269 0 0);
+    /* Dark Accent */
+    --accent-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --destructive: oklch(0.704 0.191 22.216);
+    /* Bright Red */
+    --destructive-foreground: oklch(0.985 0 0);
+    /* Near White */
+    --border: oklch(1 0 0 / 10%);
+    /* 10% White Border */
+    --input: oklch(1 0 0 / 15%);
+    /* 15% White Input */
+    --ring: oklch(0.556 0 0);
+    /* Focus Ring */
 
     /* Sidebar Colors - Dark Mode */
-    --sidebar: oklch(0.205 0 0);            /* Dark Background */
-    --sidebar-foreground: oklch(0.985 0 0); /* Light Text */
-    --sidebar-primary: oklch(0.488 0.243 264.376); /* Purple Accent */
-    --sidebar-primary-foreground: oklch(0.985 0 0); /* Light Text */
-    --sidebar-accent: oklch(0.269 0 0);     /* Dark Accent */
-    --sidebar-accent-foreground: oklch(0.985 0 0); /* Light Text */
-    --sidebar-border: oklch(1 0 0 / 10%);   /* 10% White Border */
-    --sidebar-ring: oklch(0.556 0 0);       /* Focus Ring */
+    --sidebar: oklch(0.205 0 0);
+    /* Dark Background */
+    --sidebar-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    /* Purple Accent */
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --sidebar-accent: oklch(0.269 0 0);
+    /* Dark Accent */
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    /* Light Text */
+    --sidebar-border: oklch(1 0 0 / 10%);
+    /* 10% White Border */
+    --sidebar-ring: oklch(0.556 0 0);
+    /* Focus Ring */
 
     /* Chart Colors - Dark Mode (converted to HSL for compatibility) */
-    --chart-1: 264 100% 50%;  /* Purple */
-    --chart-2: 162 100% 60%;  /* Teal */
-    --chart-3: 70 100% 65%;   /* Yellow */
-    --chart-4: 304 100% 55%;  /* Magenta */
-    --chart-5: 16 100% 50%;   /* Orange */
+    --chart-1: 264 100% 50%;
+    /* Purple */
+    --chart-2: 162 100% 60%;
+    /* Teal */
+    --chart-3: 70 100% 65%;
+    /* Yellow */
+    --chart-4: 304 100% 55%;
+    /* Magenta */
+    --chart-5: 16 100% 50%;
+    /* Orange */
 
     /* Semantic Status Colors - Dark Mode (converted to HSL for compatibility) */
-    --success: 142 60% 60%;    /* Brighter Green */
-    --success-foreground: 142 60% 10%;  /* Dark Text */
-    --warning: 69 100% 65%;    /* Orange */
-    --warning-foreground: 69 100% 15%;  /* Dark Text */
-    --error: 22 100% 65%;     /* Brighter Red */
-    --error-foreground: 22 100% 95%;    /* Near White */
+    --success: 142 60% 60%;
+    /* Brighter Green */
+    --success-foreground: 142 60% 10%;
+    /* Dark Text */
+    --warning: 69 100% 65%;
+    /* Orange */
+    --warning-foreground: 69 100% 15%;
+    /* Dark Text */
+    --error: 22 100% 65%;
+    /* Brighter Red */
+    --error-foreground: 22 100% 95%;
+    /* Near White */
   }
 }
 
@@ -173,6 +259,7 @@
   * {
     border-color: var(--border);
   }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
@@ -182,10 +269,12 @@
     overscroll-behavior: none;
     -webkit-overflow-scrolling: auto;
     overflow-x: hidden;
+    font-family: var(--font-family-sans);
   }
 
   /* Apply clamping scroll to all scrollable containers */
-  html, body {
+  html,
+  body {
     overscroll-behavior: none;
     -webkit-overflow-scrolling: auto;
   }
@@ -199,6 +288,7 @@
 
 /* Custom scrollbar */
 @layer utilities {
+
   /* Flutter-style clamping scroll utilities */
   .scroll-clamp {
     overscroll-behavior: none;
@@ -227,6 +317,7 @@
     overscroll-behavior: none;
     -webkit-overflow-scrolling: auto;
   }
+
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
@@ -237,6 +328,7 @@
     background-color: oklch(1 0 0 / 0.8);
     border: 1px solid oklch(0.922 0 0 / 0.2);
   }
+
   .dark .glass {
     background-color: oklch(0.145 0 0 / 0.8);
     border-color: oklch(1 0 0 / 0.1);
@@ -252,22 +344,27 @@
 
   /* Holographic gradient effect */
   .holographic-gradient {
-    background: linear-gradient(
-      135deg,
-      var(--sunpillar-1),
-      var(--sunpillar-2),
-      var(--sunpillar-3),
-      var(--sunpillar-4),
-      var(--sunpillar-5),
-      var(--sunpillar-6)
-    );
+    background: linear-gradient(135deg,
+        var(--sunpillar-1),
+        var(--sunpillar-2),
+        var(--sunpillar-3),
+        var(--sunpillar-4),
+        var(--sunpillar-5),
+        var(--sunpillar-6));
     background-size: 400% 400%;
     animation: holographic-shift 8s ease-in-out infinite;
   }
 
   @keyframes holographic-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
   }
 
   /* Custom animations */
@@ -289,8 +386,15 @@
 
   /* 404 page specific animations */
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
   }
 
   .animate-float {
@@ -298,21 +402,26 @@
   }
 
   @keyframes glitch {
-    0%, 100% {
+
+    0%,
+    100% {
       text-shadow:
         2px 2px 0 var(--chart-1),
         -2px -2px 0 var(--chart-3);
     }
+
     25% {
       text-shadow:
         -2px 2px 0 var(--chart-2),
         2px -2px 0 var(--chart-4);
     }
+
     50% {
       text-shadow:
         2px -2px 0 var(--chart-5),
         -2px 2px 0 var(--chart-1);
     }
+
     75% {
       text-shadow:
         -2px -2px 0 var(--chart-3),
@@ -343,12 +452,10 @@
 
 /* Loading states with Server Live colors */
 .loading-shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--muted) 0%,
-    var(--muted-foreground) 50%,
-    var(--muted) 100%
-  );
+  background: linear-gradient(90deg,
+      var(--muted) 0%,
+      var(--muted-foreground) 50%,
+      var(--muted) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -357,6 +464,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -367,6 +475,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -377,6 +486,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -388,6 +498,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -399,6 +510,7 @@
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -426,9 +538,12 @@
 
 /* Additional animations for the landing page */
 @keyframes gradient-shift {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -469,12 +584,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
   transition: left 0.5s;
 }
 
@@ -484,12 +597,16 @@
 
 /* Floating animation for decorative elements */
 @keyframes float-element {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   33% {
     transform: translateY(-20px) rotate(1deg);
   }
+
   66% {
     transform: translateY(-10px) rotate(-1deg);
   }
@@ -501,9 +618,12 @@
 
 /* Pulse animation for badges */
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
   }
+
   50% {
     box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
   }
@@ -527,6 +647,7 @@
 
 /* Unified Post Color Scheme */
 @layer utilities {
+
   /* Unified post card styling */
   .post-card {
     @apply bg-card text-card-foreground rounded-2xl border border-border/50;
@@ -603,6 +724,7 @@
 
 /* Scroll area fixes for modal contexts */
 @layer utilities {
+
   /* Ensure scroll areas work properly within modals - with clamping physics */
   [data-manual-time-scroll] .overflow-y-auto {
     -webkit-overflow-scrolling: auto !important;
