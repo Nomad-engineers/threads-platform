@@ -6,11 +6,20 @@ import { authApi } from '@/lib/auth'
 
 export interface UserPost {
   id: string
-  content: string
+  text: string
   timestamp: string
-  media_type?: 'TEXT' | 'IMAGE' | 'VIDEO' | 'CAROUSEL'
-  media_url?: string
+  media_product_type?: string
+  media_type?: 'TEXT_POST' | 'IMAGE_POST' | 'VIDEO_POST' | 'CAROUSEL_POST'
   permalink?: string
+  owner?: {
+    id: string
+  }
+  username?: string
+  shortcode?: string
+  is_quote_post?: boolean
+  // Mapped fields for compatibility
+  content: string // Mapped from text
+  media_url?: string
   like_count?: number
   reply_count?: number
   repost_count?: number
@@ -56,14 +65,29 @@ export function useUserPosts() {
         let newPosts: UserPost[] = []
         let newAfter: string | undefined
 
-        if (response.success && response.data) {
-          newPosts = response.data.map((post: any) => ({
+        if (response.success && response.posts) {
+          // Media type mapping
+          const mediaTypeMap: Record<string, 'TEXT' | 'IMAGE' | 'VIDEO' | 'CAROUSEL'> = {
+            'TEXT_POST': 'TEXT',
+            'IMAGE_POST': 'IMAGE',
+            'VIDEO_POST': 'VIDEO',
+            'CAROUSEL_POST': 'CAROUSEL'
+          }
+
+          newPosts = response.posts.map((post: any): UserPost => ({
             id: post.id,
-            content: post.content || post.caption || '',
-            timestamp: post.timestamp || post.created_at || new Date().toISOString(),
+            text: post.text || '[Repost or Media without text]',
+            timestamp: post.timestamp || new Date().toISOString(),
+            media_product_type: post.media_product_type,
             media_type: post.media_type,
-            media_url: post.media_url,
             permalink: post.permalink,
+            owner: post.owner,
+            username: post.username,
+            shortcode: post.shortcode,
+            is_quote_post: post.is_quote_post,
+            // Mapped fields for compatibility with calendar
+            content: post.text || '[Repost or Media without text]',
+            media_url: post.media_url,
             like_count: post.like_count,
             reply_count: post.reply_count,
             repost_count: post.repost_count,
