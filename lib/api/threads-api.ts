@@ -1,501 +1,433 @@
 /**
  * Threads API Client
- * Comprehensive client for interacting with the Instagram Threads API
- * Based on the official Threads API documentation
+ * A comprehensive client for interacting with the Instagram Threads API
  */
 
-import { authStorage } from '@/lib/auth'
-import { AUTH_CONFIG } from '@/lib/auth/config'
-
+// Threads API Types
 export interface ThreadsUserProfile {
   id: string
   username: string
-  threads_profile_picture_url?: string
-  threads_biography?: string
-  account_type?: string
-  follower_count?: number
-  following_count?: number
-  is_verified?: boolean
-}
-
-export interface ThreadsMediaContainer {
-  id: string
-  status: 'PENDING' | 'PUBLISHED' | 'FAILED' | 'EXPIRED'
-  error_message?: string
+  account_type: string
+  media_count: number
+  threads_count: number
+  followers_count: number
+  following_count: number
+  biography?: string
+  profile_picture_url?: string
+  website?: string
+  verified?: boolean
+  newly_created?: boolean
+  rating?: string
+  reply_audience?: string
 }
 
 export interface ThreadsMedia {
   id: string
-  media_type: 'TEXT' | 'IMAGE' | 'VIDEO' | 'CAROUSEL'
-  media_url?: string
+  media_product_type: string
+  media_type: string
+  media_url: string
   permalink: string
-  caption?: string
-  thumbnail_url?: string
+  owner: {
+    id: string
+    username: string
+  }
+  username: string
+  text?: string
   timestamp: string
-  like_count?: number
+  caption?: string
+  is_quote_post?: boolean
+  quote_post?: {
+    id: string
+    username: string
+    text?: string
+  }
+  thumbnail_url?: string
+  children?: {
+    data: Array<{
+      media_type: string
+      media_url: string
+      id: string
+    }>
+  }
+  status?: 'PUBLISHED' | 'DRAFT' | 'ARCHIVED' | 'DELETED'
   reply_count?: number
+  like_count?: number
   repost_count?: number
   quote_count?: number
   share_count?: number
-  insights?: ThreadsInsight[]
 }
 
 export interface ThreadsInsight {
-  name: string
-  period: string
-  values: Array<{ value: number }>
-  title: string
-  description: string
   id: string
+  name: string
+  values: Array<{
+    value: number
+    end_time?: string
+  }>
+  period?: string
+  description?: string
+  title?: string
 }
 
-export interface CreateTextPostParams {
+export interface TextPostOptions {
   text: string
   reply_to_id?: string
-  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned_only' | 'parent_post_author_only' | 'followers_only'
-  allowlisted_country_codes?: string[]
+  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned'
   link_attachment?: string
   quote_post_id?: string
-  auto_publish_text?: boolean
   topic_tag?: string
-  is_spoiler_media?: boolean
+  auto_publish_text?: boolean
 }
 
-export interface CreateImagePostParams {
-  text?: string
+export interface ImagePostOptions {
   image_url: string
+  text?: string
   alt_text?: string
   reply_to_id?: string
-  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned_only' | 'parent_post_author_only' | 'followers_only'
-  allowlisted_country_codes?: string[]
+  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned'
   link_attachment?: string
-  quote_post_id?: string
-  is_spoiler_media?: boolean
 }
 
-export interface CreateVideoPostParams {
-  text?: string
-  video_url: string
-  alt_text?: string
-  reply_to_id?: string
-  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned_only' | 'parent_post_author_only' | 'followers_only'
-  allowlisted_country_codes?: string[]
-  link_attachment?: string
-  quote_post_id?: string
-  is_spoiler_media?: boolean
+export interface MediaContainerResponse {
+  id: string
+  media_type: string
+  media_status: string
+  status?: 'EXPIRED' | 'PUBLISHED' | 'FAILED' | 'PUBLISHED_BUT_RATE_LIMITED'
+  error_message?: string
 }
 
-export interface CreateCarouselPostParams {
-  children: Array<{
-    media_type: 'IMAGE' | 'VIDEO'
-    media_url: string
-    alt_text?: string
-  }>
-  text?: string
-  reply_to_id?: string
-  reply_control?: 'everyone' | 'accounts_you_follow' | 'mentioned_only' | 'parent_post_author_only' | 'followers_only'
-  allowlisted_country_codes?: string[]
-  link_attachment?: string
-  quote_post_id?: string
-  is_spoiler_media?: boolean
+export interface MediaPublishResponse {
+  id: string
+  media_type: string
+  media_status: string
+  permalink?: string
 }
 
-/**
- * Threads API Client Class
- */
+export interface MediaListResponse {
+  data: ThreadsMedia[]
+  paging?: {
+    cursors?: {
+      before?: string
+      after?: string
+    }
+    next?: string
+    previous?: string
+  }
+}
+
+// Threads API Client Class
 export class ThreadsApiClient {
-  private baseUrl = 'https://graph.threads.net/v1.0'
-  private getAccessToken(): string {
-    const token = authStorage.getAccessToken()
-    if (!token) {
-      throw new Error('No access token available. Please authenticate first.')
+  private baseUrl: string
+  private accessToken: string | null = null
+
+  constructor() {
+    this.baseUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:3001'
+
+    // Try to get access token from localStorage if in browser
+    if (typeof window !== 'undefined') {
+      this.accessToken = localStorage.getItem('threads_access_token')
     }
-    return token
   }
 
-  /**
-   * Get the current user's Threads profile
-   */
-  async getUserProfile(fields: string[] = ['id', 'username', 'threads_profile_picture_url', 'threads_biography', 'account_type']): Promise<ThreadsUserProfile> {
-    const accessToken = this.getAccessToken()
-    const fieldsParam = fields.join(',')
+  private async makeRequest<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<T> {
+    const url = `${this.baseUrl}${endpoint}`
 
-    const response = await fetch(`${this.baseUrl}/me?fields=${fieldsParam}&access_token=${accessToken}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to get user profile: ${response.status} ${response.statusText}`)
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...options.headers as Record<string, string>,
     }
 
-    return await response.json()
-  }
-
-  /**
-   * Create a media container for a text post
-   */
-  async createTextPostContainer(userId: string, params: CreateTextPostParams): Promise<ThreadsMediaContainer> {
-    const accessToken = this.getAccessToken()
-
-    const body: any = {
-      media_type: 'TEXT',
-      text: params.text,
-      ...params.reply_to_id && { reply_to_id: params.reply_to_id },
-      ...params.reply_control && { reply_control: params.reply_control },
-      ...params.allowlisted_country_codes && { allowlisted_country_codes: params.allowlisted_country_codes },
-      ...params.link_attachment && { link_attachment: params.link_attachment },
-      ...params.quote_post_id && { quote_post_id: params.quote_post_id },
-      ...params.auto_publish_text !== undefined && { auto_publish_text: params.auto_publish_text },
-      ...params.topic_tag && { topic_tag: params.topic_tag },
-      ...params.is_spoiler_media !== undefined && { is_spoiler_media: params.is_spoiler_media },
-    }
-
-    const response = await fetch(`${this.baseUrl}/${userId}/threads?access_token=${accessToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Failed to create text post container: ${response.status} ${response.statusText}. ${errorText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Create a media container for an image post
-   */
-  async createImagePostContainer(userId: string, params: CreateImagePostParams): Promise<ThreadsMediaContainer> {
-    const accessToken = this.getAccessToken()
-
-    const body: any = {
-      media_type: 'IMAGE',
-      image_url: params.image_url,
-      ...params.text && { text: params.text },
-      ...params.alt_text && { alt_text: params.alt_text },
-      ...params.reply_to_id && { reply_to_id: params.reply_to_id },
-      ...params.reply_control && { reply_control: params.reply_control },
-      ...params.allowlisted_country_codes && { allowlisted_country_codes: params.allowlisted_country_codes },
-      ...params.link_attachment && { link_attachment: params.link_attachment },
-      ...params.quote_post_id && { quote_post_id: params.quote_post_id },
-      ...params.is_spoiler_media !== undefined && { is_spoiler_media: params.is_spoiler_media },
-    }
-
-    const response = await fetch(`${this.baseUrl}/${userId}/threads?access_token=${accessToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Failed to create image post container: ${response.status} ${response.statusText}. ${errorText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Create a media container for a video post
-   */
-  async createVideoPostContainer(userId: string, params: CreateVideoPostParams): Promise<ThreadsMediaContainer> {
-    const accessToken = this.getAccessToken()
-
-    const body: any = {
-      media_type: 'VIDEO',
-      video_url: params.video_url,
-      ...params.text && { text: params.text },
-      ...params.alt_text && { alt_text: params.alt_text },
-      ...params.reply_to_id && { reply_to_id: params.reply_to_id },
-      ...params.reply_control && { reply_control: params.reply_control },
-      ...params.allowlisted_country_codes && { allowlisted_country_codes: params.allowlisted_country_codes },
-      ...params.link_attachment && { link_attachment: params.link_attachment },
-      ...params.quote_post_id && { quote_post_id: params.quote_post_id },
-      ...params.is_spoiler_media !== undefined && { is_spoiler_media: params.is_spoiler_media },
-    }
-
-    const response = await fetch(`${this.baseUrl}/${userId}/threads?access_token=${accessToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Failed to create video post container: ${response.status} ${response.statusText}. ${errorText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Create a media container for a carousel post
-   */
-  async createCarouselPostContainer(userId: string, params: CreateCarouselPostParams): Promise<ThreadsMediaContainer> {
-    const accessToken = this.getAccessToken()
-
-    const body: any = {
-      media_type: 'CAROUSEL',
-      children: params.children,
-      ...params.text && { text: params.text },
-      ...params.reply_to_id && { reply_to_id: params.reply_to_id },
-      ...params.reply_control && { reply_control: params.reply_control },
-      ...params.allowlisted_country_codes && { allowlisted_country_codes: params.allowlisted_country_codes },
-      ...params.link_attachment && { link_attachment: params.link_attachment },
-      ...params.quote_post_id && { quote_post_id: params.quote_post_id },
-      ...params.is_spoiler_media !== undefined && { is_spoiler_media: params.is_spoiler_media },
-    }
-
-    const response = await fetch(`${this.baseUrl}/${userId}/threads?access_token=${accessToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Failed to create carousel post container: ${response.status} ${response.statusText}. ${errorText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Publish a media container
-   */
-  async publishMediaContainer(userId: string, creationId: string): Promise<{ id: string }> {
-    const accessToken = this.getAccessToken()
-
-    const response = await fetch(`${this.baseUrl}/${userId}/threads_publish`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        creation_id: creationId,
-      }),
-    })
-
-    if (!response.ok) {
-      const errorText = await response.text()
-      throw new Error(`Failed to publish media container: ${response.status} ${response.statusText}. ${errorText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Get the status of a media container
-   */
-  async getMediaContainerStatus(containerId: string): Promise<ThreadsMediaContainer> {
-    const accessToken = this.getAccessToken()
-
-    const response = await fetch(`${this.baseUrl}/${containerId}?fields=status,error_message&access_token=${accessToken}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to get media container status: ${response.status} ${response.statusText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Get user's media posts
-   */
-  async getUserMedia(userId: string, fields: string[] = ['id', 'media_type', 'media_url', 'permalink', 'caption', 'timestamp'], limit: number = 25, since?: string): Promise<{ data: ThreadsMedia[], paging?: any }> {
-    const accessToken = this.getAccessToken()
-    const fieldsParam = fields.join(',')
-
-    let url = `${this.baseUrl}/${userId}/threads?fields=${fieldsParam}&limit=${limit}&access_token=${accessToken}`
-    if (since) {
-      url += `&since=${since}`
+    // Add authorization if we have an access token
+    if (this.accessToken) {
+      headers['Authorization'] = `Bearer ${this.accessToken}`
     }
 
     const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      ...options,
+      headers,
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to get user media: ${response.status} ${response.statusText}`)
+      const errorText = await response.text()
+      throw new Error(
+        `Threads API Error: ${response.status} ${response.statusText}\n${errorText}`
+      )
     }
 
-    return await response.json()
+    return response.json()
   }
 
-  /**
-   * Get media insights
-   */
-  async getMediaInsights(mediaId: string, metrics: string[] = ['views', 'likes', 'replies', 'reposts', 'quotes', 'shares']): Promise<ThreadsInsight[]> {
-    const accessToken = this.getAccessToken()
-    const metricsParam = metrics.join(',')
+  // Authentication methods
+  setAccessToken(token: string): void {
+    this.accessToken = token
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('threads_access_token', token)
+    }
+  }
 
-    const response = await fetch(`${this.baseUrl}/${mediaId}/insights?metric=${metricsParam}&access_token=${accessToken}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  getAccessToken(): string | null {
+    return this.accessToken
+  }
+
+  clearAccessToken(): void {
+    this.accessToken = null
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('threads_access_token')
+    }
+  }
+
+  // Profile methods
+  async getUserProfile(): Promise<ThreadsUserProfile> {
+    return this.makeRequest<ThreadsUserProfile>('/api/threads/profile')
+  }
+
+  // Media methods
+  async getUserMedia(
+    userId: string,
+    fields: string[] = ['id', 'media_type', 'media_url', 'permalink', 'caption', 'timestamp'],
+    limit: number = 25,
+    since?: string
+  ): Promise<MediaListResponse> {
+    const params = new URLSearchParams({
+      fields: fields.join(','),
+      limit: limit.toString(),
     })
 
-    if (!response.ok) {
-      throw new Error(`Failed to get media insights: ${response.status} ${response.statusText}`)
-    }
-
-    const data = await response.json()
-    return data.data || []
-  }
-
-  /**
-   * Get user insights (account-level metrics)
-   */
-  async getUserInsights(userId: string, metrics: string[] = ['views', 'likes', 'replies', 'reposts', 'quotes', 'shares'], since?: string, until?: string): Promise<ThreadsInsight[]> {
-    const accessToken = this.getAccessToken()
-    const metricsParam = metrics.join(',')
-
-    let url = `${this.baseUrl}/${userId}/threads_insights?metric=${metricsParam}&access_token=${accessToken}`
     if (since) {
-      url += `&since=${since}`
+      params.append('since', since)
+    }
+
+    return this.makeRequest<MediaListResponse>(`/api/threads/media?${params}`)
+  }
+
+  async getMediaById(mediaId: string): Promise<ThreadsMedia> {
+    return this.makeRequest<ThreadsMedia>(`/api/threads/media/${mediaId}`)
+  }
+
+  async deleteMedia(mediaId: string): Promise<void> {
+    return this.makeRequest<void>(`/api/threads/media/${mediaId}`, {
+      method: 'DELETE',
+    })
+  }
+
+  // Publishing methods
+  async createTextPostContainer(
+    userId: string,
+    options: TextPostOptions
+  ): Promise<MediaContainerResponse> {
+    return this.makeRequest<MediaContainerResponse>('/api/threads/publish', {
+      method: 'POST',
+      body: JSON.stringify({
+        user_id: userId,
+        media_type: 'TEXT_POST',
+        text: options.text,
+        reply_to_id: options.reply_to_id,
+        reply_control: options.reply_control,
+        link_attachment: options.link_attachment,
+        quote_post_id: options.quote_post_id,
+        topic_tag: options.topic_tag,
+        auto_publish_text: options.auto_publish_text,
+      }),
+    })
+  }
+
+  async createImagePostContainer(
+    userId: string,
+    options: ImagePostOptions
+  ): Promise<MediaContainerResponse> {
+    return this.makeRequest<MediaContainerResponse>('/api/threads/publish', {
+      method: 'POST',
+      body: JSON.stringify({
+        user_id: userId,
+        media_type: 'IMAGE_POST',
+        image_url: options.image_url,
+        text: options.text,
+        alt_text: options.alt_text,
+        reply_to_id: options.reply_to_id,
+        reply_control: options.reply_control,
+        link_attachment: options.link_attachment,
+      }),
+    })
+  }
+
+  async publishMediaContainer(
+    userId: string,
+    containerId: string
+  ): Promise<MediaPublishResponse> {
+    return this.makeRequest<MediaPublishResponse>('/api/threads/publish', {
+      method: 'POST',
+      body: JSON.stringify({
+        user_id: userId,
+        container_id: containerId,
+        action: 'publish',
+      }),
+    })
+  }
+
+  async getMediaContainerStatus(containerId: string): Promise<MediaContainerResponse> {
+    return this.makeRequest<MediaContainerResponse>(`/api/threads/publish/status/${containerId}`)
+  }
+
+  // Insights methods
+  async getMediaInsights(
+    mediaId: string,
+    metrics?: string[]
+  ): Promise<ThreadsInsight[]> {
+    const params = new URLSearchParams()
+    if (metrics && metrics.length > 0) {
+      params.append('metric', metrics.join(','))
+    }
+
+    const queryString = params.toString()
+    return this.makeRequest<ThreadsInsight[]>(
+      `/api/threads/insights/${mediaId}${queryString ? `?${queryString}` : ''}`
+    )
+  }
+
+  async getUserInsights(
+    userId: string,
+    metrics?: string[],
+    since?: string,
+    until?: string
+  ): Promise<ThreadsInsight[]> {
+    const params = new URLSearchParams()
+    if (metrics && metrics.length > 0) {
+      params.append('metric', metrics.join(','))
+    }
+    if (since) {
+      params.append('since', since)
     }
     if (until) {
-      url += `&until=${until}`
+      params.append('until', until)
     }
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to get user insights: ${response.status} ${response.statusText}`)
-    }
-
-    const data = await response.json()
-    return data.data || []
+    const queryString = params.toString()
+    return this.makeRequest<ThreadsInsight[]>(
+      `/api/threads/insights/user/${userId}${queryString ? `?${queryString}` : ''}`
+    )
   }
 
-  /**
-   * Delete a media post
-   */
-  async deleteMedia(mediaId: string): Promise<{ success: boolean }> {
-    const accessToken = this.getAccessToken()
+  // Analytics helper methods
+  async getAccountAnalytics(
+    userId: string,
+    timeRange?: { since?: string; until?: string }
+  ): Promise<{
+    totalFollowers: number
+    totalFollowing: number
+    totalPosts: number
+    totalThreads: number
+  }> {
+    const profile = await this.getUserProfile()
 
-    const response = await fetch(`${this.baseUrl}/${mediaId}?access_token=${accessToken}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    return {
+      totalFollowers: profile.followers_count,
+      totalFollowing: profile.following_count,
+      totalPosts: profile.media_count,
+      totalThreads: profile.threads_count,
+    }
+  }
+
+  async getContentAnalytics(
+    userId: string,
+    timeRange?: { since?: string; until?: string },
+    limit: number = 100
+  ): Promise<{
+    totalPosts: number
+    totalLikes: number
+    totalReplies: number
+    totalReposts: number
+    totalShares: number
+    averageEngagement: number
+    topPosts: ThreadsMedia[]
+  }> {
+    // Get user's media
+    const mediaResponse = await this.getUserMedia(
+      userId,
+      ['id', 'timestamp', 'like_count', 'reply_count', 'repost_count', 'quote_count', 'share_count'],
+      limit,
+      timeRange?.since
+    )
+
+    if (!mediaResponse.data || mediaResponse.data.length === 0) {
+      return {
+        totalPosts: 0,
+        totalLikes: 0,
+        totalReplies: 0,
+        totalReposts: 0,
+        totalShares: 0,
+        averageEngagement: 0,
+        topPosts: [],
+      }
+    }
+
+    // Calculate aggregate metrics
+    let totalLikes = 0
+    let totalReplies = 0
+    let totalReposts = 0
+    let totalShares = 0
+
+    mediaResponse.data.forEach(post => {
+      totalLikes += post.like_count || 0
+      totalReplies += post.reply_count || 0
+      totalReposts += post.repost_count || 0
+      totalShares += (post.share_count || 0) + (post.quote_count || 0)
+    })
+
+    const totalPosts = mediaResponse.data.length
+    const totalEngagement = totalLikes + totalReplies + totalReposts + totalShares
+    const averageEngagement = totalPosts > 0 ? Math.round(totalEngagement / totalPosts) : 0
+
+    // Get top posts by engagement
+    const postsWithEngagement = mediaResponse.data.map(post => ({
+      ...post,
+      engagement: (post.like_count || 0) + (post.reply_count || 0) +
+                 (post.repost_count || 0) + (post.share_count || 0) + (post.quote_count || 0),
+    }))
+
+    const topPosts = postsWithEngagement
+      .sort((a, b) => b.engagement - a.engagement)
+      .slice(0, 10)
+
+    return {
+      totalPosts,
+      totalLikes,
+      totalReplies,
+      totalReposts,
+      totalShares,
+      averageEngagement,
+      topPosts,
+    }
+  }
+
+  // Reply methods
+  async getPostReplies(
+    mediaId: string,
+    fields: string[] = ['id', 'text', 'timestamp', 'username', 'like_count'],
+    limit: number = 25
+  ): Promise<MediaListResponse> {
+    const params = new URLSearchParams({
+      fields: fields.join(','),
+      limit: limit.toString(),
+    })
+
+    return this.makeRequest<MediaListResponse>(`/api/threads/replies/${mediaId}?${params}`)
+  }
+
+  // Repost methods
+  async createRepost(userId: string, mediaId: string, text?: string): Promise<MediaContainerResponse> {
+    return this.makeRequest<MediaContainerResponse>('/api/threads/repost', {
+      method: 'POST',
       body: JSON.stringify({
-        confirmation: 'I understand this action is irreversible.'
+        user_id: userId,
+        media_id: mediaId,
+        text,
       }),
     })
-
-    if (!response.ok) {
-      throw new Error(`Failed to delete media: ${response.status} ${response.statusText}`)
-    }
-
-    return await response.json()
-  }
-
-  /**
-   * Repost a media post
-   */
-  async repostMedia(mediaId: string, message?: string): Promise<{ id: string }> {
-    const accessToken = this.getAccessToken()
-
-    const body: any = {}
-    if (message) {
-      body.message = message
-    }
-
-    const response = await fetch(`${this.baseUrl}/${mediaId}/repost?access_token=${accessToken}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to repost media: ${response.status} ${response.statusText}`)
-    }
-
-    return await response.json()
   }
 }
 
-// Export singleton instance
+// Create and export singleton instance
 export const threadsApi = new ThreadsApiClient()
-
-/**
- * React hook for using the Threads API
- */
-export function useThreadsApi() {
-  return {
-    api: threadsApi,
-    // Helper methods for common operations
-    createTextPost: async (userId: string, text: string, options?: Partial<CreateTextPostParams>) => {
-      const container = await threadsApi.createTextPostContainer(userId, { text, ...options })
-
-      // For text posts with auto_publish_text: true, the container is already published
-      if (options?.auto_publish_text) {
-        return { id: container.id, status: 'PUBLISHED' }
-      }
-
-      // Wait a short period for processing (recommended by Threads API)
-      await new Promise(resolve => setTimeout(resolve, 30000))
-
-      const published = await threadsApi.publishMediaContainer(userId, container.id)
-      return { id: published.id, status: 'PUBLISHED', containerId: container.id }
-    },
-
-    createImagePost: async (userId: string, imageUrl: string, options?: Partial<CreateImagePostParams>) => {
-      const container = await threadsApi.createImagePostContainer(userId, { image_url: imageUrl, ...options })
-
-      // Wait for processing (recommended by Threads API)
-      await new Promise(resolve => setTimeout(resolve, 30000))
-
-      const published = await threadsApi.publishMediaContainer(userId, container.id)
-      return { id: published.id, status: 'PUBLISHED', containerId: container.id }
-    },
-
-    createVideoPost: async (userId: string, videoUrl: string, options?: Partial<CreateVideoPostParams>) => {
-      const container = await threadsApi.createVideoPostContainer(userId, { video_url: videoUrl, ...options })
-
-      // Wait for processing (recommended by Threads API)
-      await new Promise(resolve => setTimeout(resolve, 30000))
-
-      const published = await threadsApi.publishMediaContainer(userId, container.id)
-      return { id: published.id, status: 'PUBLISHED', containerId: container.id }
-    },
-
-    getPostAnalytics: async (mediaId: string) => {
-      return await threadsApi.getMediaInsights(mediaId)
-    },
-
-    getAccountAnalytics: async (userId: string, timeRange?: { since?: string; until?: string }) => {
-      return await threadsApi.getUserInsights(userId, undefined, timeRange?.since, timeRange?.until)
-    },
-  }
-}

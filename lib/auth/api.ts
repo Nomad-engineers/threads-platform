@@ -142,4 +142,58 @@ export const authApi = {
 
     return await response.json()
   },
+
+  /**
+   * Get user posts
+   */
+  async getUserPosts(after?: string): Promise<any> {
+    const accessToken = this.getStoredToken()
+    if (!accessToken) {
+      throw new Error('No access token available')
+    }
+
+    let url = `${AUTH_CONFIG.api.baseUrl}/users/me/posts`
+
+    if (after) {
+      url += `?after=${after}`
+    }
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to get user posts: ${response.status} ${response.statusText}`)
+    }
+
+    return await response.json()
+  },
+
+  /**
+   * Delete a user post
+   */
+  async deletePost(postId: string): Promise<any> {
+    const accessToken = this.getStoredToken()
+    if (!accessToken) {
+      throw new Error('No access token available')
+    }
+
+    const response = await fetch(`${AUTH_CONFIG.api.baseUrl}/users/me/posts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete post: ${response.status} ${response.statusText}`)
+    }
+
+    return await response.json()
+  },
 }
